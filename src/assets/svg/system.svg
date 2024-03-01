@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-系统管理选中</title>
+    <g id="正文" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="5-1-4应用管理-应用详情" transform="translate(-32.000000, -91.000000)">
+            <g id="编组-15" transform="translate(-0.000000, 64.000000)">
+                <g id="系统管理" transform="translate(0.000000, 12.000000)">
+                    <g id="icon-系统管理选中" transform="translate(32.000000, 15.000000)">
+                        <rect id="矩形" x="0" y="0" width="18" height="18"></rect>
+                        <path d="M13.500135,1 L18,8.79166667 L13.500135,16.5833333 L4.50009,16.5833333 L0,8.79166667 L4.50009,1 L13.500135,1 Z M9,6.5 C7.75737,6.5 6.75,7.526025 6.75,8.79166667 C6.75,10.0573083 7.75737,11.0833333 9,11.0833333 C10.24263,11.0833333 11.25,10.0573083 11.25,8.79166667 C11.25,7.526025 10.24263,6.5 9,6.5 Z" id="Combined-Shape" fill="currentColor" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

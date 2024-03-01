@@ -1,0 +1,52 @@
+/*滚动条样式
+::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的
+::-webkit-scrollbar-button 滚动条两端的按钮
+::-webkit-scrollbar-track 外层轨道
+::-webkit-scrollbar-track-piece 内层滚动槽
+::-webkit-scrollbar-thumb 滚动的滑块
+::-webkit-scrollbar-corner 边角
+::-webkit-resizer 定义右下角拖动块的样式
+*/
+::-webkit-scrollbar {
+  width: 4px; 
+  height: 4px;
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  background: rgba(0,0,0,0.1);
+}
+
+// ::selection：匹配鼠标长按拖动选中的内容。
+// 可用的CSS属性为background,color
+::selection {
+  color: @red;
+}
+
+
+/* ^= 是以...开头； $= 是以...结束；*= 是包含 */
+/* a[href$=".pdf"]   表示：href 属性值以 “.pdf” 结束的 <a>元素。 */
+
+/* ~= 可以让你定义取值带有空格的属性。例：
+"<a href="path/to/image.jpg" data-info="external image"> Click Me, Fool </a>
+我们可以这样获取到a标签
+a[data-info~="external"]
+或者
+a[data-info~="image"]
+*/
+[class^="icon-"], [class*="icon-"] {
+  font-family: 'iconfont' !important;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
