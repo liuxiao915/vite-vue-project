@@ -7,7 +7,7 @@
 <template>
   <el-aside width="240px">
     <el-menu router active-text-color="#2A64FE" :default-active="activeName" :collapse="isCollapse">
-      <el-menu-item v-for="item in menuData" :index="item.path" @click="clickMenu(item)">
+      <el-menu-item v-for="item in menuData" :key="item.path" :index="item.path" @click="clickMenu(item)">
         <SvgIcon :svgName="activeName === item.path ? `${item.meta?.icon as string}-active` : item.meta?.icon as string" />
         <template #title>{{ item.meta?.title }}</template>
       </el-menu-item>
@@ -17,22 +17,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { routes } from '@/router/index.ts';
-import { RouteRecordRaw, useRouter } from 'vue-router'
+import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import left from '@/assets/images/toggle-left.png'
 import right from '@/assets/images/toggle-right.png'
 const isCollapse = ref(false)
+const route = useRoute()
 const router = useRouter()
 const activeName = ref('/')
 const menuData = computed(() => routes[0].children)
-
+watch(
+  () => route,
+  (newVal) => {
+    if (newVal) {
+      console.log('route', newVal);
+      activeName.value = newVal?.path
+    }
+  },
+  {
+    immediate: true
+  }
+)
 const clickMenu = (item: RouteRecordRaw) => {
   activeName.value = item.path
-  console.log(item.path);
-  if(item.path.indexOf('about') > -1) {
-    router.push({name: 'about', params: {id: 2}})
-  }
+    // params传参，只能用name
+    // router.push({name: 'about', params: {id: 2}})
+  
 }
 </script>
 

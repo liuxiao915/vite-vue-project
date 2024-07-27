@@ -1,6 +1,8 @@
 <template>
   <div>
     <div ref="btnRef" @click="handleChange">{{ name }}</div>
+    <el-table mb-1 :data="[]" />
+    <el-pagination :total="100" />
   </div>
 </template>
 <script setup lang="ts">
@@ -15,9 +17,9 @@ const handleChange = ():void => {
   name.value = '李四'
 }
 
-const route = useRoute()
-console.log(route);
-console.log(history.state);
+// const route = useRoute()
+// console.log(route);
+// console.log(history.state);
 
 </script>
 <style lang="less" csoped>

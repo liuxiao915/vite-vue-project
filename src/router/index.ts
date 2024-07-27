@@ -21,7 +21,7 @@ export const routes:Array<RouteRecordRaw> = [
         }
       },
       { 
-        path: '/about/:id',
+        path: '/about',
         name: 'about', 
         meta: {
           keepAlive: true,
