@@ -10,6 +10,9 @@
       <el-menu-item v-for="item in menuData" :key="item.path" :index="item.path" @click="clickMenu(item)">
         <SvgIcon :svgName="activeName === item.path ? `${item.meta?.icon as string}-active` : item.meta?.icon as string" />
         <template #title>{{ item.meta?.title }}</template>
+        <template v-if="item.children?.length">
+          <el-sub-menu v-for="subItem in item.children" :key="subItem.path" :index="subItem.path"></el-sub-menu>
+        </template>
       </el-menu-item>
     </el-menu>
     <img class="toggle-icon" :src="isCollapse ? right : left" @click="isCollapse = !isCollapse" />
@@ -27,11 +30,13 @@ const route = useRoute()
 const router = useRouter()
 const activeName = ref('/')
 const menuData = computed(() => routes[0].children)
+
 watch(
   () => route,
   (newVal) => {
     if (newVal) {
       console.log('route', newVal);
+      // params: { pathMatch: this.$route.path.substring(1).split('/') },
       activeName.value = newVal?.path
     }
   },
@@ -43,6 +48,9 @@ const clickMenu = (item: RouteRecordRaw) => {
   activeName.value = item.path
     // params传参，只能用name
     // router.push({name: 'about', params: {id: 2}})
+    // if(item.path.indexOf('about') > -1) {
+    //   router.push({name: 'about', params: {id: 2}})
+    // }
   
 }
 </script>

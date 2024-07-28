@@ -48,7 +48,7 @@ const mutations = {
   NOREADNUM_SETTING: (state, payload) => {
     state.noReadNum = payload
   },
-  ADD_TAB: (state, payload) => {
+  addTabs: (state, payload) => {
     let blackList = ['/index', '/404']
     if (blackList.includes(payload.path)) {
       return

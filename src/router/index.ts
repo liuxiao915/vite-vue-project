@@ -35,6 +35,12 @@ export const routes:Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: '/:pathMath(.*)', // 此处需特别注意置于最底部
+    name: '404',
+    meta: { title: '404' },
+    component: () => import('@/components/notFound.vue')
   }
 ]
 

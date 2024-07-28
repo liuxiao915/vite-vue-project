@@ -13,7 +13,7 @@
         @tab-remove="removeTab"
       >
         <el-tab-pane
-          v-for="item in editableTabs"
+          v-for="item in tabsList"
           :key="item.name"
           :label="item.title"
           :name="item.name"
@@ -32,7 +32,7 @@ import { ref } from 'vue'
 
 let tabIndex = 2
 const editableTabsValue = ref('2')
-const editableTabs = ref([
+const tabsList = ref([
   {
     title: 'Tab 1',
     name: '1',
@@ -44,10 +44,9 @@ const editableTabs = ref([
     content: 'Tab 2 content',
   },
 ])
-
 const addTab = (targetName) => {
   const newTabName = `${++tabIndex}`
-  editableTabs.value.push({
+  tabsList.value.push({
     title: 'New Tab',
     name: newTabName,
     content: 'New Tab content',
@@ -55,7 +54,7 @@ const addTab = (targetName) => {
   editableTabsValue.value = newTabName
 }
 const removeTab = (targetName) => {
-  const tabs = editableTabs.value
+  const tabs = tabsList.value
   let activeName = editableTabsValue.value
   if (activeName === targetName) {
     tabs.forEach((tab, index) => {
@@ -69,7 +68,7 @@ const removeTab = (targetName) => {
   }
 
   editableTabsValue.value = activeName
-  editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
+  tabsList.value = tabs.filter((tab) => tab.name !== targetName)
 }
 </script>
 
