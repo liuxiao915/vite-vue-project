@@ -7,7 +7,7 @@
 <template>
     <el-main class="layout-main">
       <el-tabs
-        v-model="editableTabsValue"
+        v-model="activeTabs"
         type="card"
         closable
         @tab-remove="removeTab"
@@ -15,7 +15,7 @@
         <el-tab-pane
           v-for="item in tabsList"
           :key="item.name"
-          :label="item.title"
+          :label="item.meta.title"
           :name="item.name"
         >
         <el-card>
@@ -27,35 +27,30 @@
     </el-main>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-
+<script setup>
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 let tabIndex = 2
-const editableTabsValue = ref('2')
-const tabsList = ref([
-  {
-    title: 'Tab 1',
-    name: '1',
-    content: 'Tab 1 content',
-  },
-  {
-    title: 'Tab 2',
-    name: '2',
-    content: 'Tab 2 content',
-  },
-])
-const addTab = (targetName) => {
-  const newTabName = `${++tabIndex}`
-  tabsList.value.push({
-    title: 'New Tab',
-    name: newTabName,
-    content: 'New Tab content',
-  })
-  editableTabsValue.value = newTabName
-}
+
+const store = useStore()
+const route = useRoute()
+const activeTabs = ref(route.name)
+const tabsList = computed(() => {
+  console.log('tabList', store.state.home.tabList)
+  return store.state.home.tabList
+})
+// const tabsList = computed(() => {
+//   get() { 
+//     return store.state.home.tabList
+//   },
+//   set(val) {
+//     store.commit('home/addTabs', val)
+//   }
+// })
 const removeTab = (targetName) => {
   const tabs = tabsList.value
-  let activeName = editableTabsValue.value
+  let activeName = activeTabs.value
   if (activeName === targetName) {
     tabs.forEach((tab, index) => {
       if (tab.name === targetName) {
@@ -67,7 +62,7 @@ const removeTab = (targetName) => {
     })
   }
 
-  editableTabsValue.value = activeName
+  activeTabs.value = activeName
   tabsList.value = tabs.filter((tab) => tab.name !== targetName)
 }
 </script>
