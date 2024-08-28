@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import layout from "@/components/layout/index.vue"
 // 全局路由(无需嵌套上左右整体布局)
 // const globalRoutes = []
 // 通过meta对象设置路由展示方式
@@ -16,9 +15,8 @@ export const routes:Array<RouteRecordRaw> = [
   },
   { 
     path: '/index',
-    name: '',
-    redirect: { name: 'index' },
-    component: layout,
+    // redirect: { name: 'index' },
+    component: () => import('@/components/layout/index.vue'),
     children: [
       {
         path: '/index',
@@ -76,5 +74,7 @@ const router = createRouter({
     }
   }
 })
-
+router.beforeEach((_to, _from, next) => {
+  next()
+})
 export default router

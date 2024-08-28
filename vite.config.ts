@@ -3,9 +3,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import vitePluginVueMonitor from './vitePluginStar'
+// import viteCompression from 'vite-plugin-compression'
 const srcPath = path.resolve(__dirname, "src");
 
 // https://vitejs.dev/config/
@@ -17,7 +18,7 @@ export default defineConfig({
     vue(),
     vitePluginVueMonitor(),
     AutoImport({
-      imports: ["vue"], // 自动导入 Vue 相关函数，如：ref, reactive 等
+      imports: ["vue", "vue-router", "vuex", "@vueuse/core"], // 自动导入 Vue 相关函数，如：ref, reactive 等
       resolvers: [ElementPlusResolver()],
       dts: path.resolve(srcPath, "types", "auto-imports.d.ts"), // 指定自动导入函数TS类型声明文件路径
     }),
@@ -29,6 +30,15 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')], // 指定需要缓存的图标文件夹
       symbolId: 'icon-[name]', // 指定symbolId格式
     }),
+    //在plugins配置数组里添加gzip插件
+    // viteCompression({
+    //   verbose: true, // 默认即可
+    //   disable: false, // 开启压缩(不禁用)，默认即可
+    //   deleteOriginFile: true, // 删除源文件
+    //   threshold: 5120, // 压缩前最小文件大小
+    //   algorithm: 'gzip', // 压缩算法
+    //   ext: '.gz' // 文件类型
+    // })
   ],
   resolve: {
     alias: {
@@ -56,19 +66,28 @@ export default defineConfig({
     proxy: {
       '/api-proxy': {
         target: 'http://10.224.156.74:8080',
-        changeOrigin: true
+        changeOrigin: true // 允许跨域
       }
     }
   },
   build: {
     outDir: 'dist',
+    // 启动 / 禁用 CSS 代码拆分
+    cssCodeSplit: true,
+    // 构建后是否生成 soutrce map 文件
+    sourcemap: false,
+    // Vite 会在构建时清空outDir指定的目录
+    emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: './src/main.ts'// 入口文件main.ts
+        // 多页面配置
+        // admin: path.resolve(__dirname, 'src/admin/index.html'),
+        // page: path.resolve(__dirname, 'src/page/index.html'),
+        index: path.resolve(__dirname, './index.html'),
       },
       output: {
-        entryFileNames: 'js/[name]-[hash].js', // 根据格式命名输出文件
-        chunkFileNames: `js/[name]-[hash].js`, // 非入口文件的chunk文件名称
+        entryFileNames: 'assets/js/[name]-[hash].js', // 根据格式命名输出文件
+        chunkFileNames: `assets/js/[name]-[hash].js`, // 非入口文件的chunk文件名称
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',// 静态资源文件名称
         // 打包后单个静态资源文件太大，需要分解块，将大块分解成更小的块
         manualChunks(id) {
@@ -80,7 +99,7 @@ export default defineConfig({
     },
     // 提高超大静态资源警告门槛
     chunkSizeWarningLimit: 1000,
-    minify: 'terser', // 必须开启： 使用terserOptions才有效果
+    minify: 'terser', // 是否进行压缩,boolean | 'terser' | 'esbuild',使用terser，terserOptions才有效果
     terserOptions: {
       compress: {
         // 生产环境时移除console.log()
