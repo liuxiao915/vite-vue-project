@@ -6,14 +6,13 @@ import Components from 'unplugin-vue-components/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vitePluginVueMonitor from './vitePluginStar'
-// import pluginNmae from './src/plugins/pluginName.ts' // pluginNmae(),
 const srcPath = path.resolve(__dirname, "src");
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './', // index.html文件所在位置
   root: './', // js导入的资源路径，src
-  envPrefix: 'VITE_', // 环境变量前缀设置 
+  envPrefix: 'VITE_', // 环境变量前缀设置
   plugins: [
     vue(),
     vitePluginVueMonitor(),
@@ -71,6 +70,7 @@ export default defineConfig({
         entryFileNames: 'js/[name]-[hash].js', // 根据格式命名输出文件
         chunkFileNames: `js/[name]-[hash].js`, // 非入口文件的chunk文件名称
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',// 静态资源文件名称
+        // 打包后单个静态资源文件太大，需要分解块，将大块分解成更小的块
         manualChunks(id) {
           if (id.includes('node_modules')) {
             return id.toString().split('node_modules/')[1].split('/')[0].toString();

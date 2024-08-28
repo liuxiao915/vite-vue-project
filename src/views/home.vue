@@ -5,7 +5,7 @@
  @LastEditTime: 2024-08-28 09:56:32
 -->
 <template>
-  <div>这是首页</div>
+  <div>这是home页面</div>
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'

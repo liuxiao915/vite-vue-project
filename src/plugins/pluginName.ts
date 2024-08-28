@@ -51,7 +51,7 @@ export default function setupName(): Plugin {
 
 
 /**
- * 使用：
+ * 使用：（现在报错）
  * vite config ts中引入
  * import pluginNmae from '@/plugins/pluginName.ts'
  * plugins: [pluginName()]
