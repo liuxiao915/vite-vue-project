@@ -1,13 +1,13 @@
 <template>
   <div ref="test">
-    <!-- <el-button test="button">{{ user.name }}</el-button>
+    <el-button test="button">{{ user.name }}</el-button>
     <el-button>{{ money }}</el-button>
     <el-button>{{ car }}</el-button>
     <el-button>{{ book.year }}</el-button>
-    <el-button @click="handleChange">{{ myVariable }}</el-button> -->
+    <el-button @click="handleChange">{{ myVariable }}</el-button>
   </div>
 </template>
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { ref, reactive, withDefaults } from 'vue'
 defineOptions({
   name: 'Ts',
@@ -63,7 +63,7 @@ const handleChange = (event: Event) => {
   // console.log(event.target as HTMLButtonElement) === console.log(event.target)
   console.log((event.target as HTMLButtonElement).classList)
 }
-</script> -->
+</script>
 <style lang="less" csoped>
 button[test='button'] {
   color: @red;

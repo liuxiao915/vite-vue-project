@@ -54,7 +54,6 @@ watch(
   (newVal) => {
     if (newVal) {
       activeName.value = newVal?.path
-      console.log('watch', newVal)
       store.commit('addTabs', { ...newVal })
       // store.commit('home/addTabs', newVal)
     }

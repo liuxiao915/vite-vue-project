@@ -7,17 +7,17 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: 'Hello'
+  name: 'Hello',
 })
 // import { ref } from "vue";
 // import { Check } from '@element-plus/icons-vue'
 interface User {
-  id: string,
+  id: string
   name: string
 }
 const user: User = {
   id: '11',
-  name: '张三'
+  name: '张三',
 }
 </script>
 

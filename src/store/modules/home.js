@@ -41,7 +41,6 @@ export default {
           }, 0)
         }
       }
-      console.log('addTabs', state.tabList)
     },
     updateTabs: (state, index) => {
       state.tabList.splice(index, 1)

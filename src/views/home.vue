@@ -9,12 +9,14 @@
 </template>
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
+defineOptions({
+  name: 'home',
+})
 const route = useRoute()
-// const router = useRouter()
+const router = useRouter()
 const handleClick = () => {
-  console.log(route, window.location)
-  // router.push({ name: 'index' })
-  window.open(window.location.href + 'index', '_self')
+  router.push({ name: 'index' })
+  // window.open(window.location.href + 'index', '_self')
 }
 </script>
 <style lang="less" scoped>
