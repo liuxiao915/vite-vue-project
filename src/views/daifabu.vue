@@ -1,6 +1,6 @@
 <template>
   <div class="counter">
-    这是index页面
+    这是待发布页面
     <Ts
       :money="123456"
       car="奔驰"

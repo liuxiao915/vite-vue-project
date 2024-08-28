@@ -25,21 +25,13 @@ export default {
   },
   mutations: {
     addTabs: (state, payload) => {
-      let blackList = ['/index', '/404']
+      let blackList = ['/home', '/404']
       if (blackList.includes(payload.path)) {
         return
       }
-      let index = state.tabList.findIndex((val) => payload.path === val.path)
+      let index = state.tabList.findIndex((val) => payload.name === val.name)
       if (index === -1) {
         state.tabList.push(payload)
-        // state.tabList.push({
-        //   path: payload.path,
-        //   fullPath: payload.fullPath,
-        //   name: payload.name,
-        //   meta: payload.meta,
-        //   params: payload.params,
-        //   query: payload.query
-        // })
       } else {
         // 同组件同路由下刷新组件状态
         if (state.tabList[index].fullPath !== payload.fullPath) {
@@ -49,8 +41,13 @@ export default {
           }, 0)
         }
       }
+      console.log('addTabs', state.tabList)
     },
     updateTabs: (state, index) => {
+      state.tabList.splice(index, 1)
+    },
+    deleteTabs: (state, fullPath) => {
+      let index = state.tabList.findIndex((val) => val.fullPath === fullPath)
       state.tabList.splice(index, 1)
     },
     // 清除用户信息
@@ -71,12 +68,6 @@ export default {
     // 设置未读消息数
     NOREADNUM_SETTING: (state, payload) => {
       state.noReadNum = payload
-    },
-    
-    
-    DELETE_TAB: (state, fullPath) => {
-      let index = state.tabList.findIndex((val) => val.fullPath === fullPath)
-      state.tabList.splice(index, 1)
     },
     ROUTER_PUSH: (state, path) => {
       let index = state.tabList.findIndex((val) => val.path === path)

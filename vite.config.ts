@@ -5,6 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import vitePluginVueMonitor from './vitePluginStar'
 // import pluginNmae from './src/plugins/pluginName.ts' // pluginNmae(),
 const srcPath = path.resolve(__dirname, "src");
 
@@ -15,6 +16,7 @@ export default defineConfig({
   envPrefix: 'VITE_', // 环境变量前缀设置 
   plugins: [
     vue(),
+    vitePluginVueMonitor(),
     AutoImport({
       imports: ["vue"], // 自动导入 Vue 相关函数，如：ref, reactive 等
       resolvers: [ElementPlusResolver()],
