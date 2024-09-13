@@ -44,6 +44,9 @@ export default {
     },
     updateTabs: (state, index) => {
       state.tabList.splice(index, 1)
+      // setTimeout(() => {
+      //   state.tabList.splice(index, 0, payload)
+      // }, 0)
     },
     deleteTabs: (state, fullPath) => {
       let index = state.tabList.findIndex((val) => val.fullPath === fullPath)

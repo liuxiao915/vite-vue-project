@@ -6,11 +6,13 @@
 -->
 <template>
   <el-main class="layout-main">
+    <!-- <el-card> -->
     <el-tabs
       v-model="activeTabs"
       type="card"
       closable
       @tab-remove="removeTab"
+      @tab-click="tabClick"
     >
       <el-tab-pane
         v-for="item in tabsList"
@@ -19,9 +21,8 @@
         :name="item.name"
       />
     </el-tabs>
-    <el-card>
-      <router-view />
-    </el-card>
+    <router-view />
+    <!-- </el-card> -->
     <el-backtop target=".layout-main" />
   </el-main>
 </template>
@@ -30,24 +31,11 @@
 import { ref, toRef } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-let tabIndex = 2
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
-const activeTabs = ref(null)
 const tabsList = toRef(store.state.home, 'tabList') // 存放标签页数组
-watch(
-  () => route,
-  (newVal) => {
-    if (newVal) {
-      activeTabs.value = newVal.name
-    }
-  },
-  {
-    deep: true,
-    immediate: true,
-  }
-)
+const activeTabs = toRef(route, 'name') // 存放当前激活标签页，默认激活首页
 const removeTab = (targetName) => {
   const index = tabsList.value.findIndex((item) => item.name === targetName) //查找触发右键菜单所在标签页index
   if (tabsList.value.length === 1) {
@@ -67,10 +55,17 @@ const removeTab = (targetName) => {
   }
   store.commit('updateTabs', index)
 }
+const tabClick = (item) => {
+  console.log('tabClick', tabsList.value, item)
+  router.push({ name: item.props.name })
+}
 </script>
 
 <style lang="less" scoped>
 .layout-main {
   width: 100%;
+  .el-card {
+    height: 100%;
+  }
 }
 </style>

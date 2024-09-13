@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, toRef, watch, computed } from 'vue'
 import { routes } from '@/router/index'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -46,40 +46,26 @@ import left from '@/assets/images/toggle-left.png'
 import right from '@/assets/images/toggle-right.png'
 const isCollapse = ref(false)
 const route = useRoute()
-const activeName = ref('/')
 const menuData = computed(() => routes[1].children)
 const store = useStore()
-watch(
-  () => route,
-  (newVal) => {
-    if (newVal) {
-      activeName.value = newVal?.path
-      store.commit('addTabs', { ...newVal })
-      // store.commit('home/addTabs', newVal)
-    }
-  },
-  {
-    deep: true,
-    immediate: true,
-  }
-)
+const activeName = toRef(route, 'path') // 存放当前激活标签页，默认激活首页
 const getSvgName = (item) => {
   return activeName === item.path
     ? `${item.meta?.icon}-active`
     : item.meta?.icon
 }
-const clickMenu = (item) => {
-  activeName.value = item.path
-}
+const clickMenu = (item) => { }
 </script>
 
 <style lang="less" scoped>
 .el-aside {
   height: calc(100vh - 60px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   width: auto;
+  &:hover {
+    overflow-y: auto;
+  }
 }
 .el-menu {
   height: 100%;
