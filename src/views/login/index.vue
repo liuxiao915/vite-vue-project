@@ -14,7 +14,7 @@
       </el-input>
       <!-- 滑动校验 -->
       <slider @verificationSuccess="getVerificationResult" />
-      <div class="login-btn" :style="btnStyle" @click="handleLogin">登录</div>
+      <el-button class="login-btn" :style="btnStyle" @click="handleLogin">登录</el-button>
     </div>
   </div>
 </template>
@@ -84,8 +84,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 560px;
-    height: 525px;
+    width: 500px;
+    height: 500px;
     background: #ffffff;
     box-shadow: 0px 5px 5px 0 rgba(83, 53, 89, 0.2);
     border-radius: 8px;
@@ -99,8 +99,8 @@ export default {
   }
   .el-input {
     margin-top: 24px;
-    width: 480px;
-    height: 60px;
+    width: 100%;
+    height: 50px;
   }
   .user-icon {
     width: 24px;
@@ -114,12 +114,11 @@ export default {
     background: url('@/assets/images/login/password.png') no-repeat;
     background-size: 100% 100%;
   }
-  .login-btn {
-    width: 480px;
-    height: 60px;
-    margin-top: 40px;
-    text-align: center;
-    line-height: 60px;
+  .el-button {
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    line-height: 50px;
     border-radius: 8px;
     font-family: PingFangSC-Semibold;
     font-size: 18px;

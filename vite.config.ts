@@ -5,7 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import vitePluginVueMonitor from './vitePluginStar'
+import vitePluginVueMonitor from './src/plugins/vitePluginStar'
 // import viteCompression from 'vite-plugin-compression'
 const srcPath = path.resolve(__dirname, "src");
 

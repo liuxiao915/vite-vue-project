@@ -5,13 +5,34 @@
  @LastEditTime: 2024-01-10 16:27:25
 -->
 <template>
-  <el-header>{{state.Header}}</el-header>
+  <el-header>
+    <div>
+      {{state.Header}}
+    </div>
+    <el-dropdown>
+      <span class="el-dropdown-link">
+        Dropdown List
+        <el-icon class="el-icon--right">
+          <arrow-down />
+        </el-icon>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+          <el-dropdown-item>Action 3</el-dropdown-item>
+          <el-dropdown-item disabled>Action 4</el-dropdown-item>
+          <el-dropdown-item divided>Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </el-header>
 </template>
 
-<script setup lang="ts">
-import { reactive } from 'vue';
+<script setup>
+import { reactive } from 'vue'
 const state = reactive({
-  Header: 'Header'
+  Header: '管理系统',
 })
 </script>
 

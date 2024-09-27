@@ -1,6 +1,6 @@
 <!-- 滑动验证功能页面 -->
 <template>
-  <div class="sliding-verification" onselectstart="return false;">
+  <div class="slider-container" onselectstart="return false;">
     <div class="bgColor"></div>
     <div class="txt">向右滑动验证</div>
     <div :class="['slider', isValidSuccess ? 'success' : '']"></div>
@@ -9,7 +9,6 @@
 
 <script>
 export default {
-  name: "slidingVerification",
   data() {
     return {
       isValidSuccess: false, //是否解锁成功的标志，默认不成功
@@ -26,7 +25,7 @@ export default {
     init() {
       let _this = this;
       //二、获取到需要用到的DOM元素
-      let box = this.getEle(".sliding-verification"), //容器
+      let box = this.getEle(".slider-container"), //容器
         bgColor = this.getEle(".bgColor"), //背景色
         txt = this.getEle(".txt"), //文本
         slider = this.getEle(".slider"), //滑块
@@ -35,10 +34,7 @@ export default {
         isSuccess = false; //是否解锁成功的标志，默认不成功
 
       //三、给滑块添加鼠标按下事件
-      slider.onmousedown = mousedownHandler;
-
-      //3.1鼠标按下事件的方法实现
-      function mousedownHandler(e) {
+      slider.onmousedown = () => {
         bgColor.style.transition = "";
         slider.style.transition = "";
         var e = e || window.event || e.which;
@@ -47,25 +43,13 @@ export default {
         document.onmousemove = mousemoveHandler;
         document.onmouseup = mouseupHandler;
       }
-
-      //四、定义一个获取鼠标当前需要移动多少距离的方法
-      function getOffsetX(offset, min, max) {
-        if (offset < min) {
-          offset = min;
-        } else if (offset > max) {
-          offset = max;
-        }
-        return offset;
-      }
-
-      //3.1.1鼠标移动事件的方法实现
+      //3.1鼠标移动事件的方法实现
       function mousemoveHandler(e) {
         var e = e || window.event || e.which;
         var moveX = e.clientX;
         var offsetX = getOffsetX(moveX - downX, 0, successMoveDistance);
         bgColor.style.width = offsetX + "px";
         slider.style.left = offsetX + "px";
-
         if (offsetX == successMoveDistance) {
           success();
         }
@@ -73,7 +57,7 @@ export default {
         e.preventDefault();
       }
 
-      //3.1.2鼠标松开事件的方法实现
+      //3.2鼠标松开事件的方法实现
       function mouseupHandler(e) {
         if (!isSuccess) {
           bgColor.style.width = 0 + "px";
@@ -85,7 +69,15 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
       }
-
+      //四、定义一个获取鼠标当前需要移动多少距离的方法
+      function getOffsetX(offset, min, max) {
+        if (offset < min) {
+          offset = min;
+        } else if (offset > max) {
+          offset = max;
+        }
+        return offset;
+      }
       //五、定义一个滑块解锁成功的方法
       function success() {
         isSuccess = true;
@@ -105,11 +97,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.sliding-verification {
+.slider-container {
   position: relative;
   margin-top: 24px;
-  height: 60px;
-  width: 480px;
+  height: 50px;
+  width: 100%;
   background: #ffffff;
   border: 1px solid rgba(221, 221, 221, 1);
   border-radius: 8px;
@@ -125,8 +117,8 @@ export default {
   .txt {
     position: absolute;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     border-radius: 8px;
     text-align: center;
     font-family: PingFangSC-Regular;
@@ -138,8 +130,8 @@ export default {
   .slider {
     position: absolute;
     top: -1px;
-    width: 60px;
-    height: 61px;
+    width: 50px;
+    height: 50px;
     background-color: #ffffff;
     background-size: 24px 24px;
     background-position: center center;

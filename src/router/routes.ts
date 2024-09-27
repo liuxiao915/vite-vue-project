@@ -1,12 +1,12 @@
 // import Layout from '@/components/layout/Index.vue'
 
 export const defaultRoutes = [
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   meta: { title: '登录', hidden: true },
-  //   component: () => import('../views/login/Login.vue')
-  // }
+  {
+    path: '/login',
+    name: 'login',
+    meta: { title: '登录', hidden: true },
+    component: () => import('../views/login/index.vue')
+  }
 ]
 export const NotFoundRoutes = [
   // {

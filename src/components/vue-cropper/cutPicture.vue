@@ -2,7 +2,7 @@
   <el-dialog :title="state.title" v-model="visible" width="800px" append-to-body @close="closeDialog" @open="openDialog">
     <el-row>
       <el-col :xs="24" :md="12" :style="{height: '350px'}">
-        <vue-cropper v-if="state.showCropper" ref="cropper" :img="state.options.img" :info="true" :output-type="state.options.outputType" @realTime="realTime" />
+        <vue-cropper v-if="state.showCropper" ref="cropper" :img="state.options.img" :output-type="state.options.outputType" @realTime="realTime" />
       </el-col>
       <el-col :xs="24" :md="12" :style="{height: '350px'}">
         <div ref="preview" class="avatar-upload-preview">
@@ -102,8 +102,8 @@ const beforeUpload = (file) => {
   state.file = file
   if (file.type.indexOf('image/') === -1) {
     ElMessage({
-      message: '文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。',
-      type: 'warning',
+      message: '文件格式错误，请上传图片类型,如：JPG，PNG，jpeg等后缀的文件。',
+      type: 'warning'
     })
   } else {
     const reader = new FileReader()
@@ -119,7 +119,7 @@ const uploadImg = () => {
   if (!state.file) {
     return ElMessage({
       message: '请先选择文件！',
-      type: 'warning',
+      type: 'warning'
     })
   }
   cropper.value.getCropBlob(data => {
@@ -129,13 +129,13 @@ const uploadImg = () => {
     // API.uploadImg(formData).then(res => {
     //   if (res.code === 0) {
     //     const list = [{ fileUrl: res.data.objectUrl, fileName: state.file?.name || props.fileObj?.fileName, orders: 1 }]
-    //     emit('upload', list)
     //     ElMessage({
     //       message: '上传成功',
     //       type: 'success',
     //     })
-    //     state.showCropper = false
     //     emit('input', false)
+    //     emit('upload', list)
+    //     state.showCropper = false
     //   }
     // })
   })
@@ -149,7 +149,7 @@ const closeDialog = () => {
   console.log('closeDialog')
   state.showCropper = false
   state.file = null
-  emit('input', false)
+  // emit('input', false)
 }
 </script>
 <style scoped lang="less">

@@ -7,19 +7,16 @@
 <template>
   <el-main class="layout-main">
     <!-- <el-card> -->
-    <el-tabs
-      v-model="activeTabs"
-      type="card"
-      closable
-      @tab-remove="removeTab"
-      @tab-click="tabClick"
-    >
-      <el-tab-pane
-        v-for="item in tabsList"
-        :key="item.name"
-        :label="item.meta.title"
-        :name="item.name"
-      />
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+      <el-breadcrumb-item>
+        <a href="/">promotion management</a>
+      </el-breadcrumb-item>
+      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-tabs v-model="activeTabs" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
+      <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.meta.title" :name="item.name" />
     </el-tabs>
     <router-view />
     <!-- </el-card> -->
@@ -40,7 +37,7 @@ const removeTab = (targetName) => {
   const index = tabsList.value.findIndex((item) => item.name === targetName) //查找触发右键菜单所在标签页index
   if (tabsList.value.length === 1) {
     router.replace('/')
-    store.commit('updateTabs', index)
+    store.commit('deleteTabs', index)
     return
   }
   //当前激活标签页与触发右键菜单标签页是同一页
@@ -53,7 +50,7 @@ const removeTab = (targetName) => {
       router.replace(tabsList.value[index + 1].fullPath)
     }
   }
-  store.commit('updateTabs', index)
+  store.commit('deleteTabs', index)
 }
 const tabClick = (item) => {
   console.log('tabClick', tabsList.value, item)

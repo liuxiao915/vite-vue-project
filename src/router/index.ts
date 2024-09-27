@@ -10,7 +10,7 @@ const tabRouter:Array<RouteRecordRaw> = [
     name: 'index',
     meta: {
       keepAlive: true,
-      title: '首页'
+      title: 'index'
     },
     component: () => import('@/views/index.vue'),
   },
@@ -86,7 +86,7 @@ export const routes:Array<RouteRecordRaw> = [
   },
   { 
     path: '/index',
-    // redirect: { name: 'index' },
+    redirect: { name: 'index' },
     component: () => import('@/components/layout/index.vue'),
     children: [
       ...tabRouter
@@ -118,7 +118,6 @@ const router = createRouter({
   }
 })
 router.beforeEach((to, _from, next) => {
-  console.log(to);
   store.commit('addTabs', { ...to })
   next()
 })
