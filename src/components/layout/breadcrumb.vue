@@ -7,10 +7,8 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
-      <span v-if="index === levelList.length - 1" class="no-redirect">
-        {{ item.meta?.title }}
-      </span>
-      <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+      <span v-if="index === levelList.length - 1">{{ item.meta?.title }}</span>
+      <a v-else @click="handleLink(item)">{{ item.meta.title }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -21,8 +19,8 @@ const route = useRoute()
 const router = useRouter()
 const levelList = ref([])
 const getBreadcrumb = () => {
-  let matched = route.matched.filter((item) => item.meta && item.meta.title)[0]
-  matched = [{ path: '/', meta: { title: '首页' } }].concat(matched)
+  let matched = route.matched.filter((item) => item.meta && item.meta.title)
+  matched = [].concat(matched)
   levelList.value = matched.filter(
     (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
   )
@@ -41,8 +39,7 @@ const handleLink = (item) => {
 watch(
   () => route.path,
   () => {
-    console.log('watch--route', route)
-    getBreadcrumb()
+    // getBreadcrumb()
   },
   { immediate: true }
 )

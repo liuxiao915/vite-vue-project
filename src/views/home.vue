@@ -7,7 +7,7 @@
 <template>
   <div @click="handleClick">这是home页面</div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { useRouter } from 'vue-router'
 defineOptions({
   name: 'home',

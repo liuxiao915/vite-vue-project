@@ -6,34 +6,10 @@
 -->
 <template>
   <el-aside width="240px">
-    <el-menu
-      router
-      active-text-color="#2A64FE"
-      :default-active="activeName"
-      :collapse="isCollapse"
-    >
-      <el-menu-item
-        v-for="item in menuData"
-        :key="item.path"
-        :index="item.path"
-        @click="clickMenu(item)"
-      >
-        <SvgIcon :svg-name="getSvgName(item)" />
-        <template #title>{{ item.meta?.title }}</template>
-        <template v-if="item.children?.length">
-          <el-sub-menu
-            v-for="subItem in item.children"
-            :key="subItem.path"
-            :index="subItem.path"
-          ></el-sub-menu>
-        </template>
-      </el-menu-item>
+    <el-menu router active-text-color="#2A64FE" :default-active="activeName" :collapse="isCollapse">
+      <SubMenuItem v-for="(item, index) in menuData" :key="item.name + index" :menuItem="item" />
     </el-menu>
-    <img
-      class="toggle-icon"
-      :src="isCollapse ? right : left"
-      @click="isCollapse = !isCollapse"
-    />
+    <img class="toggle-icon" :src="isCollapse ? right : left" @click="isCollapse = !isCollapse" />
   </el-aside>
 </template>
 
@@ -41,13 +17,12 @@
 import { ref, toRef, watch, computed } from 'vue'
 import { routes } from '@/router/index'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 import left from '@/assets/images/toggle-left.png'
 import right from '@/assets/images/toggle-right.png'
+import SubMenuItem from './SubMenuItem.vue'
 const isCollapse = ref(false)
 const route = useRoute()
-const menuData = computed(() => routes[1].children)
-const store = useStore()
+const menuData = computed(() => routes.filter(item => !item.meta.hidden))
 const activeName = toRef(route, 'path') // 存放当前激活标签页，默认激活首页
 const getSvgName = (item) => {
   return activeName === item.path

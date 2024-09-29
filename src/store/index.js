@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import home from './modules/home'
+import report from './modules/report'
 import system from './modules/system'
 // 自动引入
 // const files  = import.meta.glob('./modules/*.js', { eager: true })
@@ -15,6 +16,7 @@ export default createStore({
   state: () => ({}),
   modules: {
     home,
+    report,
     system
   }
 })
