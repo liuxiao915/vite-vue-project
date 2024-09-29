@@ -6,7 +6,6 @@
 -->
 <template>
   <el-main class="layout-main">
-    <!-- <el-card> -->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
       <el-breadcrumb-item>
@@ -19,7 +18,6 @@
       <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.meta.title" :name="item.name" />
     </el-tabs>
     <router-view />
-    <!-- </el-card> -->
     <el-backtop target=".layout-main" />
   </el-main>
 </template>

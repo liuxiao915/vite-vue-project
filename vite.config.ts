@@ -55,6 +55,7 @@ export default defineConfig({
           blue: "#1177EE", // 用法：color: @blue;
           green: "#11BB77",
           red: "#FA5555",
+          purple: '#825C89'
         }
       }
     }

@@ -118,6 +118,20 @@ const router = createRouter({
   }
 })
 router.beforeEach((to, _from, next) => {
+  // const userInfo = JSON.parse(sessionStorage.getItem('userInfo') || {})
+  // if (userInfo?.userName) {
+  //   if (to.path === '/login') {
+  //     next({ path: '/' })
+  //   } else {
+  //     next()
+  //   }
+  // } else {
+  //   if (to.path === '/login') {
+  //     next();
+  //   } else {
+  //     next({ path: '/login' });
+  //   }
+  // }
   store.commit('addTabs', { ...to })
   next()
 })

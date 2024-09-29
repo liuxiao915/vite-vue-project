@@ -2,71 +2,70 @@
   <div class="login">
     <div class="login-module">
       <div class="login-module_title">统一身份认证</div>
-      <el-input v-model="userInfo.userName" placeholder="请输入用户名">
-        <template #prefix>
-          <div class="user-icon"></div>
-        </template>
-      </el-input>
-      <el-input type="password" show-password v-model="userInfo.password" placeholder="请输入登录密码">
-        <template #prefix>
-          <div class="password-icon"></div>
-        </template>
-      </el-input>
-      <!-- 滑动校验 -->
-      <slider @verificationSuccess="getVerificationResult" />
-      <el-button class="login-btn" :style="btnStyle" @click="handleLogin">登录</el-button>
+      <el-form ref="formRef" style="width: 100%" :model="ruleForm" status-icon :rules="rules" label-width="auto">
+        <el-form-item label="" prop="userName">
+          <el-input v-model="ruleForm.userName" placeholder="请输入用户名">
+            <template #prefix>
+              <div class="user-icon"></div>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="" prop="password">
+          <el-input type="password" show-password v-model="ruleForm.password" placeholder="请输入登录密码">
+            <template #prefix>
+              <div class="password-icon"></div>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="" prop="">
+          <!-- 滑动校验 -->
+          <slider @verificationSuccess="getVerificationResult" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm(formRef)">登录</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
 
-<script>
-import slider from "./slider.vue";
-export default {
-  components: {
-    slider,
-  },
-  data() {
-    return {
-      // 用户信息
-      userInfo: {
-        userName: "",
-        password: "",
-      },
-      // 密码是否可见
-      closeEyes: false,
-      // 账号不存在/密码错误提示框
-      isShowError: false,
-      // 滑块是否解锁成功
-      isSuccessUnlock: false,
-    };
-  },
-  computed: {
-    btnStyle() {
-      let background = "#825C89";
-      let cursor = "pointer";
-      if (
-        !this.userInfo.userName ||
-        !this.userInfo.password ||
-        !this.isSuccessUnlock
-      ) {
-        background = "rgba(130, 92, 137, 0.3)";
-        cursor = "not-allowed";
-      }
-      return {
-        background,
-        cursor,
-      };
-    },
-  },
-  methods: {
-    // 获取滑动的验证结果
-    getVerificationResult(isSuccess) {
-      this.isSuccessUnlock = isSuccess;
-    },
-    // 登录校验
-    handleLogin() { },
-  },
-};
+<script setup>
+import slider from './slider.vue';
+import { useStore } from 'vuex'
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+const store = useStore()
+const router = useRouter()
+const ruleForm = reactive({
+  userName: '',
+  password: '',
+})
+const formRef = ref(null)
+const validatePass = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('请输入登录密码'))
+  } else {
+    callback()
+  }
+}
+const rules = reactive({
+  userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入登录密码', trigger: 'blur' }]
+})
+const isSuccessUnlock = ref(false)
+// 获取滑动的验证结果
+const getVerificationResult = (isSuccess) => {
+  isSuccessUnlock.value = isSuccess;
+}
+const submitForm = (formEl) => {
+  if (!formEl) return
+  formEl.validate((valid) => {
+    if (valid) {
+      store.commit('setUserInfo', ruleForm)
+      router.push('/')
+    }
+  })
+}
 </script>
 
 <style lang="less" scoped>

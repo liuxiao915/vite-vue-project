@@ -6,16 +6,9 @@
 -->
 <template>
   <el-header>
-    <div>
-      {{state.Header}}
-    </div>
+    <div>{{ state.Header }}</div>
     <el-dropdown>
-      <span class="el-dropdown-link">
-        Dropdown List
-        <el-icon class="el-icon--right">
-          <arrow-down />
-        </el-icon>
-      </span>
+      <span class="el-dropdown-link">{{ store.state.userInfo.userName }}</span>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>Action 1</el-dropdown-item>
@@ -31,6 +24,8 @@
 
 <script setup>
 import { reactive } from 'vue'
+import { useStore } from 'vuex'
+const store = useStore()
 const state = reactive({
   Header: '管理系统',
 })
@@ -43,5 +38,7 @@ const state = reactive({
   font-weight: 600;
   text-align: center;
   background-color: @blue;
+  display: flex;
+  align-items: center;
 }
 </style>

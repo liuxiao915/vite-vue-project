@@ -4,7 +4,7 @@ import router from '@/router/index.js'
 axios.interceptors.request.use(
   (confing) => {
     //设置请求头
-    if (localStorage.Authorization) { //判断本地缓存的token是否存在
+    if (localStorage.Authorization) { // 判断本地缓存的token是否存在
       confing.headers.Authorization = localStorage.Authorization
     }
     return confing
@@ -26,14 +26,11 @@ axios.interceptors.response.use(
         localStorage.removeItem('Authorization')
         //跳转到登录页面
         router.push('/login')
-      } else {
-        //Message.error(res.data.msg);
       }
       return Promise.reject(res)
     } else {
       return Promise.reject(res)
     }
-    // return res
   },
   (error) => {
     Message.error('网络出错')
