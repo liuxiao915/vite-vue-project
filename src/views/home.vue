@@ -8,11 +8,10 @@
   <div @click="handleClick">这是home页面</div>
 </template>
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 defineOptions({
   name: 'home',
 })
-const route = useRoute()
 const router = useRouter()
 const handleClick = () => {
   router.push({ name: 'index' })

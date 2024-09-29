@@ -3,7 +3,6 @@
  * @author liux
  * @date 2023-03-18
  */
-import axios from 'axios'
 import qs from 'qs'
 
 /**
@@ -481,7 +480,7 @@ export const utils = {
    * @method guid
    * @return {string}
    */
-  guid: function(len = 27) {
+  guid: function(len = 16) {
     const keyData = 'xxxxxxxxxxxx4xxxyxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random() * 16 | 0
       const v = c === 'x' ? r : (r & 0x3 | 0x8)
@@ -1418,145 +1417,6 @@ export const utils = {
       }
     }
     return target
-  },
-  /**
-   * @method http
-   * @param options {object} 配置对象
-   *     @param options.type {string} 请求类型
-   *     @param options.url {string} 请求地址
-   *     @param options.contentType {string} 请求消息主体编码，默认是application/x-www-form-urlencoded
-   *     @param options.data {object|string|number} 请求数据，适用于options.type为'PUT', 'POST', and 'PATCH'
-   *     @param options.params {object} URL参数
-   *     @param options.beforeSend {function} 请求前钩子函数，默认参数是当前options
-   *     @param options.success {function} 请求成功函数
-   *     @param options.error {function} 请求失败执行函数
-   *     @param options.complete {function} 请求执行完成函数，不管成功失败都会执行
-   *     @param options.dataType {string} 请求返回数据类型，默认是JSON
-   *     @param options.timeout {number} 请求超时时间，单位毫秒
-   *     @param options.context {object} 相关回调函数上下文，默认是window
-   *     @param options.headers {object} 请求头信息
-   *     @param options.host {string} 请求host
-   *     @param options.crossSite {boolean} 是否跨域访问，默认为false
-   */
-  http: function(options) {
-    if (utils.isEmpty(options)) {
-      utils.warn('调用utils.http参数为空', options)
-    }
-    var defaultOpts = {
-      method: 'get',
-      url: '',
-      baseURL: '',
-      withCredentials: false,
-      timeout: 20000,
-      headers: { 'content-type': 'application/json' },
-      data: {},
-      params: {},
-      responseType: 'json',
-      validateStatus: function(status) {
-        return status >= 200 && status < 300
-      }
-    }
-    var mapDefaultOpts = function() {
-      var propMap = {
-        method: 'type',
-        url: 'url',
-        baseURL: 'host',
-        timeout: 'timeout',
-        headers: 'headers',
-        data: 'data',
-        params: 'params',
-        responseType: 'dataType',
-        withCredentials: 'crossSite'
-      }
-
-      if (!utils.isEmpty(options['contentType'])) {
-        options.headers = options.headers || {}
-        if (String(options['contentType']).toLowerCase() === 'json') {
-          options.headers['content-type'] = 'application/json'
-        } else {
-          options.headers['content-type'] = options['contentType']
-        }
-      }
-
-      for (var prop in propMap) {
-        if (options.hasOwnProperty(propMap[prop])) {
-          // 设置配置属性为null，则表示删除默认的请求属性
-          if (utils.isNull(options[propMap[prop]])) {
-            delete defaultOpts[prop]
-            continue
-          }
-          switch (prop) {
-            // 处理大小写问题
-            case 'headers':
-              let header = options[propMap[prop]]
-              if (utils.isPlainObject(header)) {
-                Object.keys(header).forEach(function(key) {
-                  defaultOpts[prop][key.toLowerCase()] = header[key]
-                })
-              }
-              break
-            case 'params':
-              defaultOpts[prop] = Object.assign(defaultOpts[prop], options[propMap[prop]])
-              break
-            // get请求，data参数转为params参数
-            case 'data' && defaultOpts['method'].toLowerCase() === 'get':
-              defaultOpts['params'] = Object.assgin(defaultOpts['params'], options[propMap[prop]])
-              break
-            case 'url' && (options['url'].indexOf('http://') === 0 || options['url'].indexOf('https://') === 0):
-              delete defaultOpts['baseURL']
-              if (options.hasOwnProperty('host')) {
-                delete options['host']
-              }
-              break
-            case 'timeout': defaultOpts['timeout'] = options[propMap[prop]] || 20000; break;
-            default:
-              defaultOpts[prop] = options[propMap[prop]]
-          }
-        }
-      }
-    }
-    var context = options.context || window
-
-    try {
-      if (utils.isFunction(options.beforeSend)) {
-        options.beforeSend.call(context, options)
-      }
-      mapDefaultOpts()
-
-      // 处理表单数据，data为js对象则stringify处理
-      if (defaultOpts['headers']['content-type'] === 'application/x-www-form-urlencoded' &&
-        (utils.isPlainObject(defaultOpts['data']) || utils.isArray(defaultOpts['data']))) {
-        defaultOpts['data'] = qs.stringify(defaultOpts['data'])
-      }
-    } catch (err) {
-      console.error(err)
-      return Promise.reject(err)
-    }
-
-    return axios(defaultOpts)
-      .then(function(response) {
-        var data = response.data
-        if (utils.isFunction(options.success)) {
-          options.success.call(context, data, response)
-        }
-
-        if (utils.isFunction(options.complete)) {
-          options.complete.call(context, data, response)
-        }
-
-        return data
-      }).catch(function(error) {
-        // 由request处理错误
-        // if (utils.isFunction(options.error)) {
-        //     options.error.call(context, error, options)
-        // }
-
-        if (utils.isFunction(options.complete)) {
-          options.complete.call(context, error, options)
-        }
-
-        throw error
-      })
   },
   /**
    * 获取单例对象

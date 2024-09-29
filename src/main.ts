@@ -3,7 +3,7 @@ import router from '@/router/index'
 import '@/hooks/polyfill.js' // 去除touch事件谷歌提示
 import App from '@/hooks'
 import 'virtual:svg-icons-register'
-import store from '@/store/index'
+import store from '@/store/index.js'
 // 全局注册element-plus图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

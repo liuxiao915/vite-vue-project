@@ -6,14 +6,7 @@
 -->
 <template>
   <el-main class="layout-main">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item>
-        <a href="/">promotion management</a>
-      </el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-    </el-breadcrumb>
+    <Breadcrumb />
     <el-tabs v-model="activeTabs" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
       <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.meta.title" :name="item.name" />
     </el-tabs>
@@ -26,6 +19,7 @@
 import { ref, toRef } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
+import Breadcrumb from './breadcrumb.vue'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
@@ -51,7 +45,6 @@ const removeTab = (targetName) => {
   store.commit('deleteTabs', index)
 }
 const tabClick = (item) => {
-  console.log('tabClick', tabsList.value, item)
   router.push({ name: item.props.name })
 }
 </script>

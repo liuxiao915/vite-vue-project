@@ -1,18 +1,11 @@
-import router from '@/router'
 export default {
   state: () => ({
     userInfo: {},
-    routers: [],
     tabList: []
   }),
-  getters: {
-    routers: (state) => {
-      return state.routers
-    }
-  },
   mutations: {
     addTabs: (state, payload) => {
-      let blackList = ['home', '404']
+      let blackList = ['home', '404', 'login']
       if (blackList.includes(payload.name)) {
         return
       }
@@ -35,6 +28,12 @@ export default {
     // 存储用户信息
     setUserInfo: (state, payload) => {
       state.userInfo = payload
+      sessionStorage.setItem('userInfo', JSON.stringify(payload))
+    },
+    clearUserInfo: (state) => {
+      state.userInfo = {}
+      sessionStorage.removeItem('userInfo')
+      sessionStorage.removeItem('token')
     }
   },
   actions: {}

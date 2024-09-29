@@ -12,6 +12,7 @@ import system from './modules/system'
 
 
 export default createStore({
+  state: () => ({}),
   modules: {
     home,
     system

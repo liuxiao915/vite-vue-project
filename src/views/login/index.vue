@@ -34,11 +34,12 @@ import slider from './slider.vue';
 import { useStore } from 'vuex'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { utils } from '@/utils/index'
 const store = useStore()
 const router = useRouter()
 const ruleForm = reactive({
   userName: '',
-  password: '',
+  password: ''
 })
 const formRef = ref(null)
 const validatePass = (rule, value, callback) => {
@@ -63,6 +64,7 @@ const submitForm = (formEl) => {
     if (valid) {
       store.commit('setUserInfo', ruleForm)
       router.push('/')
+      sessionStorage.setItem('token', utils.guid(16))
     }
   })
 }
