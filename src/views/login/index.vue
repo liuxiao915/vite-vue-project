@@ -1,21 +1,13 @@
 <template>
   <div class="login">
-    <div class="login-module">
-      <div class="login-module_title">统一身份认证</div>
+    <div class="login-box">
+      <div class="login-box_title">统一身份认证</div>
       <el-form ref="formRef" style="width: 100%" :model="ruleForm" status-icon :rules="rules" label-width="auto">
         <el-form-item label="" prop="userName">
-          <el-input v-model="ruleForm.userName" placeholder="请输入用户名">
-            <template #prefix>
-              <div class="user-icon"></div>
-            </template>
-          </el-input>
+          <el-input v-model="ruleForm.userName" placeholder="请输入用户名" prefix-icon="UserFilled" />
         </el-form-item>
         <el-form-item label="" prop="password">
-          <el-input type="password" show-password v-model="ruleForm.password" placeholder="请输入登录密码">
-            <template #prefix>
-              <div class="password-icon"></div>
-            </template>
-          </el-input>
+          <el-input type="password" show-password v-model="ruleForm.password" placeholder="请输入登录密码" prefix-icon="Unlock" />
         </el-form-item>
         <el-form-item label="" prop="">
           <!-- 滑动校验 -->
@@ -73,58 +65,50 @@ const submitForm = (formEl) => {
 <style lang="less" scoped>
 .login {
   position: relative;
-  width: 1920px;
-  height: 919px;
+  width: 100%;
+  height: 100%;
   background: url('@/assets/images/login/full-screen-bg.png') no-repeat;
   background-size: 666px 573px;
   background-position: 160px 254px;
-  .login-module {
+  .login-box {
     position: absolute;
-    right: 160px;
-    bottom: 277px;
+    right: 10%;
+    bottom: 0;
+    top: 0;
+    margin: auto 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 500px;
-    height: 500px;
+    height: 480px;
     background: #ffffff;
     box-shadow: 0px 5px 5px 0 rgba(83, 53, 89, 0.2);
     border-radius: 8px;
-    padding: 56px 40px;
-  }
-  .login-module_title {
-    font-family: PingFangSC-Regular;
-    color: #181818;
-    font-weight: 600;
-    font-size: 20px;
+    padding: 50px 40px;
+    .login-box_title {
+      font-family: PingFangSC-Regular;
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .el-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
   }
   .el-input {
-    margin-top: 24px;
     width: 100%;
     height: 50px;
-  }
-  .user-icon {
-    width: 24px;
-    height: 24px;
-    background: url('@/assets/images/login/user.png') no-repeat;
-    background-size: 100% 100%;
-  }
-  .password-icon {
-    width: 24px;
-    height: 24px;
-    background: url('@/assets/images/login/password.png') no-repeat;
-    background-size: 100% 100%;
+    :deep(.el-input__icon) {
+      width: 24px;
+      height: 24px;
+    }
   }
   .el-button {
     width: 100%;
     height: 50px;
-    margin-top: 30px;
-    line-height: 50px;
-    border-radius: 8px;
-    font-family: PingFangSC-Semibold;
     font-size: 18px;
-    color: #ffffff;
-    font-weight: 600;
   }
   :deep(.ant-input-affix-wrapper) {
     padding: 10px 24px;

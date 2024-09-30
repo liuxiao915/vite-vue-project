@@ -99,7 +99,6 @@ export default {
 <style lang="less" scoped>
 .slider-container {
   position: relative;
-  margin-top: 24px;
   height: 50px;
   width: 100%;
   background: #ffffff;
