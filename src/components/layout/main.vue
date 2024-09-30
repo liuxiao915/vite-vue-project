@@ -6,11 +6,12 @@
 -->
 <template>
   <el-main class="layout-main">
-    <Breadcrumb />
     <el-tabs v-model="activeTabs" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
       <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.meta.title" :name="item.name" />
     </el-tabs>
-    <router-view />
+    <div class="layout-content">
+      <router-view />
+    </div>
     <el-backtop target=".layout-main" />
   </el-main>
 </template>
@@ -19,7 +20,6 @@
 import { ref, toRef } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import Breadcrumb from './breadcrumb.vue'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
@@ -52,8 +52,13 @@ const tabClick = (item) => {
 <style lang="less" scoped>
 .layout-main {
   width: 100%;
-  .el-card {
-    height: 100%;
+  padding: 0 0 16px;
+  overflow: hidden;
+  height: 100%;
+  .layout-content {
+    overflow-y: auto;
+    height: calc(100% - 55px);
+    padding-bottom: 55px;
   }
 }
 </style>

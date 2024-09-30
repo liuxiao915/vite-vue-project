@@ -24,11 +24,6 @@ const isCollapse = ref(false)
 const route = useRoute()
 const menuData = computed(() => routes.filter(item => !item.meta.hidden))
 const activeName = toRef(route, 'path') // 存放当前激活标签页，默认激活首页
-const getSvgName = (item) => {
-  return activeName === item.path
-    ? `${item.meta?.icon}-active`
-    : item.meta?.icon
-}
 const clickMenu = (item) => { }
 </script>
 

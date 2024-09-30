@@ -4,7 +4,7 @@ export const systemRouter:Array<RouteRecordRaw> = [
   {
     path: '/system',
     name: 'system',
-    meta: { title: 'system' },
+    meta: { title: 'system', icon: 'Setting' },
     component: () => import('@/components/layout/index.vue'),
     children: [
       {

@@ -7,6 +7,7 @@
 <template>
   <el-sub-menu v-if="menuItem?.children?.length" :index="menuItem.path">
     <template #title>
+      <el-button v-if="menuItem.meta?.icon" class="icon-btn" :icon="menuItem.meta?.icon" circle />
       <span>{{ menuItem.meta?.title }}</span>
     </template>
     <el-menu-item v-for="subItem in menuItem.children" :key="subItem.name" :index="subItem.path">
@@ -27,8 +28,11 @@ const props = defineProps({
   menuItem: {
     type: Object,
     default: () => { },
-  },
+  }
 })
 </script>
 <style lang="less" scoped>
+.icon-btn {
+  border: none;
+}
 </style>
