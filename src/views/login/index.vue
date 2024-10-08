@@ -54,7 +54,7 @@ const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      store.commit('setUserInfo', ruleForm)
+      store.commit('tabs/setUserInfo', ruleForm)
       router.push('/')
       sessionStorage.setItem('token', utils.guid(16))
     }

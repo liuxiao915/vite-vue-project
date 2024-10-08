@@ -25,7 +25,9 @@
 <script setup>
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 const store = useStore()
+const router = useRouter()
 const state = reactive({
   Header: '管理系统',
   dropdownList: [
@@ -45,11 +47,12 @@ const handleClick = (item) => {
   } else if (item.value === 3) {
     ElMessageBox.confirm('是否确认要退出登录?', '提示', { type: 'warning' })
       .then(() => {
-        store.commit('clearUserInfo')
+        store.commit('tabs/clearUserInfo')
         ElMessage({
           type: 'success',
           message: '退出登录成功！',
         })
+        router.replace('/login')
       })
   }
 }

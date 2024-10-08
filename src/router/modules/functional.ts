@@ -43,6 +43,16 @@ export const functionalRouter:Array<RouteRecordRaw> = [
         component: () => import('@/views/functional/test.vue'),
       },
       {
+        path: '/video',
+        name: 'video',
+        meta: {
+          keepAlive: true,
+          isTab: true,
+          title: 'video'
+        },
+        component: () => import('@/views/functional/video.vue'),
+      },
+      {
         path: '/tree',
         name: 'tree', 
         meta: {

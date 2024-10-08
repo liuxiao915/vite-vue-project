@@ -53,7 +53,7 @@ const onSubmit = (type, formEl) => {
       }
     })
   } else {
-    formEl.resetFields()
+    // formEl.resetFields()
     // 暂未考虑有初始值的情况
     formData.value.forEach(item => item.value = '')
     emit('onSubmit', 'reset', formData.value)

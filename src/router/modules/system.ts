@@ -15,6 +15,15 @@ export const systemRouter:Array<RouteRecordRaw> = [
           title: '系统'
         },
         component: () => import('@/views/system/index.vue'),
+      },
+      {
+        path: '/system/waterMark',
+        name: 'system/waterMark',
+        meta: {
+          keepAlive: true,
+          title: '水印'
+        },
+        component: () => import('@/views/system/water-mark.vue'),
       }
     ]
   }

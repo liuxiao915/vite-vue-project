@@ -27,16 +27,20 @@ const props = defineProps({
 const pageSize = ref(props.options.pageSize)
 const currentPage = ref(1)
 const handleSizeChange = (val) => {
-  console.log(`${val} items per page`)
   emit('sizeChange', val)
 }
 const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`)
   emit('currentChange', val)
 }
 </script>
 <style lang="less" scoped>
 .el-pagination {
   margin-top: 16px;
+  justify-content: end;
+  position: relative;
+  :deep(.el-pagination__total) {
+    position: absolute;
+    left: 0;
+  }
 }
 </style>

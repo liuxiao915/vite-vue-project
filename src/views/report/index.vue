@@ -10,14 +10,14 @@
     <el-table border stripe :data="state.tableData" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column v-for="item in state.headerData" :key="item.prop" :prop="item.prop" :label="item.label" />
     </el-table>
-    <pagination />
+    <pagination @sizeChange="sizeChange" @currentChange="currentChange" />
   </el-card>
 </template>
 <script setup>
 import { reactive } from 'vue'
 const state = reactive({
   searchData: [
-    { label: '登录名称', value: '', prop: 'loginName', type: 'input', placeholder: '' },
+    { label: '登录名称', value: '111', prop: 'loginName', type: 'input', placeholder: '' },
     { label: '主机', value: '', prop: 'ipaddr', type: 'input', placeholder: '' },
     { label: '用户状态', value: '', prop: 'status', type: 'select', placeholder: '' },
   ],
@@ -414,6 +414,12 @@ const state = reactive({
 })
 const onSubmit = (type, data) => {
   console.log('onSubmit', type, data)
+}
+const sizeChange = (val) => {
+  console.log('sizeChange', val)
+}
+const currentChange = (val) => {
+  console.log('currentChange', val)
 }
 </script>
 <style lang="less" scoped>

@@ -17,12 +17,14 @@
 import { ref, toRef, watch, computed } from 'vue'
 import { routes } from '@/router/index'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import left from '@/assets/images/toggle-left.png'
 import right from '@/assets/images/toggle-right.png'
 import SubMenuItem from './SubMenuItem.vue'
 const isCollapse = ref(false)
 const route = useRoute()
-const menuData = computed(() => routes.filter(item => !item.meta.hidden))
+const store = useStore()
+const menuData = store.getters['tabs/menuList']
 const activeName = toRef(route, 'path') // 存放当前激活标签页，默认激活首页
 const clickMenu = (item) => { }
 </script>

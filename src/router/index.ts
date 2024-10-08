@@ -60,7 +60,7 @@ router.beforeEach((to, _from, next) => {
       next({ path: '/login' });
     }
   }
-  store.commit('addTabs', { ...to })
+  store.commit('tabs/addTabs', { ...to })
   next()
 })
 export default router

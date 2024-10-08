@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import home from './modules/home'
+import tabs from './modules/tabs'
 import report from './modules/report'
 import system from './modules/system'
 // 自动引入
@@ -15,7 +15,7 @@ import system from './modules/system'
 export default createStore({
   state: () => ({}),
   modules: {
-    home,
+    tabs,
     report,
     system
   }

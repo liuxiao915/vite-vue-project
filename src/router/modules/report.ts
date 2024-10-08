@@ -3,8 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 export const reportRouter:Array<RouteRecordRaw> = [
   { 
     path: '/report',
-    name: 'report',
-    meta: { title: 'report' },
+    meta: { title: 'report', icon: 'DataAnalysis' },
     component: () => import('@/components/layout/index.vue'),
     children: [
       {
@@ -14,7 +13,7 @@ export const reportRouter:Array<RouteRecordRaw> = [
           keepAlive: true,
           title: '报表'
         },
-        component: () => import('@/views/report/index.vue'),
+        component: () => import('@/views/report/index.vue')
       }
     ]
   }
