@@ -54,11 +54,10 @@ const tabClick = (item) => {
   width: 100%;
   padding: 0 0 16px;
   overflow: hidden;
-  height: 100%;
+  height: calc(100vh - 50px);
   .layout-content {
     overflow-y: auto;
-    height: calc(100% - 55px);
-    padding-bottom: 55px;
+    height: calc(100vh - 105px);
   }
 }
 </style>

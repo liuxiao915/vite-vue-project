@@ -12,6 +12,7 @@
 import Header from "@/components/layout/header.vue";
 import Aside from "@/components/layout/aside.vue";
 import Main from "@/components/layout/main.vue";
+console.log('layout--setup')
 </script>
 <style lang="less" csoped>
 .layout {

@@ -29,7 +29,7 @@ const clickMenu = (item) => { }
 
 <style lang="less" scoped>
 .el-aside {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 50px);
   overflow: hidden;
   position: relative;
   width: auto;
