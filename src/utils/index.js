@@ -480,7 +480,7 @@ export const utils = {
    * @method guid
    * @return {string}
    */
-  guid: function(len = 16) {
+  guid: function(len = 27) {
     const keyData = 'xxxxxxxxxxxx4xxxyxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random() * 16 | 0
       const v = c === 'x' ? r : (r & 0x3 | 0x8)

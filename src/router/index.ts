@@ -1,16 +1,12 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import store from '@/store'
-import { functionalRouter } from './modules/functional'
-import { reportRouter } from './modules/report'
-import { systemRouter } from './modules/system'
+import { menuRouter } from './modules/index'
 // 全局路由(无需嵌套上左右整体布局)
 // const globalRoutes = []
 // 通过meta对象设置路由展示方式
 // 1. isTab: 是否通过tab展示内容, true: 是, false: 否
 export const routes:Array<RouteRecordRaw> = [
-  ...functionalRouter,
-  ...reportRouter,
-  ...systemRouter,
+  ...menuRouter,
   {
     path: '/',
     name: 'home',

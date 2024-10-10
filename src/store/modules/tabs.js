@@ -1,6 +1,4 @@
-import { functionalRouter } from '@/router/modules/functional'
-import { reportRouter } from '@/router/modules/report'
-import { systemRouter } from '@/router/modules/system'
+import { menuRouter } from '@/router/modules/index'
 export default {
   namespaced: true,
   state: () => ({
@@ -9,7 +7,7 @@ export default {
   }),
   getters: {
     menuList: state => {
-      return [].concat(...functionalRouter, ...reportRouter, ...systemRouter)
+      return [].concat(...menuRouter)
     }
   },
   mutations: {

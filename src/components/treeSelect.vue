@@ -1,35 +1,8 @@
 <template>
-  <el-select
-    v-model="valueTitle"
-    :clearable="clearable"
-    @clear="clearHandle"
-    ref="treeSelect"
-    filterable
-    :filter-method="filterSelect"
-    @visible-change="clearSelect"
-    placeholder="请选择"
-  >
-    <!-- <el-input
-      class="selectInput"
-      :placeholder="placeholder"
-      v-model="filterText"
-    >
-    </el-input> -->
-    <el-option
-      :value="valueTitle"
-      :label="valueTitle"
-    >
-      <el-tree
-        id="tree-option"
-        ref="selectTree"
-        :accordion="accordion"
-        :data="treeOptions"
-        :props="props"
-        :node-key="props.value"
-        :default-expanded-keys="defaultExpandedKey"
-        :filter-node-method="filterNode"
-        @node-click="handleNodeClick"
-      >
+  <el-select v-model="valueTitle" @clear="clearHandle" ref="treeSelect" filterable :filter-method="filterSelect" @visible-change="clearSelect" placeholder="请选择">
+    <!-- <el-input class="selectInput" :placeholder="placeholder" v-model="filterText"></el-input> -->
+    <el-option :value="valueTitle" :label="valueTitle">
+      <el-tree id="tree-option" ref="selectTree" :accordion="accordion" :data="treeOptions" :props="props" :node-key="props.value" :default-expanded-keys="defaultExpandedKey" :filter-node-method="filterNode" @node-click="handleNodeClick">
       </el-tree>
     </el-option>
   </el-select>
@@ -37,6 +10,7 @@
 
 <script>
 export default {
+  name: 'TreeSelect',
   props: {
     /* 配置项 */
     props: {
@@ -63,13 +37,6 @@ export default {
         return null;
       },
     },
-    /* 可清空选项 */
-    clearable: {
-      type: Boolean,
-      default: () => {
-        return true;
-      },
-    },
     /* 自动收起 */
     accordion: {
       type: Boolean,
@@ -94,6 +61,7 @@ export default {
     };
   },
   mounted() {
+    console.log('mounted');
     this.initHandle();
   },
   methods: {
@@ -107,6 +75,7 @@ export default {
         this.defaultExpandedKey = [this.valueId]; // 设置默认展开
 
         this.treeOptions = this.options;
+        console.log('treeOptions', this.treeOptions)
       }
       this.initScroll();
     },

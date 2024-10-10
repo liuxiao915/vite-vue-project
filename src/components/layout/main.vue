@@ -23,7 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
-const tabsList = toRef(store.state.home, 'tabList') // 存放标签页数组
+const tabsList = toRef(store.state.tabs, 'tabList') // 存放标签页数组
 const activeTabs = toRef(route, 'name') // 存放当前激活标签页，默认激活首页
 const removeTab = (targetName) => {
   const index = tabsList.value.findIndex((item) => item.name === targetName) //查找触发右键菜单所在标签页index
