@@ -6,8 +6,8 @@
 -->
 <template>
   <el-header class="sticky">
-    <div>{{ state.Header }}</div>
-    <Screenfull />
+    <div class="logo">{{ state.Header }}</div>
+    <!-- <Screenfull /> -->
     <el-dropdown>
       <span class="el-dropdown-link">{{ userInfo.userName }}</span>
       <template #dropdown>
@@ -16,9 +16,7 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <el-dialog v-model="visible" :title="curTitle" width="800">
-      <div>姓名：{{ userInfo.userName }}</div>
-    </el-dialog>
+    <component :is="component" v-model="visible" />
   </el-header>
 </template>
 
@@ -26,6 +24,9 @@
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import ChangePassword from './components/ChangePassword.vue'
+import ChangeTheme from './components/ChangeTheme.vue'
+import PersonalCenter from './components/PersonalCenter.vue'
 const store = useStore()
 const router = useRouter()
 const state = reactive({
@@ -39,11 +40,19 @@ const state = reactive({
 })
 const visible = ref(false)
 const curTitle = ref('')
+const component = ref(null)
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 const handleClick = (item) => {
   curTitle.value = item.label
   if (item.value === 0) {
     visible.value = true
+    component.value = PersonalCenter
+  } else if (item.value === 1) {
+    visible.value = true
+    component.value = ChangePassword
+  } else if (item.value === 2) {
+    visible.value = true
+    component.value = ChangeTheme
   } else if (item.value === 3) {
     ElMessageBox.confirm('是否确认要退出登录?', '提示', { type: 'warning' })
       .then(() => {
@@ -65,12 +74,17 @@ const handleClick = (item) => {
   font-style: 30px;
   font-weight: 600;
   text-align: center;
-  background-color: @blue;
+  // background-color: @blue;
+  background-color: var(--bg-color);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   z-index: 10;
   position: relative;
+  .logo {
+    position: absolute;
+    left: 16px;
+  }
   .el-dropdown-link {
     color: #fff;
     cursor: pointer;

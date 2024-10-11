@@ -29,7 +29,7 @@ const removeTab = (targetName) => {
   const index = tabsList.value.findIndex((item) => item.name === targetName) //查找触发右键菜单所在标签页index
   if (tabsList.value.length === 1) {
     router.replace('/')
-    store.commit('deleteTabs', index)
+    store.commit('tabs/deleteTabs', index)
     return
   }
   //当前激活标签页与触发右键菜单标签页是同一页
@@ -42,7 +42,7 @@ const removeTab = (targetName) => {
       router.replace(tabsList.value[index + 1].fullPath)
     }
   }
-  store.commit('deleteTabs', index)
+  store.commit('tabs/deleteTabs', index)
 }
 const tabClick = (item) => {
   router.push({ name: item.props.name })

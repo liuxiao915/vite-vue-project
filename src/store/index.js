@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
-import tabs from './modules/tabs'
 import report from './modules/report'
 import system from './modules/system'
+import tabs from './modules/tabs'
+import theme from './modules/theme'
 // 自动引入
 // const files  = import.meta.glob('./modules/*.js', { eager: true })
 // const modules = {}
@@ -17,6 +18,7 @@ export default createStore({
   modules: {
     tabs,
     report,
-    system
+    system,
+    theme
   }
 })

@@ -7,12 +7,13 @@
 <template>
   <div class="form-build">
     <Toolbar />
-
+    <ComponentsList />
   </div>
 </template>
 <script setup>
 import { reactive } from 'vue'
 import Toolbar from './Toolbar.vue'
+import ComponentsList from './ComponentsList.vue'
 const state = reactive({})
 </script>
 <style lang="less" scoped>

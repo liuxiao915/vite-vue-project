@@ -6,6 +6,8 @@
 <script setup>
 import { ref } from 'vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+const theme = localStorage.getItem('theme') ? JSON.parse(localStorage.getItem('theme')) : null
+document.documentElement.setAttribute('theme-mode', theme.value)
 const locale = ref({
   ...zhCn,
   el: {
