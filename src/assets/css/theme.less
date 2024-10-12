@@ -1,21 +1,31 @@
-
 :root,  
 :root[theme-mode='blue'] {
-  --bg-color: #0052d9;
+  --primaryColor: #0052d9;
 }
  
 :root[theme-mode='dark'] {
-  --bg-color: #2c2c2c;
+  --primaryColor: #2c2c2c;
 }
 
 :root[theme-mode='orange'] {
-  --bg-color: #eb5f0e;
+  --primaryColor: #eb5f0e;
 }
 
 :root[theme-mode='white'] {
-  --bg-color: #eee4e4;
+  --primaryColor: #eee4e4;
 }
 
 :root[theme-mode='green'] {
-  --bg-color: #41af37;
+  --primaryColor: #41af37;
+}
+
+
+// 默认的主题颜色
+@primaryColor: var(--primaryColor, #0052d9);
+@primaryTextColor: var(--primaryTextColor, #606266);
+// 导出变量
+:export {
+  name: "less";
+  primaryColor: @primaryColor;
+  primaryTextColor: @primaryTextColor;
 }

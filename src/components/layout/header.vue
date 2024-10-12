@@ -75,8 +75,8 @@ const handleClick = (item) => {
   font-weight: 600;
   text-align: center;
   // background-color: @blue;
-  // background-color: var(--bg-color);
   background-color: @primaryColor;
+  // background-color: var(--primaryColor);
   color: @primaryTextColor;
   display: flex;
   align-items: center;

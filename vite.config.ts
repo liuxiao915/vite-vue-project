@@ -51,7 +51,7 @@ export default defineConfig({
       less: {
         math: "always", // 可以不写calc()，直接进行计算：width: 40 / 20px; === width: 2px;
         modifyVars: { // modifyVars选项允许你重写或添加less变量
-          hack: `true; @import (reference) "${path.resolve('src/theme/style.less')}";`,
+          hack: `true; @import (reference) "${path.resolve('src/assets/css/theme.less')}";`,
         },
         javascriptEnabled: true,
         // 定义全局css变量
