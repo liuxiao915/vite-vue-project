@@ -77,7 +77,7 @@ const handleClick = (item) => {
   // background-color: @blue;
   background-color: @primaryColor;
   // background-color: var(--primaryColor);
-  color: @primaryTextColor;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: end;
