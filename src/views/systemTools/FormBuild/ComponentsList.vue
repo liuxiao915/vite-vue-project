@@ -8,13 +8,13 @@
   <div class="components-list">
     <div class="components-type">布局组件</div>
     <div class="layout-components" @dragstart="handleDragStart" @click="handleClick">
-      <div v-for="(item, index) in layoutComponents" :key="index" class="list" draggable :data-index="index">
+      <div v-for="(item, index) in layoutComponents" :key="index" class="list" :draggable="true" :data-index="index">
         <span>{{ item.label }}</span>
       </div>
     </div>
     <div class="components-type">表单组件</div>
     <div class="layout-components" @dragstart="handleDragStart" @click="handleClick">
-      <div v-for="(item, index) in selectComponents" :key="index" class="list" draggable :data-index="index">
+      <div v-for="(item, index) in selectComponents" :key="index" class="list" :draggable="true" :data-index="index">
         <span>{{ item.label }}</span>
       </div>
     </div>
