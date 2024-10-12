@@ -26,7 +26,7 @@
 <script setup>
 import { ref, reactive, defineModel } from 'vue'
 const model = defineModel()
-const ruleFormRef = ref(null)
+const formRef = ref(null)
 const ruleForm = reactive({
   pass: '',
   checkPass: '',
@@ -34,11 +34,13 @@ const ruleForm = reactive({
 })
 const validatePass = (rule, value, callback) => {
   if (value === '') {
+    // pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?~`-]).{8,16}$/,
+    // message: "密码必须包含大写字母、小写字母、数字、特殊字符且8-16位",
     callback(new Error('请输入密码！'))
   } else {
     if (ruleForm.checkPass !== '') {
-      if (!ruleFormRef.value) return
-      ruleFormRef.value.validateField('checkPass')
+      if (!formRef.value) return
+      formRef.value.validateField('checkPass')
     }
     callback()
   }
