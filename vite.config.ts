@@ -50,12 +50,16 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         math: "always", // 可以不写calc()，直接进行计算：width: 40 / 20px; === width: 2px;
+        modifyVars: { // modifyVars选项允许你重写或添加less变量
+          hack: `true; @import (reference) "${path.resolve('src/theme/style.less')}";`,
+        },
+        javascriptEnabled: true,
         // 定义全局css变量
         globalVars: {
           blue: "#1177EE", // 用法：color: @blue;
           green: "#11BB77",
           red: "#FA5555",
-          purple: '#825C89'
+          purple: "#825C89", // 紫色
         }
       }
     }

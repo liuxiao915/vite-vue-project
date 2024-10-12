@@ -6,8 +6,14 @@
 <script setup>
 import { ref } from 'vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-const theme = localStorage.getItem('theme') ? JSON.parse(localStorage.getItem('theme')) : null
-document.documentElement.setAttribute('theme-mode', theme.value)
+import { isStorageObject } from '@/utils/storage.js'
+if (isStorageObject('local', 'theme')) {
+  const theme = JSON.parse(localStorage.getItem('theme')) || null
+  document.documentElement.setAttribute('theme-mode', theme?.value)
+  if (theme?.value === 'customize') {
+    document.getElementsByTagName("body")[0].style.setProperty(`--primaryColor`, theme.backGroundColor);
+  }
+}
 const locale = ref({
   ...zhCn,
   el: {

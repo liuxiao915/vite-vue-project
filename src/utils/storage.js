@@ -187,3 +187,20 @@ export const cookie = {
     return utils.cookie.set(key, '', -1000, noStoreKey)
   }
 }
+
+export const isStorageObject = (type, key) => {
+  try {
+    // const themeValue = localStorage.getItem('theme');
+    // JSON.parse(themeValue);
+    if (type === 'local') {
+      JSON.parse(localStorage.get(key));
+    } else if (type === 'session') {
+      console.log('isStorageObject')
+      JSON.parse(sessionStorage.get(key));
+    }
+    return true; // 是一个对象
+  } catch (error) {
+    console.log('isStorageObject', error)
+    return false; // 不是一个对象
+  }
+}
