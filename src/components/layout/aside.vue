@@ -39,7 +39,7 @@ const clickMenu = (item) => { }
     overflow-y: auto;
   }
 }
-.el-menu {
+:deep(.el-menu) {
   height: 100%;
   .el-menu-item {
     font-size: 18px;
@@ -47,6 +47,9 @@ const clickMenu = (item) => { }
   &:not(.el-menu--collapse) {
     width: 240px;
     min-height: 400px;
+  }
+  .el-button.is-circle {
+    background-color: transparent !important;;
   }
   .icon-svg {
     margin-right: 8px;
