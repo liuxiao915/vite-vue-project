@@ -27,7 +27,7 @@
 </template>
 <script setup>
 import { reactive } from 'vue'
-import { inputComponents, selectComponents, layoutComponents, formConf } from '@/utils/generator/config'
+import { inputComponents, selectComponents, layoutComponents, formConf } from './generator/config'
 const state = reactive({})
 const handleClick = (e) => {
   console.log('handleDragStart:::', e.target)

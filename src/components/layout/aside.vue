@@ -35,12 +35,10 @@ const clickMenu = (item) => { }
   overflow: hidden;
   position: relative;
   width: auto;
-  &:hover {
-    overflow-y: auto;
-  }
 }
-:deep(.el-menu) {
+.el-menu {
   height: 100%;
+  overflow-y: auto;
   .el-menu-item {
     font-size: 18px;
   }
@@ -48,11 +46,8 @@ const clickMenu = (item) => { }
     width: 240px;
     min-height: 400px;
   }
-  .el-button.is-circle {
-    background-color: transparent !important;;
-  }
-  .icon-svg {
-    margin-right: 8px;
+  :deep(.el-button.is-circle) {
+    background-color: transparent !important;
   }
 }
 .toggle-icon {
