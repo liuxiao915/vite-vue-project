@@ -13,7 +13,6 @@
 import { reactive, defineModel } from 'vue'
 const state = reactive({})
 const model = defineModel()
-console.log('model', model)
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 </script>
 <style lang="less" scoped>

@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import formBuild from './modules/formBuild'
 import report from './modules/report'
 import system from './modules/system'
 import tabs from './modules/tabs'
@@ -16,9 +17,10 @@ import theme from './modules/theme'
 export default createStore({
   state: () => ({}),
   modules: {
-    tabs,
+    formBuild,
     report,
     system,
+    tabs,
     theme
   }
 })

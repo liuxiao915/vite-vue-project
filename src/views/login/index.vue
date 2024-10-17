@@ -11,7 +11,7 @@
         </el-form-item>
         <el-form-item label="" prop="">
           <!-- 滑动校验 -->
-          <slider @verificationSuccess="getVerificationResult" />
+          <slider v-model="ruleForm.sliderVerify" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(formRef)">登录</el-button>
@@ -30,8 +30,9 @@ import { utils } from '@/utils/index'
 const store = useStore()
 const router = useRouter()
 const ruleForm = reactive({
-  userName: '',
-  password: ''
+  userName: 'admin',
+  password: '123456',
+  sliderVerify: false
 })
 const formRef = ref(null)
 const validatePass = (rule, value, callback) => {
@@ -43,20 +44,25 @@ const validatePass = (rule, value, callback) => {
 }
 const rules = reactive({
   userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入登录密码', trigger: 'blur' }]
+  password: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
+  sliderVerify: [{ required: true, message: '请完成安全验证' }],
 })
-const isSuccessUnlock = ref(false)
-// 获取滑动的验证结果
-const getVerificationResult = (isSuccess) => {
-  isSuccessUnlock.value = isSuccess;
-}
 const submitForm = (formEl) => {
   if (!formEl) return
-  formEl.validate((valid) => {
+  formEl.validate((valid, fields) => {
     if (valid) {
+      if (!ruleForm.sliderVerify) {
+        ElMessage({
+          type: 'error',
+          message: '请完成安全验证！',
+        })
+        return
+      }
       store.commit('tabs/setUserInfo', ruleForm)
       router.push('/')
-      sessionStorage.setItem('token', utils.guid(16))
+      sessionStorage.setItem('token', utils.guid())
+    } else {
+      console.log('error submit!', fields)
     }
   })
 }

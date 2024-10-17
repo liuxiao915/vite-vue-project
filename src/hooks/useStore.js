@@ -4,10 +4,8 @@ import { mapState, useStore } from 'vuex'
 export const useState = (mapper) => {
   // 拿到store独享
   const store = useStore()
-
   // 获取到对应的对象的functions: {name: function, age: function}
   const storeStateFns = mapState(mapper)
-
   // 对数据进行转换
   const storeState = {}
   Object.keys(storeStateFns).forEach(fnKey => {
@@ -17,4 +15,3 @@ export const useState = (mapper) => {
 
   return storeState
 }
-

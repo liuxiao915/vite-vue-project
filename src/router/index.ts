@@ -50,13 +50,8 @@ router.beforeEach((to, _from, next) => {
       next()
     }
   } else {
-    if (to.path === '/login') {
-      next();
-    } else {
-      next({ path: '/login' });
-    }
+    next({ path: '/login' })
   }
   store.commit('tabs/addTabs', { ...to })
-  next()
 })
 export default router

@@ -11,7 +11,49 @@ export const formConf = {
   formBtns: true
 }
 
-export const inputComponents = [
+// 组件rule的触发方式，无触发方式的组件不生成rule
+export const trigger = {
+  'el-input': 'blur',
+  'el-input-number': 'blur',
+  'el-select': 'change',
+  'el-radio-group': 'change',
+  'el-checkbox-group': 'change',
+  'el-cascader': 'change',
+  'el-time-picker': 'change',
+  'el-date-picker': 'change',
+  'el-rate': 'change'
+}
+// 布局组件
+export const layoutComponents = [
+  {
+    layout: 'rowFormItem',
+    tagIcon: 'row',
+    type: 'default',
+    justify: 'start',
+    align: 'top',
+    label: '行容器',
+    layoutTree: true,
+    children: [],
+    document: 'https://element.eleme.cn/#/zh-CN/component/layout'
+  },
+  {
+    layout: 'colFormItem',
+    label: '按钮',
+    changeTag: true,
+    labelWidth: null,
+    tag: 'el-button',
+    tagIcon: 'button',
+    span: 24,
+    default: '主要按钮',
+    type: 'primary',
+    icon: 'el-icon-search',
+    size: 'medium',
+    disabled: false,
+    document: 'https://element.eleme.cn/#/zh-CN/component/button'
+  }
+]
+// 表单组件
+export const formComponents = [
   {
     label: '单行文本',
     tag: 'el-input',
@@ -101,10 +143,7 @@ export const inputComponents = [
     regList: [],
     changeTag: true,
     document: 'https://element.eleme.cn/#/zh-CN/component/input-number'
-  }
-]
-
-export const selectComponents = [
+  },
   {
     label: '下拉选择',
     tag: 'el-select',
@@ -394,8 +433,8 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/upload'
   }
 ]
-
-export const layoutComponents = [
+// 自定义组件
+export const customComponents = [
   {
     layout: 'rowFormItem',
     tagIcon: 'row',
@@ -423,16 +462,3 @@ export const layoutComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/button'
   }
 ]
-
-// 组件rule的触发方式，无触发方式的组件不生成rule
-export const trigger = {
-  'el-input': 'blur',
-  'el-input-number': 'blur',
-  'el-select': 'change',
-  'el-radio-group': 'change',
-  'el-checkbox-group': 'change',
-  'el-cascader': 'change',
-  'el-time-picker': 'change',
-  'el-date-picker': 'change',
-  'el-rate': 'change'
-}

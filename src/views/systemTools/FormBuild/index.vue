@@ -6,16 +6,14 @@
 -->
 <template>
   <div class="form-build">
-    <header>
-      <Toolbar />
-    </header>
+    <Toolbar />
     <main>
       <section class="left">
-        <ComponentsList />
+        <ComponentList />
       </section>
       <section class="center">
         <div class="content" @drop="handleDrop" @dragover="handleDragOver" @mousedown="handleMouseDown" @mouseup="deselectCurComponent">
-          <!-- <Editor /> -->
+          <Editor ref="editor" />
         </div>
       </section>
       <section class="right">
@@ -35,12 +33,18 @@
   </div>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
 import Toolbar from './Toolbar.vue'
-import ComponentsList from './ComponentsList.vue'
+import { deepCopy, utils } from '@/utils/index.js'
+import componentList from './components-list.js'
+import ComponentList from './components-list.vue'
+import Editor from './Editor/index.vue'
+import { layoutComponents, formComponents, customComponents, formConf } from './generator/config.js'
 const state = reactive({})
 const store = useStore()
+const editor = ref(null)
+const curComponent = ref(null)
 const restore = () => {
   // 用保存的数据恢复画布
   if (localStorage.getItem('canvasData')) {
@@ -53,25 +57,31 @@ const restore = () => {
   }
 }
 const handleDrop = (e) => {
-  console.log('handleDrop--handleDrop')
+  console.log('drop事件！！！')
   e.preventDefault() // 阻止的dom元素默认的事件，如提交的按钮，超链接的跳转等。
   e.stopPropagation() // 阻止的不是事件本身，是事件的传播
-
   const index = e.dataTransfer.getData('index')
-  const rectInfo = this.editor.getBoundingClientRect()
-  if (index) {
-    const component = deepCopy(componentList[index])
+  const type = e.dataTransfer.getData('type')
+  console.log('editor.value', editor.value.getBoundingClientRect())
+  const rectInfo = editor.value.getBoundingClientRect()
+  if (index && type) {
+    const obj = {
+      demo: componentList,
+      layout: layoutComponents,
+      form: formComponents,
+      custom: customComponents
+    }
+    const component = deepCopy(obj[type][index])
+    console.log('component:::', component)
     component.style.top = e.clientY - rectInfo.y
     component.style.left = e.clientX - rectInfo.x
-    component.id = generateID()
-    // 根据画面比例修改组件样式比例 https://github.com/woai3c/visual-drag-demo/issues/91
-    changeComponentSizeWithScale(component)
-    store.commit('addComponent', { component })
-    store.commit('recordSnapshot')
+    component.id = utils.guid()
+    // changeComponentSizeWithScale(component)
+    store.commit('formBuild/addComponent', component)
+    // store.commit('recordSnapshot')
   }
 }
 const handleDragOver = (e) => {
-  console.log('handleDragOver--handleDragOver')
   e.preventDefault()
   e.dataTransfer.dropEffect = 'copy'
 }
@@ -101,34 +111,24 @@ restore()
   height: 100vh;
   background: #fff;
   main {
-    height: calc(100% - 64px);
+    height: calc(100% - 60px);
     position: relative;
+    display: flex;
+    flex-direction: row;
     .left {
-      position: absolute;
       height: 100%;
       width: 200px;
-      left: 0;
-      top: 0;
-      & > div {
-        overflow: auto;
-        &:first-child {
-          border-bottom: 1px solid #ddd;
-        }
-      }
+      overflow-y: auto;
     }
     .right {
-      position: absolute;
       height: 100%;
       width: 288px;
-      right: 0;
-      top: 0;
       .el-select {
         width: 100%;
       }
     }
     .center {
-      margin-left: 200px;
-      margin-right: 288px;
+      flex: 1;
       background: #f5f5f5;
       height: 100%;
       overflow: auto;

@@ -17,8 +17,14 @@ import { reactive } from 'vue'
 import html2canvas from 'html2canvas'
 const state = reactive({})
 const hanleClick = (type) => {
-  if (type === 'screenshot') {
+  if (type === 'preview') {
+
+  } else if (type === 'screenshot') {
     // exportImg('toolbar', '效果图')
+  } else if (type === 'copy') {
+
+  } else if (type === 'generateFiles') {
+
   }
 }
 const exportImg = (ref, title) => {

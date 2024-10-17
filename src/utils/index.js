@@ -46,6 +46,21 @@ export const debounce = (fun, delay) => {
     }, delay)
   };
 };
+
+export const deepCopy = (target) => {
+  if (typeof target == 'object') {
+    const result = Array.isArray(target) ? [] : {}
+    for (const key in target) {
+      if (typeof target[key] == 'object') {
+        result[key] = deepCopy(target[key])
+      } else {
+        result[key] = target[key]
+      }
+    }
+    return result
+  }
+  return target
+}
 /**
  * 获取符合条件的父元素
  * @param {*} element 根据子元素找父元素
