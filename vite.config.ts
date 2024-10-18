@@ -1,6 +1,7 @@
 import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from "@vitejs/plugin-vue-jsx"
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -16,6 +17,7 @@ export default defineConfig({
   envPrefix: 'VITE_', // 环境变量前缀设置
   plugins: [
     vue(),
+    vueJsx({include:/\.[jt]xs$|\.js$/}),
     vitePluginVueMonitor(),
     AutoImport({
       imports: ["vue", "vue-router", "vuex", "@vueuse/core"], // 自动导入 Vue 相关函数，如：ref, reactive 等

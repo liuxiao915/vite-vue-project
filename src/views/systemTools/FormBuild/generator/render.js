@@ -1,5 +1,14 @@
-import { makeMap } from '@/utils/index'
-
+import { h, render } from 'vue'
+export function makeMap(str, expectsLowerCase) {
+  const map = Object.create(null)
+  const list = str.split(',')
+  for (let i = 0; i < list.length; i++) {
+    map[list[i]] = true
+  }
+  return expectsLowerCase
+    ? val => map[val.toLowerCase()]
+    : val => map[val]
+}
 // 参考https://github.com/vuejs/vue/blob/v2.6.10/src/platforms/web/server/util.js
 const isAttr = makeMap(
   'accept,accept-charset,accesskey,action,align,alt,async,autocomplete,'
@@ -88,7 +97,8 @@ const componentChild = {
 }
 
 export default {
-  render(h) {
+  props: ['conf'],
+  render() {
     const dataObject = {
       attrs: {},
       props: {},
@@ -121,6 +131,5 @@ export default {
       }
     })
     return h(this.conf.tag, dataObject, children)
-  },
-  props: ['conf']
+  }
 }

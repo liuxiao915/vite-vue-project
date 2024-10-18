@@ -1,14 +1,8 @@
 <template>
   <div>
     这是待办页面
-    <div
-      ref="btnRef"
-      @click="handleChange"
-    >{{ name }}</div>
-    <el-table
-      mb-1
-      :data="[]"
-    />
+    <div ref="btnRef" @click="handleChange">{{ name }}</div>
+    <el-table mb-1 :data="[]" />
     <el-pagination :total="100" />
   </div>
 </template>

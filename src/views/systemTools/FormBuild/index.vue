@@ -12,7 +12,7 @@
         <ComponentList />
       </section>
       <section class="center">
-        <div class="content" @drop="handleDrop" @dragover="handleDragOver" @mousedown="handleMouseDown" @mouseup="deselectCurComponent">
+        <div class="content" @drop="handleDrop" @dragover="handleDragOver" @mousedown="handleMouseDown">
           <Editor ref="editor" />
         </div>
       </section>
@@ -86,20 +86,9 @@ const handleDragOver = (e) => {
   e.dataTransfer.dropEffect = 'copy'
 }
 const handleMouseDown = (e) => {
-  console.log('handleMouseDown--handleMouseDown')
   e.stopPropagation()
   // store.commit('setClickComponentStatus', false)
   // store.commit('setInEditorStatus', true)
-}
-const deselectCurComponent = (e) => {
-  console.log('deselectCurComponent--deselectCurComponent')
-  if (!this.isClickComponent) {
-    // store.commit('setCurComponent', { component: null, index: null })
-  }
-  // 0 左击 1 滚轮 2 右击
-  if (e.button != 2) {
-    // store.commit('hideContextMenu')
-  }
 }
 restore()
 // 全局监听按键事件
@@ -109,12 +98,14 @@ restore()
 .form-build {
   height: 100%;
   height: 100vh;
-  background: #fff;
+  background: #f0eeee;
   main {
     height: calc(100% - 60px);
     position: relative;
     display: flex;
     flex-direction: row;
+    padding-top: 16px;
+    background-color: #fff;
     .left {
       height: 100%;
       width: 200px;
@@ -132,7 +123,8 @@ restore()
       background: #f5f5f5;
       height: 100%;
       overflow: auto;
-      padding: 20px;
+      border-left: 1px solid #dcdfe6;
+      border-right: 1px solid #dcdfe6;
       .content {
         width: 100%;
         height: 100%;

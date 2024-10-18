@@ -1,5 +1,6 @@
 <template>
-  <div v-show="menuShow" class="contextmenu" :style="{ top: menuTop + 'px', left: menuLeft + 'px' }">
+  <!-- :style="{ top: menuTop + 'px', left: menuLeft + 'px' }" -->
+  <div v-show="contextMenu.showMenu" class="contextmenu" :style="{ top: contextMenu.top + 'px', left: contextMenu.left + 'px' }">
     <ul @mouseup="handleMouseUp">
       <template v-if="curComponent">
         <template v-if="!curComponent.isLock">
@@ -21,11 +22,10 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
-import { useState } from '@/hooks/useStore.js'
 import { ref } from 'vue'
+const contextMenu = defineModel('contextMenu')
+const curComponent = defineModel('curComponent')
 const store = useStore()
-const storeState = useState(['menuTop', 'menuLeft', 'menuShow', 'curComponent'])
-const copyData = ref(null)
 const lock = () => {
   store.commit('lock')
 }
@@ -67,7 +67,7 @@ const bottomComponent = () => {
   store.commit('recordSnapshot')
 }
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .contextmenu {
   position: absolute;
   z-index: 1000;

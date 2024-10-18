@@ -1,6 +1,6 @@
 <template>
   <div class="shape" :class="{ active }" @click="selectCurComponent" @mousedown="handleMouseDownOnShape">
-    <span v-show="isActive()" class="iconfont icon-xiangyouxuanzhuan" @mousedown="handleRotate"></span>
+    <!-- <span v-show="isActive()" class="iconfont icon-xiangyouxuanzhuan" @mousedown="handleRotate"></span> -->
     <span v-show="element.isLock" class="iconfont icon-suo"></span>
     <div v-for="item in isActive() ? getPointList() : []" :key="item" class="shape-point" :style="getPointStyle(item)" @mousedown="handleMouseDownOnPoint(item, $event)"></div>
     <slot></slot>
@@ -203,7 +203,7 @@ export default {
     },
 
     handleMouseDownOnShape(e) {
-      // 将当前点击组件的事件传播出去，目前的消费是 VText 组件 https://github.com/woai3c/visual-drag-demo/issues/90
+      // 将当前点击组件的事件传播出去，目前的消费是 VText 组件
       this.$nextTick(() => eventBus.$emit('componentClick'))
 
       this.$store.commit('setInEditorStatus', true)
@@ -263,7 +263,7 @@ export default {
       // 阻止向父组件冒泡
       e.stopPropagation()
       e.preventDefault()
-      this.$store.commit('hideContextMenu')
+      // this.$store.commit('hideContextMenu')
       // 打开右侧组件列表
       if (!this.$store.state.rightList) {
         this.$store.commit('isShowRightList')

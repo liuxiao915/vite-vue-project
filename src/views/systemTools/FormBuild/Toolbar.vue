@@ -60,4 +60,8 @@ const fileDownload = (downloadUrl, title) => {
 }
 </script>
 <style lang="less" scoped>
+.toolbar {
+  padding-bottom: 16px;
+  background-color: #fff;
+}
 </style>

@@ -5,17 +5,38 @@
  @LastEditTime: 2024-10-15 17:50:05
 -->
 <template>
-  <div id="editor" class="editor edit" @contextmenu="handleContextMenu" @mousedown="handleMouseDown">
+  <div id="editor" class="editor edit" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
+    <div v-for="(item, index) in componentData" :key="item.id" :index="index">
+      <DragItem />
+    </div>
     <!-- <Shape v-for="(item, index) in componentData" :key="item.id" :default-style="item.style" :style="getShapeStyle(item.style)" :active="item.id === (curComponent || {}).id" :element="item" :index="index" :class="{ lock: item.isLock }">
-      <component :is="item.component" :id="'component' + item.id" :style="getSVGStyle(item.style)" class="component" :prop-value="item.propValue" :element="item" :request="item.request" />
+      <component
+                :is="item.component"
+                v-else
+                :id="'component' + item.id"
+                class="component"
+                :style="getComponentStyle(item.style)"
+                :prop-value="item.propValue"
+                :element="item"
+                :request="item.request"
+                @input="handleInput"
+            />
     </Shape> -->
+    <!-- 右击菜单 -->
+    <ContextMenu v-model:context-menu="contextMenu" v-model::cur-component="curComponent" />
   </div>
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
+import DragItem from './dragItem.vue'
+import ContextMenu from './ContextMenu.vue'
 // import Shape from './Shape.vue'
-const state = reactive({})
+const contextMenu = reactive({
+  showMenu: false,
+  top: 0,
+  left: 0
+})
 const store = useStore()
 const handleContextMenu = (e) => {
   e.stopPropagation()
@@ -24,6 +45,7 @@ const handleContextMenu = (e) => {
   let target = e.target
   let top = e.offsetY
   let left = e.offsetX
+  console.log('target:::', target)
   while (target instanceof SVGElement) {
     target = target.parentNode
   }
@@ -32,7 +54,9 @@ const handleContextMenu = (e) => {
     top += target.offsetTop
     target = target.parentNode
   }
-  // store.commit('showContextMenu', { top, left })
+  contextMenu.showMenu = true
+  contextMenu.top = top
+  contextMenu.left = left
 }
 
 const curComponent = ref(null)
@@ -81,6 +105,37 @@ const handleMouseDown = (e) => {
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }
+const handleMouseUp = (e) => {
+  // if (!this.isClickComponent) {
+  //   store.commit('setCurComponent', { component: null, index: null })
+  // }
+  // 0 左击 1 滚轮 2 右击
+  if (e.button != 2) {
+    contextMenu.showMenu = false
+  }
+}
 </script>
 <style lang="less" scoped>
+.editor {
+  position: relative;
+  background: #fff;
+  margin: auto;
+  height: 100%;
+
+  .lock {
+    opacity: 0.5;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.edit {
+  .component {
+    outline: none;
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

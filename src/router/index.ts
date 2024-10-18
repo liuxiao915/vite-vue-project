@@ -45,12 +45,12 @@ router.beforeEach((to, _from, next) => {
   const token = sessionStorage.getItem('token')
   if (token) {
     if (to.path === '/login') {
-      next({ path: '/' })
+      next('/')
     } else {
       next()
     }
   } else {
-    next({ path: '/login' })
+    next('/login')
   }
   store.commit('tabs/addTabs', { ...to })
 })

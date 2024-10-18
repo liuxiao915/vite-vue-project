@@ -6,7 +6,7 @@
 -->
 <template>
   <div>
-    <div class="title">布局组件</div>
+    <div class="title">demo组件</div>
     <div class="components-list" @dragstart="handleDragStart">
       <div v-for="(item, index) in componentList" :key="index" class="list" :draggable="true" :data-index="index" data-type="demo">
         <span>{{ item.label }}</span>

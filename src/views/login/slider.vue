@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { defineModel, onMounted } from 'vue'
+import { onMounted } from 'vue'
 const model = defineModel(false)
 //一、定义了一个获取元素的方法
 const getEle = (selector) => {

@@ -58,6 +58,7 @@ const tabClick = (item) => {
   .layout-content {
     overflow-y: auto;
     height: calc(100vh - 105px);
+    padding: 0 16px;
   }
 }
 </style>

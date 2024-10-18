@@ -10,7 +10,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { reactive, defineModel } from 'vue'
+import { reactive } from 'vue'
 const state = reactive({})
 const model = defineModel()
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))

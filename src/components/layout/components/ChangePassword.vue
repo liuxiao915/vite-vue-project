@@ -24,7 +24,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref, reactive, defineModel } from 'vue'
+import { ref, reactive } from 'vue'
 const model = defineModel()
 const formRef = ref(null)
 const ruleForm = reactive({
