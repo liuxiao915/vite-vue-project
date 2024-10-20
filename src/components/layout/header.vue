@@ -9,7 +9,7 @@
     <div class="logo">{{ state.Header }}</div>
     <!-- <Screenfull /> -->
     <el-dropdown>
-      <span class="el-dropdown-link">{{ userInfo.userName }}</span>
+      <span class="el-dropdown-link">{{ userInfo?.userName }}</span>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="item in state.dropdownList" :key="item.value" @click="handleClick(item)">{{ item.label }}</el-dropdown-item>

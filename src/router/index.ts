@@ -42,6 +42,10 @@ const router = createRouter({
   }
 })
 router.beforeEach((to, _from, next) => {
+  if(Object.is(to.path, '/login')) {
+    next()
+    return
+  }
   const token = sessionStorage.getItem('token')
   if (token) {
     if (to.path === '/login') {

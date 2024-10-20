@@ -1,4 +1,4 @@
-import { h, render } from 'vue'
+import { h } from 'vue'
 export function makeMap(str, expectsLowerCase) {
   const map = Object.create(null)
   const list = str.split(',')

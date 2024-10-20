@@ -6,7 +6,7 @@
 -->
 <template>
   <el-dialog v-model="model" title="个人中心" width="800">
-    <div>姓名：{{ userInfo.userName }}</div>
+    <div>姓名：{{ userInfo?.userName }}</div>
   </el-dialog>
 </template>
 <script setup>

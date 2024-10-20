@@ -1,6 +1,7 @@
 <template>
   <div class="counter">
     这是待发布页面
+    <el-select></el-select>
   </div>
 </template>
 <script setup>

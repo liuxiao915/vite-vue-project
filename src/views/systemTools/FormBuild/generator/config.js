@@ -1,3 +1,4 @@
+import { ElButton, ElInput, ElUpload, ElTreeSelect, ElTree, ElSelect, ElOption, ElInputNumber, ElCascader, ElRadio, ElRadioGroup, ElSwitch, ElSlider } from 'element-plus';
 export const formConf = {
   formRef: 'elForm',
   formModel: 'formData',
@@ -56,7 +57,7 @@ export const layoutComponents = [
 export const formComponents = [
   {
     label: '单行文本',
-    tag: 'el-input',
+    tag: ElInput,
     tagIcon: 'input',
     placeholder: '请输入',
     defaultValue: undefined,
@@ -79,7 +80,7 @@ export const formComponents = [
   },
   {
     label: '多行文本',
-    tag: 'el-input',
+    tag: ElInput,
     tagIcon: 'textarea',
     type: 'textarea',
     placeholder: '请输入',
@@ -102,7 +103,7 @@ export const formComponents = [
   },
   {
     label: '密码',
-    tag: 'el-input',
+    tag: ElInput,
     tagIcon: 'password',
     placeholder: '请输入',
     defaultValue: undefined,
@@ -126,12 +127,13 @@ export const formComponents = [
   },
   {
     label: '计数器',
-    tag: 'el-input-number',
+    tag: ElInputNumber,
     tagIcon: 'number',
     placeholder: '',
     defaultValue: undefined,
     span: 24,
     labelWidth: null,
+    style: {},
     min: undefined,
     max: undefined,
     step: undefined,
@@ -146,7 +148,7 @@ export const formComponents = [
   },
   {
     label: '下拉选择',
-    tag: 'el-select',
+    tag: 'ElSelect',
     tagIcon: 'select',
     placeholder: '请选择',
     defaultValue: undefined,
@@ -171,7 +173,7 @@ export const formComponents = [
   },
   {
     label: '级联选择',
-    tag: 'el-cascader',
+    tag: ElCascader,
     tagIcon: 'cascader',
     placeholder: '请选择',
     defaultValue: [],
@@ -257,7 +259,7 @@ export const formComponents = [
   },
   {
     label: '开关',
-    tag: 'el-switch',
+    tag: ElSwitch,
     tagIcon: 'switch',
     defaultValue: false,
     span: 24,
@@ -277,11 +279,12 @@ export const formComponents = [
   },
   {
     label: '滑块',
-    tag: 'el-slider',
+    tag: ElSlider,
     tagIcon: 'slider',
     defaultValue: null,
     span: 24,
     labelWidth: null,
+    style: {},
     disabled: false,
     required: true,
     min: 0,
@@ -403,6 +406,7 @@ export const formComponents = [
     labelWidth: null,
     'show-alpha': false,
     'color-format': '',
+    style: {},
     disabled: false,
     required: true,
     size: 'medium',
@@ -412,11 +416,12 @@ export const formComponents = [
   },
   {
     label: '上传',
-    tag: 'el-upload',
+    tag: ElUpload,
     tagIcon: 'upload',
     action: 'https://jsonplaceholder.typicode.com/posts/',
     defaultValue: null,
     labelWidth: null,
+    style: {},
     disabled: false,
     required: true,
     accept: '',
@@ -451,7 +456,7 @@ export const customComponents = [
     label: '按钮',
     changeTag: true,
     labelWidth: null,
-    tag: 'el-button',
+    tag: 'ElButton',
     tagIcon: 'button',
     span: 24,
     default: '主要按钮',

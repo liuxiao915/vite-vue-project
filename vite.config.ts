@@ -17,7 +17,8 @@ export default defineConfig({
   envPrefix: 'VITE_', // 环境变量前缀设置
   plugins: [
     vue(),
-    vueJsx({include:/\.[jt]xs$|\.js$/}),
+    vueJsx(),
+    // vueJsx({include:/\.[jt]xs$|\.js$|\.vue$/}),
     vitePluginVueMonitor(),
     AutoImport({
       imports: ["vue", "vue-router", "vuex", "@vueuse/core"], // 自动导入 Vue 相关函数，如：ref, reactive 等
@@ -69,6 +70,7 @@ export default defineConfig({
   server: {
     open: true,
     host: '0.0.0.0',
+    port: 8081,
     // 代理
     proxy: {
       '/api-proxy': {
