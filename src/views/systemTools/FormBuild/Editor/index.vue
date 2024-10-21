@@ -6,8 +6,8 @@
 -->
 <template>
   <div id="editor" class="editor edit" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
-    <DragItem v-for="(item, index) in componentData" :key="item.id" :drawing-list="drawingList" :element="item" :index="index" :active-id="activeId" :form-conf="formConf" @activeItem="activeFormItem" @copyItem="drawingItemCopy" @deleteItem="drawingItemDelete" />
-    <!-- <Shape v-for="(item, index) in componentData" :key="item.id" :default-style="item.style" :style="getShapeStyle(item.style)" :active="item.id === (curComponent || {}).id" :item="item" :index="index" :class="{ lock: item.isLock }">
+    <DragItem v-for="(item, index) in drawingList" :key="item.id" :drawing-list="drawingList" :element="item" :index="index" :active-id="activeId" :form-conf="formConf" @activeItem="activeFormItem" @copyItem="drawingItemCopy" @deleteItem="drawingItemDelete" />
+    <!-- <Shape v-for="(item, index) in drawingList" :key="item.id" :default-style="item.style" :style="getShapeStyle(item.style)" :active="item.id === (curComponent || {}).id" :item="item" :index="index" :class="{ lock: item.isLock }">
       <component
         :is="item.component"
         v-else

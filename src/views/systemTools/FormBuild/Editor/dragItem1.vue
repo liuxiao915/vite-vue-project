@@ -22,7 +22,7 @@ const components = {
 const layouts = {
   colFormItem(h, element, index, parent) {
     const { activeItem } = this.$listeners
-    let className = this.activeId === element.formId ? 'drawing-item active-from-item' : 'drawing-item'
+    let className = this.activeId === element.id ? 'drawing-item active-from-item' : 'drawing-item'
     if (this.formConf.unFocusedComponentBorder) className += ' unfocus-bordered'
     return (
       <el-col span={element.span} class={className}
@@ -39,7 +39,7 @@ const layouts = {
   },
   rowFormItem(h, element, index, parent) {
     const { activeItem } = this.$listeners
-    const className = this.activeId === element.formId ? 'drawing-row-item active-from-item' : 'drawing-row-item'
+    const className = this.activeId === element.id ? 'drawing-row-item active-from-item' : 'drawing-row-item'
     let child = renderChildren.apply(this, arguments)
     if (element.type === 'flex') {
       child = <el-row type={element.type} justify={element.justify} align={element.align}>

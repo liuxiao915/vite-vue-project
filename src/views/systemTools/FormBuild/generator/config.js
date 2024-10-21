@@ -1,4 +1,44 @@
-import { ElButton, ElInput, ElUpload, ElTreeSelect, ElTree, ElSelect, ElOption, ElInputNumber, ElCascader, ElRadio, ElRadioGroup, ElSwitch, ElSlider } from 'element-plus';
+export const beautifierConf = {
+  html: {
+    indent_size: '2',
+    indent_char: ' ',
+    max_preserve_newlines: '-1',
+    preserve_newlines: false,
+    keep_array_indentation: false,
+    break_chained_methods: false,
+    indent_scripts: 'separate',
+    brace_style: 'end-expand',
+    space_before_conditional: true,
+    unescape_strings: false,
+    jslint_happy: false,
+    end_with_newline: true,
+    wrap_line_length: '110',
+    indent_inner_html: true,
+    comma_first: false,
+    e4x: true,
+    indent_empty_lines: true
+  },
+  js: {
+    indent_size: '2',
+    indent_char: ' ',
+    max_preserve_newlines: '-1',
+    preserve_newlines: false,
+    keep_array_indentation: false,
+    break_chained_methods: false,
+    indent_scripts: 'normal',
+    brace_style: 'end-expand',
+    space_before_conditional: true,
+    unescape_strings: false,
+    jslint_happy: true,
+    end_with_newline: true,
+    wrap_line_length: '110',
+    indent_inner_html: true,
+    comma_first: false,
+    e4x: true,
+    indent_empty_lines: true
+  }
+}
+
 export const formConf = {
   formRef: 'elForm',
   formModel: 'formData',
@@ -148,7 +188,7 @@ export const formComponents = [
   },
   {
     label: '下拉选择',
-    tag: 'ElSelect',
+    tag: ElSelect,
     tagIcon: 'select',
     placeholder: '请选择',
     defaultValue: undefined,
@@ -211,7 +251,7 @@ export const formComponents = [
   },
   {
     label: '单选框组',
-    tag: 'el-radio-group',
+    tag: ElRadioGroup,
     tagIcon: 'radio',
     defaultValue: undefined,
     span: 24,
@@ -235,7 +275,7 @@ export const formComponents = [
   },
   {
     label: '多选框组',
-    tag: 'el-checkbox-group',
+    tag: ElCheckboxGroup,
     tagIcon: 'checkbox',
     defaultValue: [],
     span: 24,
@@ -298,7 +338,7 @@ export const formComponents = [
   },
   {
     label: '时间选择',
-    tag: 'el-time-picker',
+    tag: ElTimePicker,
     tagIcon: 'time',
     placeholder: '请选择',
     defaultValue: null,
@@ -319,7 +359,7 @@ export const formComponents = [
   },
   {
     label: '时间范围',
-    tag: 'el-time-picker',
+    tag: ElTimePicker,
     tagIcon: 'time-range',
     defaultValue: null,
     span: 24,
@@ -340,7 +380,7 @@ export const formComponents = [
   },
   {
     label: '日期选择',
-    tag: 'el-date-picker',
+    tag: ElDatePicker,
     tagIcon: 'date',
     placeholder: '请选择',
     defaultValue: null,
@@ -360,7 +400,7 @@ export const formComponents = [
   },
   {
     label: '日期范围',
-    tag: 'el-date-picker',
+    tag: ElDatePicker,
     tagIcon: 'date-range',
     defaultValue: null,
     span: 24,
@@ -382,7 +422,7 @@ export const formComponents = [
   },
   {
     label: '评分',
-    tag: 'el-rate',
+    tag: ElRate,
     tagIcon: 'rate',
     defaultValue: 0,
     span: 24,
@@ -400,7 +440,7 @@ export const formComponents = [
   },
   {
     label: '颜色选择',
-    tag: 'el-color-picker',
+    tag: ElColorPicker,
     tagIcon: 'color',
     defaultValue: null,
     labelWidth: null,

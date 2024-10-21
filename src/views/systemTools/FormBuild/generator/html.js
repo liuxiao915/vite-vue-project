@@ -23,13 +23,13 @@ export function vueTemplate(str) {
 }
 
 export function vueScript(str) {
-  return `<script>
+  return `<script setup>
     ${str}
   </script>`
 }
 
 export function cssStyle(cssStr) {
-  return `<style>
+  return `<style lang="less" scoped>
     ${cssStr}
   </style>`
 }
@@ -346,7 +346,7 @@ export function makeUpHtml(conf, type) {
   confGlobal = conf
   someSpanIsNot24 = conf.fields.some(item => item.span !== 24)
   conf.fields.forEach(el => {
-    htmlList.push(layouts[el.layout](el))
+    htmlList.push(layouts[el.layout || 'colFormItem'](el))
   })
   const htmlStr = htmlList.join('\n')
 

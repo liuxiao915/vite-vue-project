@@ -1,6 +1,18 @@
-import { exportDefault, titleCase } from '@/utils/index'
 import { trigger } from './config'
+// 首字母大小
+export function titleCase(str) {
+  return str.replace(/( |^)[a-z]/g, L => L.toUpperCase())
+}
 
+// 下划转驼峰
+export function camelCase(str) {
+  return str.replace(/_[a-z]/g, str1 => str1.substr(-1).toUpperCase())
+}
+
+export function isNumberStr(str) {
+  return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
+}
+const exportDefault = 'export default '
 const units = {
   KB: '1024',
   MB: '1024 / 1024',
@@ -13,7 +25,7 @@ const inheritAttrs = {
 }
 
 
-export function makeUpJs(conf, type) {
+export const makeUpJs = (conf, type) => {
   confGlobal = conf = JSON.parse(JSON.stringify(conf))
   const dataList = []
   const ruleList = []
@@ -74,37 +86,41 @@ function buildAttributes(el, dataList, ruleList, optionsList, methodList, propsL
     })
   }
 }
-
 function mixinMethod(type) {
-  const list = []; const
-    minxins = {
-      file: confGlobal.formBtns ? {
-        submitForm: `submitForm() {
-        this.$refs['${confGlobal.formRef}'].validate(valid => {
-          if(!valid) return
-          // TODO 提交表单
-        })
-      },`,
-        resetForm: `resetForm() {
-        this.$refs['${confGlobal.formRef}'].resetFields()
-      },`
-      } : null,
-      dialog: {
-        onOpen: 'onOpen() {},',
-        onClose: `onClose() {
-        this.$refs['${confGlobal.formRef}'].resetFields()
-      },`,
-        close: `close() {
-        this.$emit('update:visible', false)
-      },`,
-        handleConfirm: `handleConfirm() {
-        this.$refs['${confGlobal.formRef}'].validate(valid => {
-          if(!valid) return
-          this.close()
-        })
-      },`
-      }
+  const list = [];
+  const minxins = {
+    file: confGlobal.formBtns ? {
+      // const `${confGlobal.formRef}` = ref(null)
+      submitForm: `const submitForm = (${confGlobal.formRef}) => {
+          if (!${confGlobal.formRef}) return
+          ${confGlobal.formRef}.validate((valid) => {
+            if(!valid) return
+            // TODO 提交表单
+          })
+        }`,
+      resetForm: `const resetForm = (${confGlobal.formRef}) => {
+          if (!${confGlobal.formRef}) return
+          ${confGlobal.formRef}.resetFields()
+        }`
+    } : null,
+    dialog: {
+      onOpen: 'const onOpen = () => {},',
+      onClose: `const onClose = () => {
+          if (!${confGlobal.formRef}) return
+          ${confGlobal.formRef}.resetFields()
+        }`,
+      close: `const close = () => {
+          this.$emit('update:visible', false)
+        }`,
+      handleConfirm: `const handleConfirm = () => {
+          if (!${confGlobal.formRef}) return
+          ${confGlobal.formRef}.validate((valid) => {
+            if(!valid) return
+            this.close()
+          })
+        }`
     }
+  }
 
   const methods = minxins[type]
   if (methods) {
@@ -206,30 +222,17 @@ function buildOptionMethod(methodName, model, methodList) {
 }
 
 function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods) {
-  const str = `${exportDefault}{
-  ${inheritAttrs[type]}
-  components: {},
-  props: [],
-  data () {
-    return {
-      ${conf.formModel}: {
-        ${data}
-      },
-      ${conf.formRules}: {
-        ${rules}
-      },
+  console.log('conf::::', conf)
+  return `<script setup>
+    import { ref, reactive } from 'vue';
+    ${inheritAttrs[type]}
+    const ${conf.formModel} = reactive(${data})
+    const ${conf.formRules} = reactive(${rules})
+    const state = reactive({
       ${uploadVar}
       ${selectOptions}
       ${props}
-    }
-  },
-  computed: {},
-  watch: {},
-  created () {},
-  mounted () {},
-  methods: {
+    })
     ${methods}
-  }
-}`
-  return str
+  </script>`
 }

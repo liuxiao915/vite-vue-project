@@ -23,6 +23,8 @@
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "clipboard": "^2.0.11",
     "fast-glob": "^3.3.2",
+    "file-saver": "^2.0.5",
+    "js-beautify": "^1.15.1",
     "less": "^4.2.0",
     "less-loader": "^11.1.4",
     "qs": "^6.13.0",

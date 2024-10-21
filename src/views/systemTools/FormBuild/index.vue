@@ -6,14 +6,19 @@
 -->
 <template>
   <div class="form-build">
-    <Toolbar />
+    <div class="toolbar" ref="toolbar">
+      <el-button @click="hanleClick('preview')">预览</el-button>
+      <el-button @click="hanleClick('screenshot')">截图</el-button>
+      <el-button @click="hanleClick('copy')">复制代码</el-button>
+      <el-button @click="hanleClick('generateFiles')">生成vue文件</el-button>
+    </div>
     <main>
       <section class="left">
         <ComponentList />
       </section>
       <section class="center">
         <div id="editor" ref="editor" class="editor content" @drop="handleDrop" @dragover="handleDragOver" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
-          <DragItem v-for="(item, index) in componentData" :key="item.id" :element="item" :index="index" :active-id="activeId" :form-conf="formConf" @activeItem="activeFormItem" @copyItem="drawingItemCopy" @deleteItem="drawingItemDelete" />
+          <DragItem v-for="(item, index) in drawingList" :key="item.id" :element="item" :index="index" :form-conf="formConf" @deleteItem="drawingItemDelete" />
         </div>
       </section>
       <section class="right">
@@ -35,20 +40,79 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
-import Toolbar from './Toolbar.vue'
 import { deepCopy, utils } from '@/utils/index.js'
 import componentList from './components-list.js'
 import ComponentList from './components-list.vue'
+import beautifier from 'js-beautify'
 // import Editor from './Editor/index.vue'
 // import Shape from './Editor/Shape.vue'
 import DragItem from './Editor/dragItem.vue'
 import ContextMenu from './Editor/ContextMenu.vue'
-import { layoutComponents, formComponents, customComponents, formConf } from './generator/config.js'
+import { saveAs } from 'file-saver'
+import { beautifierConf, layoutComponents, formComponents, customComponents, formConf } from './generator/config.js'
+import { makeUpHtml, vueTemplate, vueScript, cssStyle } from './generator/html'
+import { makeUpJs } from './generator/js'
+import { makeUpCss } from './generator/css'
 const state = reactive({})
 const store = useStore()
 const editor = ref(null)
 const curComponent = ref(null)
-const componentData = ref([])
+const drawingList = ref([])
+import html2canvas from 'html2canvas'
+const hanleClick = (type) => {
+  if (type === 'preview') {
+
+  } else if (type === 'screenshot') {
+    exportImg('editor', '效果图')
+  } else if (type === 'copy') {
+
+  } else if (type === 'generateFiles') {
+    const codeStr = generateCode()
+    const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' })
+    saveAs(blob, 'form.vue')
+  }
+}
+const generateCode = () => {
+  const formData = {
+    fields: JSON.parse(JSON.stringify(drawingList.value)),
+    ...formConf
+  }
+  const script = makeUpJs(formData, 'file')
+  const html = vueTemplate(makeUpHtml(formData, 'file'))
+  const css = cssStyle(makeUpCss(formData))
+  return beautifier.html(html + script + css, beautifierConf.html)
+}
+const exportImg = (ref, title) => {
+  // exportLoading = true
+  const copyDom = document.getElementsByClassName(ref)[0] // 要保存的dom
+  const width = copyDom.offsetWidth // dom宽
+  const height = copyDom.offsetHeight // dom高
+  const scale = 2 // 放大倍数
+  html2canvas(copyDom, {
+    dpi: window.devicePixelRatio * 2,
+    scale: scale,
+    width: width,
+    heigth: height,
+    useCORS: true, // 【重要】开启跨域配置
+    backgroundColor: '#fff'
+  }).then(canvas => {
+    const imgData = canvas.toDataURL('image/jpeg')
+    fileDownload(imgData, title)
+    // exportLoading = false
+  }).finally(() => {
+    // exportLoading = false
+  })
+}
+const fileDownload = (downloadUrl, title) => {
+  const aLink = document.createElement('a')
+  aLink.style.display = 'none'
+  aLink.href = downloadUrl
+  aLink.download = title + '.png'
+  // 触发点击-然后移除
+  document.body.appendChild(aLink)
+  aLink.click()
+  document.body.removeChild(aLink)
+}
 const restore = () => {
   // 用保存的数据恢复画布
   if (localStorage.getItem('canvasData')) {
@@ -59,6 +123,33 @@ const restore = () => {
   if (localStorage.getItem('canvasStyle')) {
     // store.commit('setCanvasStyle', JSON.parse(localStorage.getItem('canvasStyle')))
   }
+}
+// activeFormItem(element) {
+//   this.activeData = element
+//   this.activeId = element.id
+// },
+// addComponent(item) {
+//   const clone = this.cloneComponent(item)
+//   this.drawingList.push(clone)
+//   this.activeFormItem(clone)
+// },
+const cloneComponent = (origin) => {
+  let tempActiveData = null
+  const clone = JSON.parse(JSON.stringify(origin))
+  clone.span = formConf.span
+  clone.renderKey = +new Date() // 改变renderKey后可以实现强制更新组件
+  if (!clone.layout) clone.layout = 'colFormItem'
+  if (clone.layout === 'colFormItem') {
+    clone.vModel = `field`
+    clone.placeholder !== undefined && (clone.placeholder += clone.label)
+    tempActiveData = clone
+  } else if (clone.layout === 'rowFormItem') {
+    delete clone.label
+    clone.componentName = `row`
+    clone.gutter = formConf.gutter
+    tempActiveData = clone
+  }
+  return tempActiveData
 }
 const handleDrop = (e) => {
   e.preventDefault() // 阻止的dom元素默认的事件，如提交的按钮，超链接的跳转等。
@@ -80,8 +171,9 @@ const handleDrop = (e) => {
     component.style.left = e.clientX - rectInfo.x
     component.id = utils.guid()
     // changeComponentSizeWithScale(component)
+    const clone = cloneComponent(component)
     store.commit('formBuild/addComponent', component)
-    componentData.value.push({ ...component })
+    drawingList.value.push({ ...component })
     // store.commit('recordSnapshot')
   }
 }
@@ -181,6 +273,10 @@ const handleMouseUp = (e) => {
   height: 100%;
   height: 100vh;
   background: #f0eeee;
+  .toolbar {
+    padding-bottom: 16px;
+    background-color: #fff;
+  }
   main {
     height: calc(100% - 60px);
     position: relative;

@@ -20,7 +20,7 @@ const hanleClick = (type) => {
   if (type === 'preview') {
 
   } else if (type === 'screenshot') {
-    // exportImg('toolbar', '效果图')
+    exportImg('editor', '效果图')
   } else if (type === 'copy') {
 
   } else if (type === 'generateFiles') {
@@ -28,12 +28,13 @@ const hanleClick = (type) => {
   }
 }
 const exportImg = (ref, title) => {
-  this.exportLoading = true
-  const copyDom = this.$refs[ref]// 要保存的dom
+  console.log('ref:::', document.getElementsByClassName(ref))
+  // exportLoading = true
+  const copyDom = document.getElementsByClassName(ref) // 要保存的dom
   const width = copyDom.offsetWidth // dom宽
   const height = copyDom.offsetHeight // dom高
   const scale = 2 // 放大倍数
-  html2canvas(this.$refs[ref], {
+  html2canvas(copyDom, {
     dpi: window.devicePixelRatio * 2,
     scale: scale,
     width: width,
@@ -42,10 +43,10 @@ const exportImg = (ref, title) => {
     backgroundColor: '#fff'
   }).then(canvas => {
     const imgData = canvas.toDataURL('image/jpeg')
-    this.fileDownload(imgData, title)
-    this.exportLoading = false
+    fileDownload(imgData, title)
+    // exportLoading = false
   }).finally(() => {
-    this.exportLoading = false
+    // exportLoading = false
   })
 }
 const fileDownload = (downloadUrl, title) => {

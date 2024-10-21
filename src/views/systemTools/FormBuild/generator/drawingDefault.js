@@ -4,7 +4,7 @@ export default [
     tagIcon: 'input',
     label: '手机号',
     vModel: 'mobile',
-    formId: 6,
+    id: 6,
     tag: 'el-input',
     placeholder: '请输入手机号',
     defaultValue: '',
