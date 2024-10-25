@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import formBuild from './modules/formBuild'
 import report from './modules/report'
 import system from './modules/system'
+import systemManage from './modules/systemManage'
 import tabs from './modules/tabs'
 import theme from './modules/theme'
 // 自动引入
@@ -20,6 +21,7 @@ export default createStore({
     formBuild,
     report,
     system,
+    systemManage,
     tabs,
     theme
   }

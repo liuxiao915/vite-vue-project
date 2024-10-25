@@ -7,7 +7,7 @@
 <template>
   <Search :data="state.searchData" @onSubmit="onSubmit" />
   <el-card>
-    <el-table border stripe :data="state.tableData" style="width: 100%" :row-class-name="tableRowClassName">
+    <el-table border stripe :data="state.tableData" style="width: 100%">
       <el-table-column v-for="item in state.headerData" :key="item.prop" :prop="item.prop" :label="item.label" />
     </el-table>
     <pagination @sizeChange="sizeChange" @currentChange="currentChange" />

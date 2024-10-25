@@ -10,7 +10,9 @@
       <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.meta.title" :name="item.name" />
     </el-tabs>
     <div class="layout-content">
-      <router-view />
+      <el-watermark :content="waterMark.content" :font="waterMark.font" :z-index="waterMark.zIndex" :rotate="waterMark.rotate" :gap="waterMark.gap" :offset="waterMark.offset">
+        <router-view />
+      </el-watermark>
     </div>
     <el-backtop target=".layout-main" />
   </el-main>
@@ -23,6 +25,7 @@ import { useRoute, useRouter } from 'vue-router'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
+const waterMark = ref(JSON.parse(sessionStorage.getItem('waterMark')))
 const tabsList = toRef(store.state.tabs, 'tabList') // 存放标签页数组
 const activeTabs = toRef(route, 'name') // 存放当前激活标签页，默认激活首页
 const removeTab = (targetName) => {

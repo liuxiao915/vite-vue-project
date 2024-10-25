@@ -45,7 +45,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 const config = reactive({
-  content: store.state.tabs.userInfo.userName || userInfo.userName,
+  content: userInfo.userName || 'admin',
   font: {
     fontSize: 16,
     color: 'rgba(0, 0, 0, 0.15)',
@@ -60,12 +60,17 @@ const onSubmit = (type, formEl) => {
   if (!formEl) return
   if (type === 'submit') {
     formEl.validate((valid) => {
-      if (valid) { }
+      if (valid) {
+        store.commit('systemManage/setWaterMark', config)
+        ElMessage({
+          type: 'success',
+          message: '设置成功！',
+        })
+      }
     })
   } else {
     formEl.resetFields()
   }
-  console.log('config:::', config)
 }
 </script>
 

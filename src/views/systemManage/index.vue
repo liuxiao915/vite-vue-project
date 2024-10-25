@@ -7,7 +7,7 @@
 <template>
   <div>系统管理、系统工具</div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { reactive } from 'vue'
 const state = reactive({})
 </script>

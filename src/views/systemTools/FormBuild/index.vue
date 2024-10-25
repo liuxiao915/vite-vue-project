@@ -22,23 +22,23 @@
         </div>
       </section>
       <section class="right">
-        <el-tabs v-if="curComponent" v-model="activeName">
+        <!-- <el-tabs v-if="curComponent" v-model="activeName">
           <el-tab-pane label="属性" name="attr">
-            <!-- <component :is="curComponent.component + 'Attr'" /> -->
+            <component :is="curComponent.component + 'Attr'" />
           </el-tab-pane>
-          <!-- <el-tab-pane label="动画" name="animation" style="padding-top: 20px;">
+          <el-tab-pane label="动画" name="animation" style="padding-top: 20px;">
             <AnimationList />
           </el-tab-pane>
           <el-tab-pane label="事件" name="events" style="padding-top: 20px;">
             <EventList />
-          </el-tab-pane> -->
-        </el-tabs>
+          </el-tab-pane>
+        </el-tabs> -->
       </section>
     </main>
   </div>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { deepCopy, utils } from '@/utils/index.js'
 import componentList from './components-list.js'
@@ -81,6 +81,17 @@ const generateCode = () => {
   const html = vueTemplate(makeUpHtml(formData, 'file'))
   const css = cssStyle(makeUpCss(formData))
   return beautifier.html(html + script + css, beautifierConf.html)
+}
+const drawingItemDelete = (index, parent) => {
+  parent.splice(index, 1)
+  nextTick(() => {
+    const len = drawingList.value.length
+    if (len) {
+      // activeFormItem(drawingList.value[len - 1])
+      // this.activeId = element.id
+      curComponent.value = drawingList.value[len - 1]
+    }
+  })
 }
 const exportImg = (ref, title) => {
   // exportLoading = true
