@@ -1,3 +1,4 @@
+import { markRaw, shallowRef } from 'vue'
 export const beautifierConf = {
   html: {
     indent_size: '2',
@@ -45,6 +46,7 @@ export const formConf = {
   size: 'medium',
   labelPosition: 'right',
   labelWidth: 100,
+  width: '100%',
   formRules: 'rules',
   gutter: 15,
   disabled: false,
@@ -97,7 +99,10 @@ export const layoutComponents = [
 export const formComponents = [
   {
     label: '单行文本',
-    tag: ElInput,
+    tag: 'el-input',
+    component: ElInput,
+    // component: markRaw(ElInput),
+    // component: shallowRef(ElInput),
     tagIcon: 'input',
     placeholder: '请输入',
     defaultValue: undefined,
@@ -120,7 +125,8 @@ export const formComponents = [
   },
   {
     label: '多行文本',
-    tag: ElInput,
+    tag: 'el-input',
+    component: ElInput,
     tagIcon: 'textarea',
     type: 'textarea',
     placeholder: '请输入',
@@ -143,7 +149,8 @@ export const formComponents = [
   },
   {
     label: '密码',
-    tag: ElInput,
+    tag: 'el-input',
+    component: ElInput,
     tagIcon: 'password',
     placeholder: '请输入',
     defaultValue: undefined,
@@ -167,7 +174,8 @@ export const formComponents = [
   },
   {
     label: '计数器',
-    tag: ElInputNumber,
+    tag: 'el-input-number',
+    component: ElInputNumber,
     tagIcon: 'number',
     placeholder: '',
     defaultValue: undefined,
@@ -188,7 +196,8 @@ export const formComponents = [
   },
   {
     label: '下拉选择',
-    tag: ElSelect,
+    tag: 'el-select',
+    component: ElSelect,
     tagIcon: 'select',
     placeholder: '请选择',
     defaultValue: undefined,
@@ -213,7 +222,8 @@ export const formComponents = [
   },
   {
     label: '级联选择',
-    tag: ElCascader,
+    tag: 'el-cascader',
+    component: ElCascader,
     tagIcon: 'cascader',
     placeholder: '请选择',
     defaultValue: [],
@@ -251,7 +261,8 @@ export const formComponents = [
   },
   {
     label: '单选框组',
-    tag: ElRadioGroup,
+    tag: 'el-radio-group',
+    component: ElRadioGroup,
     tagIcon: 'radio',
     defaultValue: undefined,
     span: 24,
@@ -275,7 +286,8 @@ export const formComponents = [
   },
   {
     label: '多选框组',
-    tag: ElCheckboxGroup,
+    tag: 'el-checkbox-group',
+    component: ElCheckboxGroup,
     tagIcon: 'checkbox',
     defaultValue: [],
     span: 24,
@@ -299,7 +311,8 @@ export const formComponents = [
   },
   {
     label: '开关',
-    tag: ElSwitch,
+    tag: 'el-switch',
+    component: ElSwitch,
     tagIcon: 'switch',
     defaultValue: false,
     span: 24,
@@ -319,7 +332,8 @@ export const formComponents = [
   },
   {
     label: '滑块',
-    tag: ElSlider,
+    tag: 'el-slider',
+    component: ElSlider,
     tagIcon: 'slider',
     defaultValue: null,
     span: 24,
@@ -338,7 +352,8 @@ export const formComponents = [
   },
   {
     label: '时间选择',
-    tag: ElTimePicker,
+    tag: 'el-time-picker',
+    component: ElTimePicker,
     tagIcon: 'time',
     placeholder: '请选择',
     defaultValue: null,
@@ -359,7 +374,8 @@ export const formComponents = [
   },
   {
     label: '时间范围',
-    tag: ElTimePicker,
+    tag: 'el-time-picker',
+    component: ElTimePicker,
     tagIcon: 'time-range',
     defaultValue: null,
     span: 24,
@@ -380,7 +396,8 @@ export const formComponents = [
   },
   {
     label: '日期选择',
-    tag: ElDatePicker,
+    tag: 'el-date-picker',
+    component: ElDatePicker,
     tagIcon: 'date',
     placeholder: '请选择',
     defaultValue: null,
@@ -400,7 +417,8 @@ export const formComponents = [
   },
   {
     label: '日期范围',
-    tag: ElDatePicker,
+    tag: 'el-date-picker',
+    component: ElDatePicker,
     tagIcon: 'date-range',
     defaultValue: null,
     span: 24,
@@ -422,7 +440,8 @@ export const formComponents = [
   },
   {
     label: '评分',
-    tag: ElRate,
+    tag: 'el-rate',
+    component: ElRate,
     tagIcon: 'rate',
     defaultValue: 0,
     span: 24,
@@ -440,7 +459,8 @@ export const formComponents = [
   },
   {
     label: '颜色选择',
-    tag: ElColorPicker,
+    tag: 'el-color-picker',
+    component: ElColorPicker,
     tagIcon: 'color',
     defaultValue: null,
     labelWidth: null,
@@ -456,7 +476,8 @@ export const formComponents = [
   },
   {
     label: '上传',
-    tag: ElUpload,
+    tag: 'el-upload',
+    component: ElUpload,
     tagIcon: 'upload',
     action: 'https://jsonplaceholder.typicode.com/posts/',
     defaultValue: null,

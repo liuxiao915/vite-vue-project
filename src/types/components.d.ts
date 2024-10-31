@@ -62,7 +62,7 @@ declare module 'vue' {
     Layout: typeof import('./../components/layout/index.vue')['default']
     Main: typeof import('./../components/layout/main.vue')['default']
     NotFound: typeof import('./../components/notFound.vue')['default']
-    Pagination: typeof import('./../components/pagination/index.vue')['default']
+    Pagination: typeof import('./../components/Pagination/index.vue')['default']
     PersonalCenter: typeof import('./../components/layout/components/PersonalCenter.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

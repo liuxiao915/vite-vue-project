@@ -19,6 +19,7 @@
       <section class="center">
         <div id="editor" ref="editor" class="editor content" @drop="handleDrop" @dragover="handleDragOver" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
           <DragItem v-for="(item, index) in drawingList" :key="item.id" :element="item" :index="index" :form-conf="formConf" @deleteItem="drawingItemDelete" />
+          <ContextMenu v-model:show-context-menu="showContextMenu" v-model:context-menu-top="contextMenuTop" v-model:context-menu-left="contextMenuLeft" v-model:cur-component="curComponent" />
         </div>
       </section>
       <section class="right">
@@ -46,7 +47,7 @@ import ComponentList from './components-list.vue'
 import beautifier from 'js-beautify'
 // import Editor from './Editor/index.vue'
 // import Shape from './Editor/Shape.vue'
-import DragItem from './Editor/dragItem.vue'
+import DragItem from './Editor/dragItem1.jsx'
 import ContextMenu from './Editor/ContextMenu.vue'
 import { saveAs } from 'file-saver'
 import { beautifierConf, layoutComponents, formComponents, customComponents, formConf } from './generator/config.js'
@@ -77,6 +78,7 @@ const generateCode = () => {
     fields: JSON.parse(JSON.stringify(drawingList.value)),
     ...formConf
   }
+  console.log('formData:::', formData)
   const script = makeUpJs(formData, 'file')
   const html = vueTemplate(makeUpHtml(formData, 'file'))
   const css = cssStyle(makeUpCss(formData))
@@ -87,8 +89,7 @@ const drawingItemDelete = (index, parent) => {
   nextTick(() => {
     const len = drawingList.value.length
     if (len) {
-      // activeFormItem(drawingList.value[len - 1])
-      // this.activeId = element.id
+      // this.activeId = drawingList.value[len - 1].id
       curComponent.value = drawingList.value[len - 1]
     }
   })
@@ -135,14 +136,11 @@ const restore = () => {
     // store.commit('setCanvasStyle', JSON.parse(localStorage.getItem('canvasStyle')))
   }
 }
-// activeFormItem(element) {
-//   this.activeData = element
-//   this.activeId = element.id
-// },
 // addComponent(item) {
 //   const clone = this.cloneComponent(item)
 //   this.drawingList.push(clone)
-//   this.activeFormItem(clone)
+//   this.activeData = clone
+//   this.activeId = clone.id
 // },
 const cloneComponent = (origin) => {
   let tempActiveData = null
@@ -177,7 +175,6 @@ const handleDrop = (e) => {
       custom: customComponents
     }
     const component = deepCopy(obj[type][index])
-    console.log('component:::', component)
     component.style.top = e.clientY - rectInfo.y
     component.style.left = e.clientX - rectInfo.x
     component.id = utils.guid()
@@ -185,6 +182,8 @@ const handleDrop = (e) => {
     const clone = cloneComponent(component)
     store.commit('formBuild/addComponent', component)
     drawingList.value.push({ ...component })
+    curComponent.value = component
+    console.log('curComponent:::', component)
     // store.commit('recordSnapshot')
   }
 }
@@ -195,13 +194,9 @@ const handleDragOver = (e) => {
 restore()
 // 全局监听按键事件
 // listenGlobalKeyDown()
-
-
-const contextMenu = reactive({
-  showMenu: false,
-  top: 0,
-  left: 0
-})
+const showContextMenu = ref(false)
+const contextMenuTop = ref(0)
+const contextMenuLeft = ref(0)
 const handleContextMenu = (e) => {
   e.stopPropagation()
   e.preventDefault()
@@ -218,17 +213,25 @@ const handleContextMenu = (e) => {
     top += target.offsetTop
     target = target.parentNode
   }
-  contextMenu.showMenu = true
-  contextMenu.top = top
-  contextMenu.left = left
+  showContextMenu.value = true
+  contextMenuTop.value = top
+  contextMenuLeft.value = left
 }
-
+// 选中区域的起点
+const curAttr = reactive({
+  start: {
+    x: 0,
+    y: 0,
+  },
+  width: 0,
+  height: 0,
+})
 const handleMouseDown = (e) => {
   // e.stopPropagation()
   // store.commit('setClickComponentStatus', false)
   // store.commit('setInEditorStatus', true)
   // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
-  if (!curComponent.value || isPreventDrop(curComponent.value.component)) {
+  if (!curComponent.value) {
     e.preventDefault()
   }
   // hideArea()
@@ -240,20 +243,20 @@ const handleMouseDown = (e) => {
 
   const startX = e.clientX
   const startY = e.clientY
-  start.x = startX - editorX
-  start.y = startY - editorY
+  curAttr.start.x = startX - editorX
+  curAttr.start.y = startY - editorY
   // 展示选中区域
   // this.isShowArea = true
 
   const move = (moveEvent) => {
-    this.width = Math.abs(moveEvent.clientX - startX)
-    this.height = Math.abs(moveEvent.clientY - startY)
+    curAttr.width = Math.abs(moveEvent.clientX - startX)
+    curAttr.height = Math.abs(moveEvent.clientY - startY)
     if (moveEvent.clientX < startX) {
-      this.start.x = moveEvent.clientX - editorX
+      curAttr.start.x = moveEvent.clientX - editorX
     }
 
     if (moveEvent.clientY < startY) {
-      this.start.y = moveEvent.clientY - editorY
+      curAttr.start.y = moveEvent.clientY - editorY
     }
   }
 
@@ -264,7 +267,7 @@ const handleMouseDown = (e) => {
       // hideArea()
       return
     }
-    createGroup()
+    // createGroup()
   }
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
@@ -275,7 +278,7 @@ const handleMouseUp = (e) => {
   // }
   // 0 左击 1 滚轮 2 右击
   if (e.button != 2) {
-    contextMenu.showMenu = false
+    showContextMenu.value = false
   }
 }
 </script>

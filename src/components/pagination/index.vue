@@ -8,7 +8,7 @@
   <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="options.pageSizes" :size="options.size" :layout="options.layout" :total="options.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 const emit = defineEmits(['sizeChange', 'currentChange'])
 const props = defineProps({
   options: {

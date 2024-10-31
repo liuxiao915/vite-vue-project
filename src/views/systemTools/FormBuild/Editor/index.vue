@@ -7,27 +7,14 @@
 <template>
   <div id="editor" class="editor edit" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
     <DragItem v-for="(item, index) in drawingList" :key="item.id" :drawing-list="drawingList" :element="item" :index="index" :active-id="activeId" :form-conf="formConf" @activeItem="activeFormItem" @copyItem="drawingItemCopy" @deleteItem="drawingItemDelete" />
-    <!-- <Shape v-for="(item, index) in drawingList" :key="item.id" :default-style="item.style" :style="getShapeStyle(item.style)" :active="item.id === (curComponent || {}).id" :item="item" :index="index" :class="{ lock: item.isLock }">
-      <component
-        :is="item.component"
-        v-else
-        :id="'component' + item.id"
-        class="component"
-        :style="getComponentStyle(item.style)"
-        :prop-value="item.propValue"
-        :element="item"
-        :request="item.request"
-        @input="handleInput"
-      />
-    </Shape> -->
     <!-- 右击菜单 -->
-    <ContextMenu v-model:context-menu="contextMenu" v-model::cur-component="curComponent" />
+    <ContextMenu v-model:context-menu="contextMenu" v-model:cur-component="curComponent" />
   </div>
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
-import DragItem from './dragItem1.vue'
+import DragItem from './dragItem1'
 import ContextMenu from './ContextMenu.vue'
 // import Shape from './Shape.vue'
 const contextMenu = reactive({

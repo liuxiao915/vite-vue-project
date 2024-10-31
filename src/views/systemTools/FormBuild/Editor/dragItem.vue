@@ -1,7 +1,7 @@
 <template>
   <el-col>
     <el-form-item :label="element.label" :required="element.required">
-      <component :is="element.tag" v-bind="element"></component>
+      <component :is="element.component" v-bind="element"></component>
     </el-form-item>
   </el-col>
 </template>

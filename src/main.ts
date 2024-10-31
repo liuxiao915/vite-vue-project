@@ -9,4 +9,6 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   App.component(key, component)
 }
+import Logger from '@/utils/logger'
+Logger.prettyPrimary(`欢迎使用`, import.meta.env.VITE_APP_TITLE || '本系统')
 App.use(store).use(router).mount('#app')

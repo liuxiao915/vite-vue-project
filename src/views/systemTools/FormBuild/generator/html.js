@@ -349,7 +349,6 @@ export function makeUpHtml(conf, type) {
     htmlList.push(layouts[el.layout || 'colFormItem'](el))
   })
   const htmlStr = htmlList.join('\n')
-
   let temp = buildFormTemplate(conf, htmlStr, type)
   if (type === 'dialog') {
     temp = dialogWrapper(temp)

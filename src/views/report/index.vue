@@ -10,7 +10,7 @@
     <el-table border stripe :data="state.tableData" style="width: 100%">
       <el-table-column v-for="item in state.headerData" :key="item.prop" :prop="item.prop" :label="item.label" />
     </el-table>
-    <pagination @sizeChange="sizeChange" @currentChange="currentChange" />
+    <Pagination @sizeChange="sizeChange" @currentChange="currentChange" />
   </el-card>
 </template>
 <script setup>
@@ -410,7 +410,7 @@ const state = reactive({
         "attributeKeys": []
       }
     }
-  ],
+  ]
 })
 const onSubmit = (type, data) => {
   console.log('onSubmit', type, data)

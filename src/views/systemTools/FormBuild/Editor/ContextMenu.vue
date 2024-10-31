@@ -1,6 +1,5 @@
 <template>
-  <!-- :style="{ top: menuTop + 'px', left: menuLeft + 'px' }" -->
-  <div v-show="contextMenu.showMenu" class="contextmenu" :style="{ top: contextMenu.top + 'px', left: contextMenu.left + 'px' }">
+  <div v-show="showContextMenu" class="contextmenu" :style="{ top: contextMenuTop + 'px', left: contextMenuLeft + 'px' }">
     <ul @mouseup="handleMouseUp">
       <template v-if="curComponent">
         <template v-if="!curComponent.isLock">
@@ -22,9 +21,16 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
-import { ref } from 'vue'
-const contextMenu = defineModel('contextMenu')
+import { ref, watch } from 'vue'
+const showContextMenu = defineModel('showContextMenu')
+const contextMenuTop = defineModel('contextMenuTop')
+const contextMenuLeft = defineModel('contextMenuLeft')
 const curComponent = defineModel('curComponent')
+console.log('showContextMenu::::', showContextMenu.value)
+console.log('curComponent::::', curComponent.value)
+watch(() => curComponent.value, (val) => {
+  console.log('watch::::curComponent', val)
+})
 const store = useStore()
 const lock = () => {
   store.commit('lock')
