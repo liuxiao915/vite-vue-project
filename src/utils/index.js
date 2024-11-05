@@ -61,6 +61,26 @@ export const deepCopy = (target) => {
   }
   return target
 }
+export const deepClone = (origin) => {
+  if (origin === undefined) {
+    return undefined
+  }
+  return JSON.parse(JSON.stringify(origin))
+}
+
+/**
+ * 获取generateId
+ * @method generateId
+ * @return {string}
+ */
+export const generateId = (len = 27) => {
+  const data = 'xxxxxxxxxxxx4xxxyxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+  return data.substring(0, len)
+}
 /**
  * 获取符合条件的父元素
  * @param {*} element 根据子元素找父元素
@@ -489,20 +509,6 @@ export const utils = {
     }
 
     return !(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
-  },
-  /**
-   * 获取guid
-   * @method guid
-   * @return {string}
-   */
-  guid: function(len = 27) {
-    const keyData = 'xxxxxxxxxxxx4xxxyxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0
-      const v = c === 'x' ? r : (r & 0x3 | 0x8)
-      return v.toString(16)
-    })
-
-    return keyData.substring(0, len)
   },
   /**
    * 清除字符串两边空格
@@ -1090,9 +1096,9 @@ export const utils = {
     }
 
     if (urls) {
-      return `${url}${url.indexOf('?') > -1 ? '&' : '?'}_=${utils.guid(8)}#${urls[1]}`
+      return `${url}${url.indexOf('?') > -1 ? '&' : '?'}_=${generateId(8)}#${urls[1]}`
     } else {
-      return `${orgiUrl}${url.indexOf('?') > -1 ? '&' : '?'}_=${utils.guid(8)}`
+      return `${orgiUrl}${url.indexOf('?') > -1 ? '&' : '?'}_=${generateId(8)}`
     }
   },
   /**

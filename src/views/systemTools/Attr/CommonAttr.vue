@@ -42,7 +42,7 @@ const isIncludesColor = (str) => {
 }
 </script>
 
-<style lang="scss">
+<style lang="less">
 .v-common-attr {
   .el-input-group__prepend {
     padding: 0 10px;

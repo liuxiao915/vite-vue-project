@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import eventBus from '@/utils/eventBus'
+import { eventBus } from '@/utils/eventBus'
 // import runAnimation from '@/utils/runAnimation'
 import { mapState } from 'vuex'
 // import calculateComponentPositonAndSize from '@/utils/calculateComponentPositonAndSize'
 // import { mod360 } from '@/utils/translate'
-// import { isPreventDrop } from '@/utils/utils'
+// import { isPreventDrop } from '@/utils/indexs'
 
 export default {
   props: {
@@ -358,7 +358,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .shape {
   position: absolute;
 

@@ -26,7 +26,7 @@ import slider from './slider.vue';
 import { useStore } from 'vuex'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { utils } from '@/utils/index'
+import { generateId } from '@/utils/index'
 import PictureSlider from './picture-slider.vue'
 const store = useStore()
 const router = useRouter()
@@ -70,7 +70,7 @@ const submitForm = (formEl) => {
 const sliderSubmit = (data) => {
   store.commit('tabs/setUserInfo', ruleForm)
   router.push('/')
-  sessionStorage.setItem('token', utils.guid())
+  sessionStorage.setItem('token', generateId())
 }
 </script>
 

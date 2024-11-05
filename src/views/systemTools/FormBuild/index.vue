@@ -18,7 +18,14 @@
       </section>
       <section class="center">
         <div id="editor" ref="editor" class="editor content" @drop="handleDrop" @dragover="handleDragOver" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
-          <DragItem v-for="(item, index) in drawingList" :key="item.id" :element="item" :index="index" :form-conf="formConf" @deleteItem="drawingItemDelete" />
+          <Draggable v-model="drawingList" group="people" @start="drag=true" @end="drag=false" item-key="id">
+            <template #item="{ element }">
+              <el-form-item :label="element.label" :required="element.required">
+                <component :is="element.component" v-bind="element"></component>
+              </el-form-item>
+            </template>
+          </Draggable>
+          <!-- <DragItem v-for="(item, index) in drawingList" :key="item.id" :element="item" :index="index" :form-conf="formConf" @deleteItem="drawingItemDelete" /> -->
           <ContextMenu v-model:show-context-menu="showContextMenu" v-model:context-menu-top="contextMenuTop" v-model:context-menu-left="contextMenuLeft" v-model:cur-component="curComponent" />
         </div>
       </section>
@@ -41,15 +48,16 @@
 <script setup>
 import { ref, reactive, nextTick } from 'vue'
 import { useStore } from 'vuex'
-import { deepCopy, utils } from '@/utils/index.js'
+import { deepCopy, generateId } from '@/utils/index.js'
 import componentList from './components-list.js'
 import ComponentList from './components-list.vue'
 import beautifier from 'js-beautify'
 // import Editor from './Editor/index.vue'
 // import Shape from './Editor/Shape.vue'
-import DragItem from './Editor/dragItem1.jsx'
+// import DragItem from './Editor/dragItem1.jsx'
 import ContextMenu from './Editor/ContextMenu.vue'
 import { saveAs } from 'file-saver'
+import Draggable from 'vuedraggable'
 import { beautifierConf, layoutComponents, formComponents, customComponents, formConf } from './generator/config.js'
 import { makeUpHtml, vueTemplate, vueScript, cssStyle } from './generator/html'
 import { makeUpJs } from './generator/js'
@@ -177,7 +185,7 @@ const handleDrop = (e) => {
     const component = deepCopy(obj[type][index])
     component.style.top = e.clientY - rectInfo.y
     component.style.left = e.clientX - rectInfo.x
-    component.id = utils.guid()
+    component.id = generateId()
     // changeComponentSizeWithScale(component)
     const clone = cloneComponent(component)
     store.commit('formBuild/addComponent', component)
