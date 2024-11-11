@@ -28,7 +28,6 @@ export function createDesigner(vueInstance) {
     functions: '',  //全局函数
     layoutType: 'PC',
     jsonVersion: 3,
-
     onFormCreated: '',
     onFormMounted: '',
     onFormDataChange: '',
@@ -55,15 +54,7 @@ export function createDesigner(vueInstance) {
 
     initDesigner(resetFormJson) {
       this.widgetList = []
-      this.formConfig = deepClone(defaultFormConfig)
-
-      //输出版本信息和语雀链接
-      console.info(`%cVariantForm %cVer${'3.0.10'} %chttps://www.yuque.com/visualdev/vform3`,
-        "color:#409EFF;font-size: 22px;font-weight:bolder",
-        "color:#999;font-size: 12px",
-        "color:#333"
-      )
-
+      this.formConfig = defaultFormConfig
       if (!resetFormJson) {
         this.initHistoryData()
       }
@@ -104,7 +95,7 @@ export function createDesigner(vueInstance) {
       return {
         widgetList: [],
         // formConfig: deepClone(this.formConfig)
-        formConfig: deepClone(defaultFormConfig)
+        formConfig: defaultFormConfig
       }
     },
 

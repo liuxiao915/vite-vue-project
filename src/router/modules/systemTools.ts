@@ -33,6 +33,15 @@ export const systemToolsRouter:Array<RouteRecordRaw> = [
           title: '表单设计'
         },
         component: () => import('@/views/systemTools/formDesign/index.vue'),
+      },
+      {
+        path: '/systemTools/formDesign11',
+        name: 'systemTools/formDesign11',
+        meta: {
+          keepAlive: true,
+          title: '表单设计11'
+        },
+        component: () => import('@/views/systemTools/formDesign11/index.vue'),
       }
     ]
   }

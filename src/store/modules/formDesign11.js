@@ -1,11 +1,6 @@
 export default {
   namespaced: true,
   state: () => ({
-    historyData: {
-      index: -1,
-      maxStep: 20,
-      steps: [],
-    },
     drawingList: [], // 添加的组件数据
   }),
   mutations: {

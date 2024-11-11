@@ -89,7 +89,7 @@ export default {
   props: {
     designer: Object,
   },
-  inject: ['getBannedWidgets', 'getDesignerConfig'],
+  inject: ['getDesignerConfig'],
   data() {
     return {
       designerConfig: this.getDesignerConfig(),
@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     isBanned(wName) {
-      return this.getBannedWidgets().indexOf(wName) > -1
+      return [].indexOf(wName) > -1
     },
     loadWidgets() {
       this.containers = CONS.map(con => {

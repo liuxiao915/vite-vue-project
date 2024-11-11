@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 const app = createApp({});
-export const eventBus = app.provide('eventBus', app);
-
+// export const eventBus = app.provide('eventBus', app);
+export const eventBus = app.config.globalProperties.eventBus = app.Vue;
 // 在组件 A 中
 // eventBus.$emit('someEvent', data);
 // 在组件 B 中

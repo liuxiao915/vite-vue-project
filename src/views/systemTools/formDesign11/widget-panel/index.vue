@@ -1,15 +1,18 @@
 <template>
   <el-scrollbar class="side-scroll-bar" :style="{height: scrollerHeight}">
     <div class="panel-container">
-
       <el-tabs v-model="firstTab" class="no-bottom-margin indent-left-margin">
         <el-tab-pane name="componentLib">
           <template #label>
             <span><svg-icon svg-name="el-set-up" /> {{i18nt('designer.componentLib')}}</span>
           </template>
-
           <el-collapse v-model="activeNames" class="widget-collapse">
             <el-collapse-item name="1" :title="i18nt('designer.containerTitle')">
+              <div class="components-list" @dragstart="handleDragStart">
+                <div v-for="(item, index) in containers" :key="index" class="list" :draggable="true" :data-index="index" data-type="layout">
+                  <span>{{i18n2t(`designer.widgetLabel.${item.type}`, `extension.widgetLabel.${item.type}`)}}</span>
+                </div>
+              </div>
               <draggable tag="ul" :list="containers" item-key="key" :group="{name: 'dragGroup', pull: 'clone', put: false}" :clone="handleContainerWidgetClone" ghost-class="ghost" :sort="false" :move="checkContainerMove" @end="onContainerDragEnd">
                 <template #item="{ element: ctn }">
                   <li class="container-widget-item" :title="ctn.displayName" @dblclick="addContainerByDbClick(ctn)">
@@ -59,7 +62,7 @@
             <span><svg-icon svg-name="el-form-template" /> {{i18nt('designer.formLib')}}</span>
           </template>
 
-          <template v-for="(ft, idx) in formTemplates">
+          <template v-for="(ft, idx) in formTemplates" :key="idx">
             <el-card :bord-style="{ padding: '0' }" shadow="hover" class="ft-card">
               <el-popover placement="right" trigger="hover">
                 <template #reference>
@@ -75,9 +78,7 @@
             </el-card>
           </template>
         </el-tab-pane>
-
       </el-tabs>
-
     </div>
   </el-scrollbar>
 </template>
@@ -89,16 +90,6 @@ import { generateId } from "@/utils/index"
 import i18n from "@/utils/i18n"
 import draggable from 'vuedraggable'
 // import axios from 'axios'
-
-// import ftImg1 from '@/assets/ft-images/t1.png'
-// import ftImg2 from '@/assets/ft-images/t2.png'
-// import ftImg3 from '@/assets/ft-images/t3.png'
-// import ftImg4 from '@/assets/ft-images/t4.png'
-// import ftImg5 from '@/assets/ft-images/t5.png'
-// import ftImg6 from '@/assets/ft-images/t6.png'
-// import ftImg7 from '@/assets/ft-images/t7.png'
-// import ftImg8 from '@/assets/ft-images/t8.png'
-
 export default {
   name: "FieldPanel",
   mixins: [i18n],
@@ -108,7 +99,7 @@ export default {
   props: {
     designer: Object,
   },
-  inject: ['getBannedWidgets', 'getDesignerConfig'],
+  inject: ['getDesignerConfig'],
   data() {
     return {
       designerConfig: this.getDesignerConfig(),
@@ -124,17 +115,7 @@ export default {
       advancedFields: [],
       customFields: [],
 
-      formTemplates: formTemplates,
-      // ftImages: [
-      //   {imgUrl: ftImg1},
-      //   {imgUrl: ftImg2},
-      //   {imgUrl: ftImg3},
-      //   {imgUrl: ftImg4},
-      //   {imgUrl: ftImg5},
-      //   {imgUrl: ftImg6},
-      //   {imgUrl: ftImg7},
-      //   {imgUrl: ftImg8},
-      // ]
+      formTemplates: formTemplates
     }
   },
   computed: {
@@ -144,8 +125,6 @@ export default {
     this.loadWidgets()
   },
   mounted() {
-    //this.loadWidgets()
-
     this.scrollerHeight = window.innerHeight - 56 + 'px'
     // addWindowResizeHandler(() => {
     //   this.$nextTick(() => {
@@ -155,7 +134,7 @@ export default {
   },
   methods: {
     isBanned(wName) {
-      return this.getBannedWidgets().indexOf(wName) > -1
+      return [].indexOf(wName) > -1
     },
 
     showFormTemplates() {
@@ -174,7 +153,7 @@ export default {
           displayName: this.i18n2t(`designer.widgetLabel.${con.type}`, `extension.widgetLabel.${con.type}`)
         }
       }).filter(con => {
-        return !con.internal && !this.isBanned(con.type)
+        return !con.internal
       })
       this.basicFields = BFS.map(fld => {
         return {
@@ -208,6 +187,7 @@ export default {
     },
 
     handleContainerWidgetClone(origin) {
+      console.log('origin:::', origin)
       return this.designer.copyNewContainerWidget(origin)
     },
 
@@ -266,8 +246,27 @@ export default {
 
 }
 </script>
-
+<script setup>
+const handleDragStart = (e) => {
+  e.dataTransfer.setData('index', e.target.dataset.index)
+  e.dataTransfer.setData('type', e.target.dataset.type)
+}
+</script>
 <style lang="less" scoped>
+.components-list {
+  width: 200px;
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(auto-fill, 80px);
+  .list {
+    border: 1px solid #ddd;
+    cursor: grab;
+    text-align: center;
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
 .color-svg-icon {
   -webkit-font-smoothing: antialiased;
   color: #7c7d82;

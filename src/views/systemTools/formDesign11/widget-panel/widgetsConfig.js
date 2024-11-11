@@ -37,6 +37,22 @@ export const containers = [
     }
   },
   {
+    type: 'card',
+    category: 'container',
+    icon: 'card',
+    widgetList: [],
+    options: {
+      name: '',
+      label: 'card',
+      hidden: false,
+      folded: false,
+      showFold: true,
+      cardWidth: '100%',
+      shadow: 'never',
+      customClass: '',
+    }
+  },
+  {
     type: 'grid-col',
     category: 'container',
     icon: 'grid-col',
@@ -86,22 +102,6 @@ export const containers = [
       active: false,
       disabled: false,
       customClass: '',  //自定义css类名
-    }
-  },
-  {
-    type: 'card',
-    category: 'container',
-    icon: 'card',
-    widgetList: [],
-    options: {
-      name: '',
-      label: 'card',
-      hidden: false,
-      folded: false,
-      showFold: true,
-      cardWidth: '100%',
-      shadow: 'never',
-      customClass: '',
     }
   }
 ]
@@ -256,9 +256,9 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       optionItems: [
-        {label: 'radio 1', value: 1},
-        {label: 'radio 2', value: 2},
-        {label: 'radio 3', value: 3},
+        { label: 'radio 1', value: 1 },
+        { label: 'radio 2', value: 2 },
+        { label: 'radio 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
@@ -296,9 +296,9 @@ export const basicFields = [
       disabled: false,
       hidden: false,
       optionItems: [
-        {label: 'check 1', value: 1},
-        {label: 'check 2', value: 2},
-        {label: 'check 3', value: 3},
+        { label: 'check 1', value: 1 },
+        { label: 'check 2', value: 2 },
+        { label: 'check 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
@@ -341,9 +341,9 @@ export const basicFields = [
       multiple: false,
       multipleLimit: 0,
       optionItems: [
-        {label: 'select 1', value: 1},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        { label: 'select 1', value: 1 },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 },
       ],
       required: false,
       requiredHint: '',
@@ -902,9 +902,9 @@ export const advancedFields = [
       checkStrictly: false,  //可选择任意一级选项，默认不开启
       showAllLevels: true,  //显示完整路径
       optionItems: [
-        {label: 'select 1', value: 1, children: [{label: 'child 1', value: 11}]},
-        {label: 'select 2', value: 2},
-        {label: 'select 3', value: 3},
+        { label: 'select 1', value: 1, children: [{ label: 'child 1', value: 11 }] },
+        { label: 'select 2', value: 2 },
+        { label: 'select 3', value: 3 },
       ],
       required: false,
       requiredHint: '',

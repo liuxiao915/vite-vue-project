@@ -5,14 +5,6 @@
         <svg-icon svg-name="undo" /></el-button>
       <el-button link type="primary" :disabled="redoDisabled" :title="i18nt('designer.toolbar.redoHint')" @click="redoHistory">
         <svg-icon svg-name="redo" /></el-button>
-      <el-button-group style="margin-left: 20px">
-        <el-button :type="layoutType === 'PC' ? 'info': ''" @click="changeLayoutType('PC')">
-          {{i18nt('designer.toolbar.pcLayout')}}</el-button>
-        <el-button :type="layoutType === 'Pad' ? 'info': ''" @click="changeLayoutType('Pad')">
-          {{i18nt('designer.toolbar.padLayout')}}</el-button>
-        <el-button :type="layoutType === 'H5' ? 'info': ''" @click="changeLayoutType('H5')">
-          {{i18nt('designer.toolbar.mobileLayout')}}</el-button>
-      </el-button-group>
       <el-button style="margin-left: 20px" :title="i18nt('designer.toolbar.nodeTreeHint')" @click="showNodeTreeDrawer">
         <svg-icon svg-name="node-tree" /></el-button>
     </div>
@@ -166,7 +158,7 @@
 </template>
 
 <script>
-import VFormRender from '@/components/form-render/index'
+import VFormRender from '../form-render/index'
 import CodeEditor from '@/components/code-editor/index'
 import Clipboard from 'clipboard'
 import {
@@ -413,10 +405,6 @@ export default {
 
     redoHistory() {
       this.designer.redoHistoryStep()
-    },
-
-    changeLayoutType(newType) {
-      this.designer.changeLayoutType(newType)
     },
 
     clearFormWidget() {

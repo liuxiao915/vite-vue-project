@@ -5,6 +5,7 @@ import system from './modules/system'
 import systemManage from './modules/systemManage'
 import tabs from './modules/tabs'
 import theme from './modules/theme'
+import formDesign11 from './modules/formDesign11'
 // 自动引入
 // const files  = import.meta.glob('./modules/*.js', { eager: true })
 // const modules = {}
@@ -23,6 +24,7 @@ export default createStore({
     system,
     systemManage,
     tabs,
-    theme
+    theme,
+    formDesign11
   }
 })

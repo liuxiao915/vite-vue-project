@@ -7,11 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Aaa: typeof import('./../components/code-editor/aaa.vue')['default']
     Aside: typeof import('./../components/layout/aside.vue')['default']
+    Bbb: typeof import('./../components/code-editor/bbb.vue')['default']
     Breadcrumb: typeof import('./../components/layout/breadcrumb.vue')['default']
     Cascader: typeof import('./../components/cascader.vue')['default']
     ChangePassword: typeof import('./../components/layout/components/ChangePassword.vue')['default']
     ChangeTheme: typeof import('./../components/layout/components/ChangeTheme.vue')['default']
+    CodeEditor: typeof import('./../components/code-editor/index.vue')['default']
     Collapse: typeof import('./../components/collapse.vue')['default']
     CutPicture: typeof import('./../components/vue-cropper/cutPicture.vue')['default']
     Dialog: typeof import('../components/layout/components/PersonalCenter.vue')['default']

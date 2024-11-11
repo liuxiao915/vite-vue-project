@@ -1,29 +1,24 @@
 <template>
-  <div class="form-widget-container">
-
+  <div class="form-widget-container" @drop="handleDrop" @dragover="handleDragOver" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
     <el-form class="full-height-width widget-form" :label-position="labelPosition" :class="[customClass, layoutType + '-layout']" :size="size" :validate-on-rule-change="false">
-
       <template v-if="designer.widgetList.length === 0">
         <div class="no-widget-hint">{{i18nt('designer.noWidgetHint')}}</div>
       </template>
-
       <div class="form-widget-list">
-        <draggable :list="designer.widgetList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 300}" tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler" @end="onDragEnd" @add="onDragAdd" @update="onDragUpdate" :move="checkMove">
+        <draggable :list="designer.widgetList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 300}" tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler" @add="onDragAdd" @update="onDragUpdate" :move="checkMove">
           <template #item="{ element: widget, index }">
             <div class="transition-group-el">
               <template v-if="'container' === widget.category">
-                <component :is="getWidgetName(widget)" :widget="widget" :designer="designer" :key="widget.id" :parent-list="designer.widgetList" :index-of-parent-list="index" :parent-widget="null"></component>
+                <component :is="widget.type + '-widget'" :widget="widget" :designer="designer" :key="widget.id" :parent-list="designer.widgetList" :index-of-parent-list="index" :parent-widget="null"></component>
               </template>
               <template v-else>
-                <component :is="getWidgetName(widget)" :field="widget" :designer="designer" :key="widget.id" :parent-list="designer.widgetList" :index-of-parent-list="index" :parent-widget="null" :design-state="true"></component>
+                <component :is="widget.type + '-widget'" :field="widget" :designer="designer" :key="widget.id" :parent-list="designer.widgetList" :index-of-parent-list="index" :parent-widget="null" :design-state="true"></component>
               </template>
             </div>
           </template>
         </draggable>
       </div>
-
     </el-form>
-
   </div>
 </template>
 
@@ -122,10 +117,6 @@ export default {
     this.designer.registerFormWidget(this)
   },
   methods: {
-    getWidgetName(widget) {
-      return widget.type + '-widget'
-    },
-
     disableFirefoxDefaultDrop() {
       let isFirefox = (navigator.userAgent.toLowerCase().indexOf("firefox") !== -1)
       if (isFirefox) {
@@ -135,12 +126,8 @@ export default {
         }
       }
     },
-
-    onDragEnd(evt) {
-      //console.log('drag end000', evt)
-    },
-
     onDragAdd(evt) {
+      console.log('onDragAdd:::', evt)
       const newIndex = evt.newIndex
       if (!!this.designer.widgetList[newIndex]) {
         this.designer.setSelected(this.designer.widgetList[newIndex])
@@ -187,7 +174,49 @@ export default {
   }
 }
 </script>
-
+<script setup>
+import { ref, reactive, nextTick } from 'vue'
+import { containers, basicFields as BFS, advancedFields as AFS, customFields as CFS } from "../widget-panel/widgetsConfig"
+const props = defineProps({
+  designer: Object,
+  formConfig: Object,
+  optionData: { //prop传入的选项数据
+    type: Object,
+    default: () => ({})
+  },
+  globalDsv: {
+    type: Object,
+    default: () => ({})
+  },
+})
+const handleDrop = (e) => {
+  e.preventDefault() // 阻止的dom元素默认的事件，如提交的按钮，超链接的跳转等。
+  e.stopPropagation() // 阻止的不是事件本身，是事件的传播
+  const index = e.dataTransfer.getData('index')
+  const type = e.dataTransfer.getData('type')
+  props.designer.copyNewContainerWidget(containers[index])
+}
+const handleDragOver = (e) => {
+  e.preventDefault()
+  e.dataTransfer.dropEffect = 'copy'
+}
+const handleMouseDown = (e) => {
+  e.stopPropagation()
+  // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
+  // if (!curComponent.value) {
+  //   e.preventDefault()
+  // }
+}
+const handleMouseUp = (e) => {
+  // if (!this.isClickComponent) {
+  //   store.commit('setCurComponent', { component: null, index: null })
+  // }
+  // 0 左击 1 滚轮 2 右击
+  if (e.button != 2) {
+    // showContextMenu.value = false
+  }
+}
+</script>
 <style lang="less" scoped>
 .container-scroll-bar {
   :deep(.el-scrollbar__wrap),
