@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-const radio1 = ref('1')
+const radio = ref('1')
 </script>
 <style lang="less" scoped>
 </style>

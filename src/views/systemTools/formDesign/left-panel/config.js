@@ -58,58 +58,58 @@ export const containersFields = [
       customClass: '',
     }
   },
-  // {
-  //   type: 'grid-col',
-  //   category: 'container',
-  //   icon: 'grid-col',
-  //   internal: true,
-  //   widgetList: [],
-  //   options: {
-  //     name: '',
-  //     hidden: false,
-  //     span: 12,
-  //     offset: 0,
-  //     push: 0,
-  //     pull: 0,
-  //     responsive: false,  //是否开启响应式布局
-  //     md: 12,
-  //     sm: 12,
-  //     xs: 12,
-  //     customClass: '',  //自定义css类名
-  //   }
-  // },
-  // {
-  //   type: 'table-cell',
-  //   category: 'container',
-  //   icon: 'table-cell',
-  //   internal: true,
-  //   widgetList: [],
-  //   merged: false,
-  //   options: {
-  //     name: '',
-  //     cellWidth: '',
-  //     cellHeight: '',
-  //     colspan: 1,
-  //     rowspan: 1,
-  //     wordBreak: false,  //是否自动换行
-  //     customClass: '',  //自定义css类名
-  //   }
-  // },
-  // {
-  //   type: 'tab-pane',
-  //   category: 'container',
-  //   icon: 'tab-pane',
-  //   internal: true,
-  //   widgetList: [],
-  //   options: {
-  //     name: '',
-  //     label: '',
-  //     hidden: false,
-  //     active: false,
-  //     disabled: false,
-  //     customClass: '',  //自定义css类名
-  //   }
-  // }
+  {
+    type: 'grid-col',
+    category: 'container',
+    icon: 'grid-col',
+    internal: true,
+    widgetList: [],
+    options: {
+      name: '',
+      hidden: false,
+      span: 12,
+      offset: 0,
+      push: 0,
+      pull: 0,
+      responsive: false,  //是否开启响应式布局
+      md: 12,
+      sm: 12,
+      xs: 12,
+      customClass: '',  //自定义css类名
+    }
+  },
+  {
+    type: 'table-cell',
+    category: 'container',
+    icon: 'table-cell',
+    internal: true,
+    widgetList: [],
+    merged: false,
+    options: {
+      name: '',
+      cellWidth: '',
+      cellHeight: '',
+      colspan: 1,
+      rowspan: 1,
+      wordBreak: false,  //是否自动换行
+      customClass: '',  //自定义css类名
+    }
+  },
+  {
+    type: 'tab-pane',
+    category: 'container',
+    icon: 'tab-pane',
+    internal: true,
+    widgetList: [],
+    options: {
+      name: '',
+      label: '',
+      hidden: false,
+      active: false,
+      disabled: false,
+      customClass: '',  //自定义css类名
+    }
+  }
 ]
 // 基础组件
 export const basicFields = [
@@ -250,7 +250,7 @@ export const basicFields = [
     type: 'radio',
     icon: 'radio-field',
     label: '单选框',
-    component: 'radio-field',
+    component: 'radio-fiel',
     formItemFlag: true,
     options: {
       name: '',

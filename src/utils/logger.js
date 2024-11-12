@@ -58,11 +58,11 @@ Logger.printBack = function(type = 'primary', text) {
 Logger.pretty = function(type = 'primary', title, text) {
   if (typeof text === 'object') {
     console.group('Console Group', title)
-    console.log(
-      `%c ${title}`,
-      `background:${Logger.typeColor(type)};border:1px solid ${Logger.typeColor(type)};
-        padding: 1px; border-radius: 4px; color: #fff;`
-    )
+    // console.log(
+    //   `%c ${title}`,
+    //   `background:${Logger.typeColor(type)};border:1px solid ${Logger.typeColor(type)};
+    //     padding: 1px; border-radius: 4px; color: #fff;`
+    // )
     isArray(text) ? console.table(text) : console.dir(text)
     console.groupEnd()
     return
