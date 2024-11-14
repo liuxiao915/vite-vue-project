@@ -299,7 +299,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .sub-form-container {
   margin-bottom: 8px;
   text-align: left; //IE浏览器强制居左对齐

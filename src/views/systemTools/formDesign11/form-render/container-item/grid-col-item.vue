@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .blank-cell {
   font-style: italic;
   color: #cccccc;

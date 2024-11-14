@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 div.table-container {
   table.table-layout {
     width: 100%;

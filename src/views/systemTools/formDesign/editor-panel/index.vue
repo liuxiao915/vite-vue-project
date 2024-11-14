@@ -5,17 +5,20 @@
  @LastEditTime: 2024-10-10 16:43:29
 -->
 <template>
+  <ToolbarPanel />
   <div id="editor" ref="editor" class="editor" @drop="handleDrop" @dragover="handleDragOver" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
-    <Draggable v-model="drawingList" group="people" @start="drag=true" @end="drag=false" item-key="id">
-      <template #item="{ element }">
-        <template v-if="element.category === 'container'">
-          <component :is="element.component" v-bind:item="element"></component>
+    <el-form :validate-on-rule-change="false">
+      <Draggable v-model="drawingList" group="people" @start="drag=true" @end="drag=false" item-key="id">
+        <template #item="{ element }">
+          <template v-if="element.category === 'container'">
+            <component :is="element.component" v-bind:item="element"></component>
+          </template>
+          <el-form-item v-else :label="element.label" :required="element.required">
+            <component :is="element.component" v-bind:item="element"></component>
+          </el-form-item>
         </template>
-        <el-form-item v-else :label="element.label" :required="element.required">
-          <component :is="element.component" v-bind:item="element"></component>
-        </el-form-item>
-      </template>
-    </Draggable>
+      </Draggable>
+    </el-form>
   </div>
 </template>
 <script setup>
@@ -23,6 +26,7 @@ import { ref, reactive, nextTick, watch } from 'vue'
 import { useStore } from 'vuex'
 import Draggable from 'vuedraggable'
 import { generateId } from '@/utils/index.js'
+import ToolbarPanel from '../toolbar-panel/index.vue'
 import { containersFields, basicFields, advancedFields, customFields } from '../left-panel/config.js'
 const state = reactive({})
 const store = useStore()

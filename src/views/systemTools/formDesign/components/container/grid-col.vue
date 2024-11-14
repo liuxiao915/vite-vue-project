@@ -1,12 +1,14 @@
 <template>
   <el-col v-if="item.type === 'grid-col'" class="grid-cell" v-bind="layoutProps" :style="colHeightStyle" :key="item.id" @click.stop="selectWidget(item)">
     <draggable :list="item.widgetList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 200}" tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler" @end="(evt) => onGridDragEnd(evt, item.widgetList)" @add="(evt) => onGridDragAdd(evt, item.widgetList)" @update="onGridDragUpdate" :move="checkContainerMove">
-      <template #item="{ element: subWidget, index: swIdx }">
+      <template #item="{ element, index }">
         <div class="form-widget-list">
-          <template v-if="subWidget.category === 'container'">
-            <component :is="subWidget.component" :item="subWidget" :key="subWidget.id" :parent-list="item.widgetList" :index-of-parent-list="swIdx" :parent-widget="item"></component>
+          <template v-if="element.category === 'container'">
+            <component :is="element.component" :item="element" :key="element.id" :parent-list="item.widgetList" :index-of-parent-list="index" :parent-widget="item"></component>
           </template>
-          <component v-else :is="subWidget.component" :field="subWidget" :key="subWidget.id" :parent-list="item.widgetList" :index-of-parent-list="swIdx" :parent-widget="item" :design-state="true"></component>
+          <el-form-item v-else :label="element.label" :required="element.required">
+            <component :is="element.component" v-bind:item="element"></component>
+          </el-form-item>
         </div>
       </template>
     </draggable>
@@ -124,9 +126,7 @@ export default {
 
   // },
   methods: {
-    onGridDragEnd(evt, subList) {
-      //
-    },
+    onGridDragEnd(evt, subList) { },
 
     onGridDragAdd(evt, subList) {
       const newIndex = evt.newIndex

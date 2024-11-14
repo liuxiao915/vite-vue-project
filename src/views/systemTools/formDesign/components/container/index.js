@@ -6,5 +6,4 @@ for (const path in modules) {
   comps[cname] = modules[path].default
   App.component(cname, modules[path].default)
 }
-console.log('comps:::', comps)
 export default comps

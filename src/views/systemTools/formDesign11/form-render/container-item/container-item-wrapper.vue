@@ -15,20 +15,19 @@
 </template>
 
 <script>
-  export default {
-    name: "container-item-wrapper",
-    props: {
-      widget: Object,
+export default {
+  name: "container-item-wrapper",
+  props: {
+    widget: Object,
+  },
+  computed: {
+    customClass() {
+      return !!this.widget.options.customClass ? this.widget.options.customClass.join(' ') : ''
     },
-    computed: {
-      customClass() {
-        return !!this.widget.options.customClass ? this.widget.options.customClass.join(' ') : ''
-      },
 
-    }
   }
+}
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
 </style>
