@@ -8,7 +8,7 @@
   <ToolbarPanel />
   <div id="editor" ref="editor" class="editor" @drop="handleDrop" @dragover="handleDragOver" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
     <el-form :validate-on-rule-change="false">
-      <Draggable v-model="drawingList" group="people" @start="drag=true" @end="drag=false" item-key="id">
+      <Draggable v-model="drawingList" group="dragGroup" @start="drag=true" @end="drag=false" @update="dragUpdate" item-key="id">
         <template #item="{ element }">
           <template v-if="element.category === 'container'">
             <component :is="element.component" v-bind:item="element"></component>
@@ -105,6 +105,9 @@ watch(drawingList.value, (val) => {
 const handleDragOver = (e) => {
   e.preventDefault()
   e.dataTransfer.dropEffect = 'copy'
+}
+const dragUpdate = (e) => {
+  console.log('dragUpdate:::', drawingList.value)
 }
 // 全局监听按键事件
 const contextMenuTop = ref(0)

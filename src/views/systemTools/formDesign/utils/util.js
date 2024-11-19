@@ -17,7 +17,7 @@ export const generateId = function() {
   return Math.floor(Math.random() * 100000 + Math.random() * 20000 + Math.random() * 5000);
 };
 
-export const deepClone = function (origin) {
+export const deepClone = function(origin) {
   if (origin === undefined) {
     return undefined
   }
@@ -38,17 +38,17 @@ export const overwriteObj = function(obj1, obj2) {  /* 浅拷贝对象属性，o
 }
 
 /* 用Function对象实现eval函数功能 */
-export const evalFn = function (fn, DSV = null, VFR = null) {
+export const evalFn = function(fn, DSV = null, VFR = null) {
   let f = new Function('DSV', 'VFR', 'return ' + fn);
   return f(DSV, VFR);
 };
 
-export const addWindowResizeHandler = function (handler) {
+export const addWindowResizeHandler = function(handler) {
   let oldHandler = window.onresize
   if (typeof window.onresize != 'function') {
     window.onresize = handler
   } else {
-    window.onresize = function () {
+    window.onresize = function() {
       oldHandler()
       handler()
     }
@@ -63,7 +63,7 @@ const createStyleSheet = function() {
   return style.sheet;
 }
 
-export const insertCustomCssToHead = function (cssCode, formId = '') {
+export const insertCustomCssToHead = function(cssCode, formId = '') {
   let head = document.getElementsByTagName('head')[0]
   let oldStyle = document.getElementById('vform-custom-css')
   if (!!oldStyle) {
@@ -80,14 +80,14 @@ export const insertCustomCssToHead = function (cssCode, formId = '') {
   newStyle.id = !!formId ? 'vform-custom-css' + '-' + formId : 'vform-custom-css'
   try {
     newStyle.appendChild(document.createTextNode(cssCode))
-  } catch(ex) {
+  } catch (ex) {
     newStyle.styleSheet.cssText = cssCode
   }
 
   head.appendChild(newStyle)
 }
 
-export const insertGlobalFunctionsToHtml = function (functionsCode, formId = '') {
+export const insertGlobalFunctionsToHtml = function(functionsCode, formId = '') {
   let bodyEle = document.getElementsByTagName('body')[0]
   let oldScriptEle = document.getElementById('v_form_global_functions')
   !!oldScriptEle && bodyEle.removeChild(oldScriptEle)  //先清除后插入！！
@@ -121,7 +121,7 @@ export const loadRemoteScript = function(srcPath, callback) {  /*加载远程js�
     s.id = sid
     document.body.appendChild(s)
 
-    s.onload = s.onreadystatechange = function (_, isAbort) { /* 借鉴自ace.js */
+    s.onload = s.onreadystatechange = function(_, isAbort) { /* 借鉴自ace.js */
       if (isAbort || !s.readyState || s.readyState === "loaded" || s.readyState === "complete") {
         s = s.onload = s.onreadystatechange = null
         if (!isAbort) {
@@ -338,9 +338,9 @@ export function copyToClipboard(content, clickEvent, $message, successMsg, error
 export function getQueryParam(variable) {
   let query = window.location.search.substring(1);
   let vars = query.split("&")
-  for (let i=0; i<vars.length; i++) {
+  for (let i = 0; i < vars.length; i++) {
     let pair = vars[i].split("=")
-    if(pair[0] == variable) {
+    if (pair[0] == variable) {
       return pair[1]
     }
   }
@@ -372,6 +372,6 @@ export function getDefaultFormConfig() {
 export function buildDefaultFormJson() {
   return {
     widgetList: [],
-    formConfig: deepClone( getDefaultFormConfig() )
+    formConfig: deepClone(getDefaultFormConfig())
   }
 }

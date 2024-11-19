@@ -16,6 +16,7 @@ const props = defineProps({
   }
 })
 const value = ref('')
+console.log('grid.vue-----grid.vue')
 </script>
 
 <style lang="less" scoped>

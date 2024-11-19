@@ -27,7 +27,6 @@ export default {
   }),
   mutations: {
     addComponent: (state, payload) => {
-      console.log('addComponent::', payload, state.drawingList)
       state.drawingList.push(payload)
       localStorage.setItem('drawingList', JSON.stringify(state.drawingList))
     },
@@ -36,6 +35,24 @@ export default {
     },
     deleteComponent: (state, index) => {
       state.drawingList.splice(index, 1)
+    },
+    clearComponent: (state, index) => {
+      state.drawingList = []
+      localStorage.setItem('drawingList', JSON.stringify([]))
+    },
+    historyChange: (state) => {
+      if (state.historyData.index === state.historyData.maxStep - 1) {
+        state.historyData.steps.shift()
+      } else {
+        state.historyData.index++
+      }
+      state.historyData.steps[state.historyData.index] = ({
+        widgetList: JSON.parse(JSON.stringify(state.widgetList || [])),
+        formConfig: JSON.parse(JSON.stringify(state.formConfig || {}))
+      })
+      if (state.historyData.index < state.historyData.steps.length - 1) {
+        state.historyData.steps = state.historyData.steps.slice(0, state.historyData.index + 1)
+      }
     },
   },
   actions: {}

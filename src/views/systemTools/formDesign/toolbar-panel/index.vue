@@ -6,6 +6,7 @@
 -->
 <template>
   <div class="toolbar" ref="toolbar">
+    <el-button @click="hanleClick('clear')">清空</el-button>
     <el-button @click="hanleClick('preview')">预览</el-button>
     <el-button @click="hanleClick('screenshot')">截图</el-button>
     <el-button @click="hanleClick('copy')">复制代码</el-button>
@@ -16,17 +17,21 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import html2canvas from 'html2canvas'
+import { useStore } from 'vuex'
 import ExportDialog from './export-dialog.vue'
 const state = reactive({})
+const store = useStore()
 const visible = ref(false)
 const exportLoading = ref(false)
 const hanleClick = (type) => {
-  if (type === 'preview') {
+  if (type === 'clear') {
+    store.commit('formBuild/clearComponent')
+  } else if (type === 'preview') {
 
   } else if (type === 'screenshot') {
     // exportImg('editor', '效果图')
   } else if (type === 'copy') {
-
+    visible.value = true
   } else if (type === 'export') {
     visible.value = true
   }

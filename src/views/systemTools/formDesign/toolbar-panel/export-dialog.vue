@@ -6,15 +6,14 @@
 -->
 <template>
   <el-dialog title="导出文件" v-model="model" :show-close="true" center append-to-body width="65%" @open="openDialog">
-    <el-tabs v-model="activeTab" @tab-click="handleClick">
+    <el-tabs v-model="activeTab" @tab-change="tabChange">
       <el-tab-pane v-for="item in state.tabList" :key="item.label" :label="item.label" :name="item.label" />
     </el-tabs>
-    <code-editor :mode="activeTab" :readonly="true" v-model="code" :user-worker="false"></code-editor>
-    <!-- <CodeEditorBB :mode="activeTab" :readonly="true" v-model="code" :user-worker="false"></CodeEditorBB> -->
+    <code-editor v-if="model" :mode="state.tabList.filter(item => item.label === activeTab)[0].mode" :readonly="true" v-model="code" :user-worker="false" />
     <template #footer>
       <div class="dialog-footer">
-        <el-button type="primary" :data-clipboard-text="code" @click="copyVueCode">复制代码</el-button>
-        <el-button type="primary" @click="saveVueCode">导出文件</el-button>
+        <el-button type="primary" @click="copyCode">复制代码</el-button>
+        <el-button type="primary" @click="saveCode">导出文件</el-button>
         <el-button @click="model = false">关闭</el-button>
       </div>
     </template>
@@ -23,32 +22,43 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import beautifier from 'js-beautify'
-import { mapState, useStore } from 'vuex'
+import { useStore } from 'vuex'
 import { genSFC } from './generator.js'
-import CodeEditorBB from '@/components/code-editor/bbb.vue'
+import { saveAs } from 'file-saver'
+import { useClipboard } from "@vueuse/core"
+
 const store = useStore()
 const model = defineModel()
 const state = reactive({
   tabList: [
-    { label: 'Vue3' },
-    { label: 'Vue2' },
-    { label: 'HTML' },
-    { label: 'JSON' },
+    { label: 'Vue3', mode: 'javascript' },
+    { label: 'Vue2', mode: 'javascript' },
+    { label: 'HTML', mode: 'html' },
+    { label: 'JSON', mode: 'json' },
   ]
 })
 const activeTab = ref('Vue3')
 const code = ref(null)
-const handleClick = (tab, event) => {
-  console.log(tab, event)
+const { copy, isSupported } = useClipboard()
+const copyCode = () => {
+  if (!isSupported) {
+    return ElMessage({
+      message: '您的浏览器不支持Clipboard API!',
+      type: 'warning'
+    })
+  }
+  copy(code.value)
+  ElMessage({ message: '复制成功!', type: 'success' })
 }
-const copyVueCode = (code) => {
-  console.log(code)
-}
-const saveVueCode = (code) => {
-  console.log(code)
+const saveCode = () => {
+  const blob = new Blob([code.value], { type: 'text/plain;charset=utf-8' })
+  saveAs(blob, 'form.vue')
 }
 const formConfig = computed(() => store.state.formBuild.formConfig)
 const drawingList = computed(() => store.state.formBuild.drawingList)
+const tabChange = (tab) => {
+  code.value = genSFC(formConfig.value, drawingList.value, beautifier, tab)
+}
 const openDialog = () => {
   code.value = genSFC(formConfig.value, drawingList.value, beautifier, true)
 }

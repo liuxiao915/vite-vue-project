@@ -77,6 +77,7 @@ const hanleClick = (type) => {
 
   } else if (type === 'generateFiles') {
     const codeStr = generateCode()
+    console.log('codeStr:::', codeStr)
     const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' })
     saveAs(blob, 'form.vue')
   }
