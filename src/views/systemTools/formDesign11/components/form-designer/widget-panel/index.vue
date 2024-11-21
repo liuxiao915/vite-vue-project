@@ -55,7 +55,7 @@
             <span><svg-icon svg-name="el-form-template" /> {{ i18nt('designer.formLib') }}</span>
           </template>
 
-          <template v-for="(ft, idx) in formTemplates">
+          <template v-for="(ft, idx) in formTemplates" :key="idx">
             <el-card :bord-style="{ padding: '0' }" shadow="hover" class="ft-card">
               <el-popover placement="right" trigger="hover">
                 <template #reference>
@@ -82,14 +82,10 @@ import { formTemplates } from './templatesConfig'
 import { addWindowResizeHandler, generateId } from "@/views/systemTools/formDesign11/utils/util"
 import i18n from "@/views/systemTools/formDesign11/utils/i18n"
 import axios from 'axios'
-import SvgIcon from "@/views/systemTools/formDesign11/components/svg-icon/index.vue";
 
 export default {
   name: "FieldPanel",
   mixins: [i18n],
-  components: {
-    SvgIcon
-  },
   props: {
     designer: Object,
   },

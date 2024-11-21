@@ -17,14 +17,12 @@
 
 <script>
 import FieldComponents from '@/views/systemTools/formDesign11/components/form-designer/form-widget/field-widget/index'
-import SvgIcon from '@/views/systemTools/formDesign11/components/svg-icon'
 
 export default {
   name: "GridColWidget",
   componentName: "GridColWidget",
   components: {
     ...FieldComponents,
-    SvgIcon,
   },
   props: {
     widget: Object,

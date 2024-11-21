@@ -18,14 +18,10 @@
 
 <script>
   import i18n from "@/views/systemTools/formDesign11/utils/i18n"
-  import SvgIcon from "@/views/systemTools/formDesign11/components/svg-icon/index";
 
   export default {
     name: "validation-editor",
     mixins: [i18n],
-    components: {
-      SvgIcon
-    },
     props: {
       designer: Object,
       selectedWidget: Object,

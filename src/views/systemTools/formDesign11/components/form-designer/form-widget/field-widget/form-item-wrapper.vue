@@ -54,14 +54,10 @@
 
 <script>
 import i18n from "@/views/systemTools/formDesign11/utils/i18n";
-import SvgIcon from '@/views/systemTools/formDesign11/components/svg-icon'
 
 export default {
   name: "form-item-wrapper",
   mixins: [i18n],
-  components: {
-    SvgIcon
-  },
   props: {
     field: Object,
     designer: Object,

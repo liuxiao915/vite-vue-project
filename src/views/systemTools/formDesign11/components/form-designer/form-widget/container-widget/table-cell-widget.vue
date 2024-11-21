@@ -48,7 +48,6 @@
 import i18n from "@/views/systemTools/formDesign11/utils/i18n"
 import FieldComponents from '@/views/systemTools/formDesign11/components/form-designer/form-widget/field-widget/index'
 import refMixinDesign from "@/views/systemTools/formDesign11/components/form-designer/refMixinDesign"
-import SvgIcon from '@/views/systemTools/formDesign11/components/svg-icon'
 
 export default {
   name: "TableCellWidget",
@@ -57,7 +56,6 @@ export default {
   inject: ['refList'],
   components: {
     ...FieldComponents,
-    SvgIcon,
   },
   props: {
     widget: Object,

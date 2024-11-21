@@ -156,7 +156,6 @@ import { genSFC } from "@/views/systemTools/formDesign11/utils/sfc-generator"
 import loadBeautifier from "@/views/systemTools/formDesign11/utils/beautifierLoader"
 import { saveAs } from 'file-saver'
 import axios from 'axios'
-import SvgIcon from "@/views/systemTools/formDesign11/components/svg-icon/index";
 
 export default {
   name: "ToolbarPanel",
@@ -165,7 +164,6 @@ export default {
     VFormRender,
     CodeEditor,
     Clipboard,
-    SvgIcon,
   },
   props: {
     designer: Object

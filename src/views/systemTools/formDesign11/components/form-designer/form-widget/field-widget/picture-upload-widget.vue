@@ -34,7 +34,6 @@ import emitter from '@/views/systemTools/formDesign11/utils/emitter'
 import i18n, { translate } from "@/views/systemTools/formDesign11/utils/i18n";
 import { deepClone, evalFn } from "@/views/systemTools/formDesign11/utils/util";
 import fieldMixin from "@/views/systemTools/formDesign11/components/form-designer/form-widget/field-widget/fieldMixin";
-import SvgIcon from "@/views/systemTools/formDesign11/components/svg-icon/index";
 
 export default {
   name: "picture-upload-widget",
@@ -68,7 +67,6 @@ export default {
   },
   components: {
     FormItemWrapper,
-    SvgIcon,
   },
   data() {
     return {

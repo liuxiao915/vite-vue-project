@@ -37,14 +37,10 @@
 <script>
 import i18n from "@/views/systemTools/formDesign11/utils/i18n";
 import containerMixin from "@/views/systemTools/formDesign11/components/form-designer/form-widget/container-widget/containerMixin";
-import SvgIcon from '@/views/systemTools/formDesign11/components/svg-icon'
 
 export default {
   name: "container-wrapper",
   mixins: [i18n, containerMixin],
-  components: {
-    SvgIcon
-  },
   props: {
     widget: Object,
     parentWidget: Object,

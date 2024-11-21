@@ -60,7 +60,6 @@ import refMixin from '../../.@/views/systemTools/formDesign11/components/form-re
 import ContainerItemWrapper from './container-item-wrapper'
 import containerItemMixin from './containerItemMixin'
 import FieldComponents from '@/views/systemTools/formDesign11/components/form-designer/form-widget/field-widget/index'
-import SvgIcon from "@/views/systemTools/formDesign11/components/svg-icon/index";
 
 export default {
   name: "sub-form-item",
@@ -69,7 +68,6 @@ export default {
   components: {
     ContainerItemWrapper,
     ...FieldComponents,
-    SvgIcon,
   },
   props: {
     widget: Object,
