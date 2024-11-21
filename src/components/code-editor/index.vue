@@ -90,7 +90,6 @@ onMounted(() => {
     showPrintMargin: false,
     // value: props.modelValue
   })
-
   aceEditor.value.setOptions({
     enableSnippets: true,  // 设置代码片段提示
     enableBasicAutocompletion: true,

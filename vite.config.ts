@@ -46,7 +46,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': srcPath
-    }
+    },
+    extensions: ['.js', '.vue', '.json', '.ts'] // 使用路径别名时想要省略的后缀名
+  },
+  optimizeDeps: {
+    include: ['@/../lib/vuedraggable/dist/vuedraggable.umd.js']
   },
   css: {
     // 预处理器配置项

@@ -42,6 +42,15 @@ export const systemToolsRouter:Array<RouteRecordRaw> = [
           title: '表单设计11'
         },
         component: () => import('@/views/systemTools/formDesign11/index.vue'),
+      },
+      {
+        path: '/systemTools/ThreeJs',
+        name: 'systemTools/ThreeJs',
+        meta: {
+          keepAlive: true,
+          title: 'ThreeJs'
+        },
+        component: () => import('@/views/systemTools/ThreeJs/index.vue'),
       }
     ]
   }

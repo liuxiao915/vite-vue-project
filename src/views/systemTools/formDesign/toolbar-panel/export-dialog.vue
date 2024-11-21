@@ -31,10 +31,10 @@ const store = useStore()
 const model = defineModel()
 const state = reactive({
   tabList: [
-    { label: 'Vue3', mode: 'javascript' },
-    { label: 'Vue2', mode: 'javascript' },
-    { label: 'HTML', mode: 'html' },
-    { label: 'JSON', mode: 'json' },
+    { label: 'Vue3', mode: 'javascript', fileType: 'vue' },
+    { label: 'Vue2', mode: 'javascript', fileType: 'vue' },
+    { label: 'HTML', mode: 'html', fileType: 'html' },
+    { label: 'JSON', mode: 'json', fileType: 'json' },
   ]
 })
 const activeTab = ref('Vue3')
@@ -52,15 +52,21 @@ const copyCode = () => {
 }
 const saveCode = () => {
   const blob = new Blob([code.value], { type: 'text/plain;charset=utf-8' })
-  saveAs(blob, 'form.vue')
+  const fileType = state.tabList.filter(item => item.label === activeTab.value)[0].fileType
+  saveAs(blob, `formDesign.${fileType}`)
 }
 const formConfig = computed(() => store.state.formBuild.formConfig)
 const drawingList = computed(() => store.state.formBuild.drawingList)
 const tabChange = (tab) => {
-  code.value = genSFC(formConfig.value, drawingList.value, beautifier, tab)
+  if (tab === 'JSON') {
+    code.value = JSON.stringify({ drawingList: drawingList.value, formConfig: formConfig.value }, null, '  ')
+  } else {
+    code.value = genSFC(formConfig.value, drawingList.value, beautifier, activeTab.value)
+  }
+
 }
 const openDialog = () => {
-  code.value = genSFC(formConfig.value, drawingList.value, beautifier, true)
+  code.value = genSFC(formConfig.value, drawingList.value, beautifier, activeTab.value)
 }
 </script>
 <style lang="less" scoped>

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import GridCol from "./grid-col.vue"
 const props = defineProps({
   item: {
@@ -16,7 +16,9 @@ const props = defineProps({
   }
 })
 const value = ref('')
-console.log('grid.vue-----grid.vue')
+watch(() => props.item, () => {
+  console.log('grid.vue::::', props.item)
+})
 </script>
 
 <style lang="less" scoped>

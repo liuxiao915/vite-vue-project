@@ -1,23 +1,24 @@
 <template>
   <el-col v-if="item.type === 'grid-col'" class="grid-cell" v-bind="layoutProps" :style="colHeightStyle" :key="item.id" @click.stop="selectWidget(item)">
-    <draggable :list="item.widgetList" item-key="id" v-bind="{group:'dragGroup', animation: 200}" tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler" @end="(evt) => onGridDragEnd(evt, item.widgetList)" @add="(evt) => onGridDragAdd(evt, item.widgetList)" @update="onGridDragUpdate" :move="checkContainerMove">
-      <template #item="{ element, index }">
-        <div class="form-widget-list">
-          <template v-if="element.category === 'container'">
-            <component :is="element.component" :item="element" :key="element.id" :parent-list="item.widgetList" :index-of-parent-list="index" :parent-widget="item"></component>
+    <Vuedraggable :list="item.widgetList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 200}" tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler" @add="(evt) => onGridDragAdd(evt, item.widgetList)" @update="onGridDragUpdate" :move="checkContainerMove">
+      <template #item="{ element, index: swIdx }">
+        <div class="form-item-list">
+          <template v-if="'container' === element.category">
+            <component :is="element.component" :item="element" :designer="designer" :key="element.id" :parent-list="item.widgetList" :index-of-parent-list="swIdx" :parent-item="item"></component>
           </template>
-          <el-form-item v-else :label="element.label" :required="element.required">
-            <component :is="element.component" v-bind:item="element"></component>
-          </el-form-item>
+          <template v-else>
+            <component :is="element.component" :field="element" :designer="designer" :key="element.id" :parent-list="item.widgetList" :index-of-parent-list="swIdx" :parent-item="item" :design-state="true"></component>
+          </template>
         </div>
       </template>
-    </draggable>
+    </Vuedraggable>
   </el-col>
 </template>
 
 <script setup>
 import { ref, reactive, nextTick, computed } from 'vue'
 import draggable from 'vuedraggable'
+import Vuedraggable from '@/../lib/vuedraggable/dist/vuedraggable.umd.js'
 import { useStore } from 'vuex'
 const props = defineProps({
   item: Object,
@@ -181,7 +182,7 @@ const removeWidget = () => {
   outline: 1px dashed #336699;
   position: relative;
 
-  .form-widget-list {
+  .form-item-list {
     min-height: 28px;
   }
 

@@ -8,40 +8,69 @@
   <ToolbarPanel />
   <div id="editor" ref="editor" class="editor" @contextmenu="handleContextMenu" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
     <el-form :validate-on-rule-change="false">
-      <!-- tag="transition-group" :component-data="{name: 'fade'}"  -->
-      <Draggable v-model="drawingList" v-bind="{group:'dragGroup', animation: 300}" @start="drag=true" @end="drag=false" @update="dragUpdate" item-key="id">
+      <!-- tag="transition-group" :component-data="{name: 'fade'}" handle=".drag-handler"  -->
+      <!-- <Vuedraggable :list="drawingList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 300}" tag="transition-group" :component-data="{name: 'fade'}" @end="onDragEnd" @add="onDragAdd" @update="dragUpdate" :move="()=> true">
         <template #item="{ element }">
-          <component v-if="element.category === 'container'" :is="element.component" v-bind:item="element"></component>
-          <el-form-item v-else :label="element.label" :required="element.required">
-            <component :is="element.component" v-bind:item="element"></component>
-          </el-form-item>
+          <div class="transition-group-el">
+            <template v-if="'container' === element.category">
+              <component :is="element.component" v-bind:item="element"></component>
+            </template>
+            <el-form-item v-else :label="element.label" :required="element.required">
+              <component :is="element.component" v-bind:item="element"></component>
+            </el-form-item>
+          </div>
         </template>
-      </Draggable>
+      </Vuedraggable> -->
+
+      <Vuedraggable :list="drawingList" item-key="id" v-bind="{group:'dragGroup', ghostClass: 'ghost',animation: 300}" tag="transition-group" :component-data="{name: 'fade'}" @end="onDragEnd" @add="onDragAdd" @update="dragUpdate" :move="()=> true">
+        <template #item="{ element: widget, index }">
+          <div class="transition-group-el">
+            <template v-if="'container' === widget.category">
+              <component :is="widget.component" :item="widget" :key="widget.id" :parent-list="drawingList" :index-of-parent-list="index" :parent-widget="null"></component>
+            </template>
+            <template v-else>
+              <component :is="widget.component" :field="widget" :key="widget.id" :parent-list="drawingList" :index-of-parent-list="index" :parent-widget="null" :design-state="true"></component>
+            </template>
+          </div>
+        </template>
+      </Vuedraggable>
     </el-form>
   </div>
 </template>
 <script setup>
 import { ref, reactive, nextTick, computed } from 'vue'
 import { useStore } from 'vuex'
-import Draggable from 'vuedraggable'
+// import Draggable from 'vuedraggable'
 import { generateId } from '@/utils/index.js'
 import ToolbarPanel from '../toolbar-panel/index.vue'
 import { containersFields, basicFields, advancedFields, customFields } from '../left-panel/config.js'
+import Vuedraggable from '@/../lib/vuedraggable/dist/vuedraggable.umd.js'
 const state = reactive({})
 const store = useStore()
 const editor = ref(null)
 const curComponent = ref(null)
 const showContextMenu = ref(false)
 
-const dragUpdate = (e) => {
-  console.log('dragUpdate:::', drawingList.value)
-}
 const drawingList = ref([])
 watch(() => store.state.formBuild.drawingList, () => {
   drawingList.value = JSON.parse(localStorage.getItem('drawingList')) || []
 }, {
   deep: true, immediate: true
 })
+const onDragAdd = (e) => {
+  console.log('onDragAdd:::', e)
+  const newIndex = evt.newIndex
+  if (!!drawingList.value[newIndex]) {
+    // this.designer.setSelected(drawingList.value[newIndex])
+  }
+  store.commit('formBuild/historyChange')
+}
+const onDragEnd = (e) => {
+  console.log('onDragAdd:::', e)
+}
+const dragUpdate = (e) => {
+  console.log('dragUpdate:::', drawingList.value)
+}
 // 全局监听按键事件
 const contextMenuTop = ref(0)
 const contextMenuLeft = ref(0)

@@ -554,24 +554,72 @@ export const registerFWGenerator = function(fieldType, ftGenerator) {
   elTemplates[fieldType] = ftGenerator
 }
 
-export const genSFC = function(formConfig, widgetList, beautifier, vue3Flag = false) {
-  const html = beautifier.html(genTemplate(formConfig, widgetList, vue3Flag), beautifierOpts.html)
-  const js = beautifier.js(!!vue3Flag ? genVue3JS(formConfig, widgetList) : genVue2JS(formConfig, widgetList), beautifierOpts.js)
-  const globalCss = beautifier.css(genGlobalCSS(formConfig), beautifierOpts.css)
-  const scopedCss = beautifier.css(genScopedCSS(formConfig, vue3Flag), beautifierOpts.css)
-  return `<template>
-${html}
-</template>
-
+export const generateCode = function(widgetList, codeType = 'vue') {
+  let formJsonStr = JSON.stringify(widgetList)
+  return `<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<title>VForm Demo</title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+  <div id="app">
+    <v-form-render :form-json="formJson" :form-data="formData" :option-data="optionData" ref="vFormRef">
+    </v-form-render>
+    <el-button type="primary" @click="submitForm">Submit</el-button>
+  </div>
 <script>
-${js}
+  const { createApp } = Vue;
+	const app = createApp({
+      data() {
+        return {
+          formJson: ${formJsonStr},
+          formData: {},
+          optionData: {}
+        }
+      },
+      methods: {
+        submitForm() {
+          this.$refs.vFormRef.getFormData().then( (formData) => {
+            // Form Validation OK
+            alert( JSON.stringify(formData) )
+          }).catch( function(error) {
+            // Form Validation Failed
+            alert(error)
+          })
+        }
+      }
+	});
+	app.use(ElementPlus)
+	app.use(VFormRender)
+	app.mount("#app");
 </script>
+</body>
+</html>`
+}
 
-<style lang="less">
-${globalCss}
-</style>
-
-<style lang="less" scoped>
-${scopedCss}
-</style>`
+export const genSFC = function(formConfig, widgetList, beautifier, type) {
+  if (type === 'HTML') {
+    return generateCode()
+  } else {
+    const html = beautifier.html(genTemplate(formConfig, widgetList, type === 'Vue3'), beautifierOpts.html)
+    const js = beautifier.js(type === 'Vue3' ? genVue3JS(formConfig, widgetList) : genVue2JS(formConfig, widgetList), beautifierOpts.js)
+    const globalCss = beautifier.css(genGlobalCSS(formConfig), beautifierOpts.css)
+    const scopedCss = beautifier.css(genScopedCSS(formConfig, type === 'Vue3'), beautifierOpts.css)
+    return `<template>
+    ${html}
+    </template>
+    <script>
+    ${js}
+    </script>
+    <style lang="less">
+    ${globalCss}
+    </style>
+    <style lang="less" scoped>
+    ${scopedCss}
+    </style>`
+  }
 }

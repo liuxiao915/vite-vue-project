@@ -11,7 +11,7 @@
   </el-container>
 </template>
 <script setup>
-import LeftPanel from './left-panel/index1.vue'
+import LeftPanel from './left-panel/index.vue'
 import EditorPanel from './editor-panel/index1.vue'
 </script>
 <style lang="less" scoped>
