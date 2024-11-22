@@ -56,7 +56,7 @@
 import emitter from '@/views/systemTools/formDesign11/utils/emitter'
 import i18n from '@/views/systemTools/formDesign11/utils/i18n'
 import { deepClone, generateId } from '@/views/systemTools/formDesign11/utils/util'
-import refMixin from '../../.@/views/systemTools/formDesign11/components/form-render/refMixin'
+import refMixin from '@/views/systemTools/formDesign11/components/form-render/refMixin'
 import ContainerItemWrapper from './container-item-wrapper'
 import containerItemMixin from './containerItemMixin'
 import FieldComponents from '@/views/systemTools/formDesign11/components/form-designer/form-widget/field-widget/index'

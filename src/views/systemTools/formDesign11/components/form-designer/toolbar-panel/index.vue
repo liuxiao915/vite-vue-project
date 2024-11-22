@@ -16,22 +16,15 @@
     <div class="right-toolbar" :style="{width: toolbarWidth + 'px'}">
       <div class="right-toolbar-con">
         <el-button link type="primary" @click="clearFormWidget">
-          <svg-icon svg-name="el-delete" />{{i18nt('designer.toolbar.clear')}}</el-button>
+          <svg-icon svg-name="el-delete" />清空</el-button>
         <el-button link type="primary" @click="previewForm">
-          <svg-icon svg-name="el-view" />{{i18nt('designer.toolbar.preview')}}</el-button>
-        <el-button link type="primary" @click="importJson">
-          {{i18nt('designer.toolbar.importJson')}}</el-button>
-        <el-button link type="primary" @click="exportCode">
-          {{i18nt('designer.toolbar.exportCode')}}</el-button>
-        <el-button link type="primary" @click="generateSFC">
-          <svg-icon svg-name="vue-sfc" />{{i18nt('designer.toolbar.generateSFC')}}</el-button>
-        <template v-for="(idx, slotName) in $slots">
-          <slot :name="slotName"></slot>
-        </template>
+          <svg-icon svg-name="el-view" />预览</el-button>
+        <el-button link type="primary" @click="importJson">导入JSON</el-button>
+        <el-button link type="primary" @click="exportCode">生成文件</el-button>
       </div>
     </div>
     <!-- 预览 -->
-    <div v-if="showPreviewDialogFlag" class="" v-drag="['.drag-dialog.el-dialog', '.drag-dialog .el-dialog__header']">
+    <div v-if="showPreviewDialogFlag">
       <el-dialog :title="i18nt('designer.toolbar.preview')" v-model="showPreviewDialogFlag" :show-close="true" :close-on-click-modal="false" :close-on-press-escape="false" center :destroy-on-close="true" :append-to-body="true" class="drag-dialog small-padding-dialog" width="75%" :fullscreen="false">
         <div>
           <div class="form-render-wrapper">
@@ -54,7 +47,7 @@
       </el-dialog>
     </div>
     <!-- 导入JSON -->
-    <div v-if="showImportJsonDialogFlag" class="" v-drag="['.drag-dialog.el-dialog', '.drag-dialog .el-dialog__header']">
+    <div v-if="showImportJsonDialogFlag">
       <el-dialog :title="i18nt('designer.toolbar.importJson')" v-model="showImportJsonDialogFlag" :show-close="true" class="drag-dialog small-padding-dialog" :append-to-body="true" center :close-on-click-modal="false" :close-on-press-escape="false" :destroy-on-close="true">
         <el-alert type="info" :title="i18nt('designer.hint.importJsonHint')" show-icon class="alert-padding"></el-alert>
         <code-editor :mode="'json'" :readonly="false" v-model="importTemplate"></code-editor>
@@ -141,7 +134,6 @@
 
 <script>
 import VFormRender from '@/views/systemTools/formDesign11/components/form-render/index'
-import CodeEditor from '@/views/systemTools/formDesign11/components/code-editor/index'
 import Clipboard from 'clipboard'
 import {
   deepClone,
@@ -162,7 +154,6 @@ export default {
   mixins: [i18n],
   components: {
     VFormRender,
-    CodeEditor,
     Clipboard,
   },
   props: {

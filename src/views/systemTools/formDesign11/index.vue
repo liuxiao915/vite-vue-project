@@ -1,10 +1,13 @@
 <template>
-  <el-container class="main-container full-height">
+  <el-container class="main-container">
     <el-container>
       <el-aside class="side-panel">
         <widget-panel :designer="designer" />
       </el-aside>
       <el-container class="center-layout-container">
+        <el-header class="toolbar-header">
+          <toolbar-panel :designer="designer" />
+        </el-header>
         <el-main class="form-widget-main">
           <el-scrollbar class="container-scroll-bar" :style="{height: scrollerHeight}">
             <v-form-widget :designer="designer" :form-config="designer.formConfig" />
@@ -16,6 +19,7 @@
 </template>
 <script>
 import WidgetPanel from '@/views/systemTools/formDesign11/components/form-designer/widget-panel/index.vue'
+import ToolbarPanel from '@/views/systemTools/formDesign11/components/form-designer/toolbar-panel/index.vue'
 import VFormWidget from '@/views/systemTools/formDesign11/components/form-designer/form-widget/index.vue'
 import { createDesigner } from "@/views/systemTools/formDesign11/components/form-designer/designer"
 import { addWindowResizeHandler } from "@/views/systemTools/formDesign11/utils/util"
@@ -23,6 +27,7 @@ import { addWindowResizeHandler } from "@/views/systemTools/formDesign11/utils/u
 export default {
   components: {
     WidgetPanel,
+    ToolbarPanel,
     VFormWidget,
   },
   data() {
@@ -44,12 +49,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#app {
-  height: 100%;
-}
 .el-container.main-container {
   background: #fff;
-
+  height: 100%;
+  overflow-y: hidden;
   :deep(aside) {
     /* 防止aside样式被外部样式覆盖！！ */
     margin: 0;
@@ -57,12 +60,6 @@ export default {
     background: inherit;
   }
 }
-
-.el-container.full-height {
-  height: 100%;
-  overflow-y: hidden;
-}
-
 .el-container.center-layout-container {
   min-width: 680px;
   border-left: 2px dotted #ebeef5;

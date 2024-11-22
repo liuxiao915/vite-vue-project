@@ -51,6 +51,15 @@ export const systemToolsRouter:Array<RouteRecordRaw> = [
           title: 'ThreeJs'
         },
         component: () => import('@/views/systemTools/ThreeJs/index.vue'),
+      },
+      {
+        path: '/systemTools/Cesium',
+        name: 'systemTools/Cesium',
+        meta: {
+          keepAlive: true,
+          title: 'Cesium'
+        },
+        component: () => import('@/views/systemTools/Cesium/index.vue'),
       }
     ]
   }

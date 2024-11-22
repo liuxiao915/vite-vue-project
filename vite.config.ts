@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import vitePluginVueMonitor from './src/plugins/vitePluginStar'
+import cesium from 'vite-plugin-cesium'
 // import viteCompression from 'vite-plugin-compression'
 const srcPath = path.resolve(__dirname, "src");
 
@@ -17,6 +18,7 @@ export default defineConfig({
   envPrefix: 'VITE_', // 环境变量前缀设置
   plugins: [
     vue(),
+    cesium(),
     vueJsx(),
     // vueJsx({include:/\.[jt]xs$|\.js$|\.vue$/}),
     vitePluginVueMonitor(),

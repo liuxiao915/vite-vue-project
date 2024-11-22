@@ -4,11 +4,11 @@
       <el-tabs v-model="firstTab" class="no-bottom-margin indent-left-margin">
         <el-tab-pane name="componentLib">
           <template #label>
-            <span><svg-icon svg-name="el-set-up" /> {{ i18nt('designer.componentLib') }}</span>
+            <span><svg-icon svg-name="el-set-up" />组件库</span>
           </template>
           <el-collapse v-model="activeNames" class="widget-collapse">
-            <el-collapse-item name="1" :title="i18nt('designer.containerTitle')">
-              <Vuedraggable tag="ul" :list="containers" item-key="key" :group="{ name: 'dragGroup', pull: 'clone', put: false }" :clone="handleContainerWidgetClone" ghost-class="ghost" :sort="false" :move="checkContainerMove" @end="onContainerDragEnd">
+            <el-collapse-item name="1" title="容器">
+              <Vuedraggable tag="ul" :list="containers" item-key="key" :group="{ name: 'dragGroup', pull: 'clone', put: false }" :clone="handleContainerWidgetClone" ghost-class="ghost" :sort="false" :move="checkContainerMove">
                 <template #item="{ element: ctn }">
                   <li class="container-widget-item" :title="ctn.displayName" @dblclick="addContainerByDbClick(ctn)">
                     <span><svg-icon :svg-name="ctn.icon" class-name="color-svg-icon" />{{ i18n2t(`designer.widgetLabel.${ctn.type}`,
@@ -17,7 +17,7 @@
                 </template>
               </Vuedraggable>
             </el-collapse-item>
-            <el-collapse-item name="2" :title="i18nt('designer.basicFieldTitle')">
+            <el-collapse-item name="2" title="基础字段">
               <Vuedraggable tag="ul" :list="basicFields" item-key="key" :group="{ name: 'dragGroup', pull: 'clone', put: false }" :move="checkFieldMove" :clone="handleFieldWidgetClone" ghost-class="ghost" :sort="false">
                 <template #item="{ element: fld }">
                   <li class="field-widget-item" :title="fld.displayName" @dblclick="addFieldByDbClick(fld)">
@@ -27,7 +27,7 @@
                 </template>
               </Vuedraggable>
             </el-collapse-item>
-            <el-collapse-item name="3" :title="i18nt('designer.advancedFieldTitle')">
+            <el-collapse-item name="3" title="高级字段">
               <Vuedraggable tag="ul" :list="advancedFields" item-key="key" :group="{ name: 'dragGroup', pull: 'clone', put: false }" :move="checkFieldMove" :clone="handleFieldWidgetClone" ghost-class="ghost" :sort="false">
                 <template #item="{ element: fld }">
                   <li class="field-widget-item" :title="fld.displayName" @dblclick="addFieldByDbClick(fld)">
@@ -37,7 +37,7 @@
                 </template>
               </Vuedraggable>
             </el-collapse-item>
-            <el-collapse-item name="4" :title="i18nt('designer.customFieldTitle')">
+            <el-collapse-item name="4" title="自定义扩展字段">
               <Vuedraggable tag="ul" :list="customFields" item-key="key" :group="{ name: 'dragGroup', pull: 'clone', put: false }" :move="checkFieldMove" :clone="handleFieldWidgetClone" ghost-class="ghost" :sort="false">
                 <template #item="{ element: fld }">
                   <li class="field-widget-item" :title="fld.displayName" @dblclick="addFieldByDbClick(fld)">
@@ -52,9 +52,8 @@
         </el-tab-pane>
         <el-tab-pane name="formLib" style="padding: 8px">
           <template #label>
-            <span><svg-icon svg-name="el-form-template" /> {{ i18nt('designer.formLib') }}</span>
+            <span><svg-icon svg-name="el-form-template" />表单模板</span>
           </template>
-
           <template v-for="(ft, idx) in formTemplates" :key="idx">
             <el-card :bord-style="{ padding: '0' }" shadow="hover" class="ft-card">
               <el-popover placement="right" trigger="hover">
@@ -65,8 +64,7 @@
               </el-popover>
               <div class="bottom clear-fix">
                 <span class="ft-title">#{{ idx + 1 }} {{ ft.title }}</span>
-                <el-button link type="primary" class="right-button" @click="loadFormTemplate(ft.jsonUrl)">
-                  {{ i18nt('designer.hint.loadFormTemplate') }}</el-button>
+                <el-button link type="primary" class="right-button" @click="loadFormTemplate(ft.jsonUrl)">加载此模板</el-button>
               </div>
             </el-card>
           </template>
@@ -92,9 +90,7 @@ export default {
   data() {
     return {
       firstTab: 'componentLib',
-
       scrollerHeight: 0,
-
       activeNames: ['1', '2', '3', '4'],
       containers: [],
       basicFields: [],
@@ -174,12 +170,6 @@ export default {
     checkFieldMove(evt) {
       return this.designer.checkFieldMove(evt)
     },
-
-    onContainerDragEnd(evt) {
-      //console.log('Drag end of container: ')
-      //console.log(evt)
-    },
-
     addContainerByDbClick(container) {
       this.designer.addContainerByDbClick(container)
     },
@@ -189,9 +179,10 @@ export default {
     },
 
     loadFormTemplate(jsonUrl) {
-      this.$confirm(this.i18nt('designer.hint.loadFormTemplateHint'), this.i18nt('render.hint.prompt'), {
-        confirmButtonText: this.i18nt('render.hint.confirm'),
-        cancelButtonText: this.i18nt('render.hint.cancel')
+      
+    ElMessageBox.confirm('是否加载这个模板？加载后会覆盖设计器当前表单，你可以使用“撤销”功能恢复。', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
       }).then(() => {
         axios.get(jsonUrl).then(res => {
           let modifiedFlag = false
@@ -203,10 +194,9 @@ export default {
           if (modifiedFlag) {
             this.designer.emitHistoryChange()
           }
-
-          this.$message.success(this.i18nt('designer.hint.loadFormTemplateSuccess'))
+          this.$message.success('加载成功！')
         }).catch(error => {
-          this.$message.error(this.i18nt('designer.hint.loadFormTemplateFailed') + ':' + error)
+          this.$message.error(error)
         })
       }).catch(error => {
         console.error(error)
