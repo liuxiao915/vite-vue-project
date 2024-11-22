@@ -9,7 +9,7 @@ const props = defineProps({
     type: Object,
     default: () => {
       return {
-        // infoBox: false, // 禁用沙箱，解决控制台报错
+        infoBox: false, // 禁用沙箱，解决控制台报错
         info: false,
         geocoder: false,
         homeButton: false,
@@ -44,13 +44,13 @@ onMounted(() => {
   viewer.scene.globe.depthTestAgainstTerrain = true;
 
 
-  // Cesium处理iframe的allow-scripts权限问题
-  const iframe = document.getElementsByClassName("cesium-infoBox-iframe")[0]; // 获取iframe dom元素
-  iframe.setAttribute(
-    "sandbox",
-    "allow-same-origin allow-scripts allow-popups allow-forms"
-  );
-  iframe.setAttribute("src", "");
+  // // Cesium处理iframe的allow-scripts权限问题
+  // const iframe = document.getElementsByClassName("cesium-infoBox-iframe")[0]; // 获取iframe dom元素
+  // iframe.setAttribute(
+  //   "sandbox",
+  //   "allow-same-origin allow-scripts allow-popups allow-forms"
+  // );
+  // iframe.setAttribute("src", "");
 
 });
 </script> 
