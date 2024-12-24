@@ -51,7 +51,9 @@ export default defineConfig({
     },
     extensions: ['.js', '.vue', '.json', '.ts'] // 使用路径别名时想要省略的后缀名
   },
+  // 优化配置
   optimizeDeps: {
+    // 是否将  作为外部依赖提取出来
     include: ['@/../lib/vuedraggable/dist/vuedraggable.umd.js']
   },
   css: {

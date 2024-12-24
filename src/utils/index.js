@@ -944,6 +944,20 @@ export const utils = {
     if (!results[2]) return ''
     const val = results[2].replace(/\+/g, ' ')
     return isDeCode ? decodeURIComponent(val) : val
+
+
+
+    // if(window.location.search) {
+    //   const params = new URLSearchParams(window.location.search);
+    //   return params.get(name)
+    // } else {
+    //   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+    //   var r = window.location.hash.split('?')[1]?.match(reg)
+    //   if (r != null) {
+    //     return unescape(r[2])
+    //   }
+    //   return null
+    // }
   },
   /**
    * 给url设置params参数
